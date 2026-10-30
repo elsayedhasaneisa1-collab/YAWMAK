@@ -462,3 +462,5 @@ svg.icon use{overflow:visible}
  .notes-document textarea{padding:17px;min-height:330px}
 }
 @media(hover:none){.button:hover,.icon-button:hover,.timer-start:hover{transform:none}}
+
+.install-button[hidden]{display:none!important}

@@ -233,6 +233,8 @@
       let commandIndex = 0;
       let lastPrayerTick = 0;
       const tafsirRequests = new Map();
+      let notificationBank = [];
+      let notificationBankReady = false;
       const arabicNormalize = text => String(text).normalize('NFD').replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').toLowerCase();
       function defaultState(withExamples = true) {
         const now = Date.now();
@@ -250,7 +252,7 @@
           timer: { mode: 'focus', duration: 1500, remaining: 1500, running: false, endAt: null, taskId: '', sessionId: uid() },
           sessions: [], recentCommands: [], notifySent: [], ambientVolume: 25,
           faith: {
-            location: { ...cities[0], id: 'cairo' }, method: 'Egyptian', madhab: 'Shafi', adjustment: 0, notifications: false, prayers: {},
+            location: { ...cities[0], id: 'cairo' }, method: 'Egyptian', madhab: 'Shafi', adjustment: 0, notifications: false, azkarNotifications: false, prayers: {},
             azkarDay: dayKey(), azkarCounts: {}, azkarFavorites: [], tasbih: { phrase: 'سبحان الله', target: 33, count: 0, total: 0, day: dayKey() },
             quran: { surah: 1, ayah: 1, page: 1, fontSize: 29, layout: 'mushaf', reciter: 'ar.alafasy', bookmarks: [] },
             readLog: {}, readPages: [], khatma: { days: 60, started: dayKey(), page: 0 }, wirdGoal: 10
@@ -293,6 +295,7 @@
           f.madhab = faith.madhab === 'Hanafi' ? 'Hanafi' : 'Shafi';
           f.adjustment = clamp(faith.adjustment,-30,30,0);
           f.notifications = faith.notifications === true;
+          f.azkarNotifications = faith.azkarNotifications === true;
           if (faith.prayers && typeof faith.prayers === 'object') f.prayers = Object.fromEntries(Object.entries(faith.prayers).filter(([date,keys]) => validDate(date) && Array.isArray(keys)).slice(-730).map(([date,keys]) => [date,keys.filter(key => prayerKeys.includes(key))]));
           if (faith.azkarCounts && typeof faith.azkarCounts === 'object') f.azkarCounts = Object.fromEntries(Object.entries(faith.azkarCounts).filter(([id]) => adhkar.some(item => item.id === id)).map(([id,count]) => [id,clamp(count,0,1000,0)]));
           f.azkarDay = validDate(faith.azkarDay) ? faith.azkarDay : dayKey();
@@ -1281,8 +1284,9 @@
       function installedApp() { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; }
       function updateOfflineStatus() {
         $('#offline-status').textContent = !navigator.onLine ? 'أنت بدون نت · المحفوظ على جهازك متاح.' : offlineReady ? 'جاهز بدون نت · بياناتك على جهازك.' : 'بياناتك على جهازك · جارٍ تجهيز العمل بدون نت.';
-        $('#offline-settings-status').textContent = installedApp() ? 'يومك مثبّت على جهازك. ' + (offlineReady ? 'النسخة الأساسية جاهزة بدون نت.' : 'جارٍ تجهيز الملفات الأساسية.') : offlineReady ? 'النسخة الأساسية جاهزة بدون نت. اضغط «ثبّت يومك» لتجربة مستقلة.' : location.protocol === 'file:' ? 'أنت فاتح الملف مباشرة. التثبيت والعمل بدون نت يحتاجان رفع الملفات على HTTPS أو localhost.' : 'أول فتح يحتاج اتصالا لتجهيز الملفات. بعد الجاهزية تقدر تستخدم يومك بدون نت.';
-        $('#install-label').textContent = installedApp() ? 'يومك مثبّت' : 'ثبّت يومك';
+        $('#offline-settings-status').textContent = installedApp() ? 'يومك مثبّت على جهازك. ' + (offlineReady ? 'النسخة الأساسية جاهزة بدون نت.' : 'جارٍ تجهيز الملفات الأساسية.') : offlineReady ? 'النسخة الأساسية جاهزة بدون نت. اضغط «ثبّت يومك» لتجربة مستقلة.' : 'أول فتح يحتاج اتصالا لتجهيز الملفات. بعد الجاهزية تقدر تستخدم يومك بدون نت.';
+        $('#install-label').textContent = 'ثبّت يومك';
+        document.querySelectorAll('[data-action="install"]').forEach(button => { button.hidden = installedApp(); });
       }
       async function refreshStorage() {
         try {
@@ -1332,6 +1336,39 @@
           else new Notification(title,{body,tag});
         } catch {}
       }
+      async function loadNotificationBank() {
+        if (notificationBankReady) return notificationBank;
+        try { const response = await fetch('./notifications.json'); if (!response.ok) throw new Error('bank'); const data = await response.json(); notificationBank = Array.isArray(data.notifications) ? data.notifications.filter(item => item && /^yw-\d{3}$/.test(item.id) && typeof item.title === 'string' && typeof item.body === 'string') : []; notificationBankReady = true; } catch { notificationBank = []; }
+        return notificationBank;
+      }
+      async function sendRandomBankNotification(now = Date.now()) {
+        if (!state.faith.azkarNotifications || Notification.permission !== 'granted') return;
+        const bank = await loadNotificationBank(); if (!bank.length) return;
+        const last = Number(localStorage.getItem('yawmak-random-notification-at') || 0);
+        const interval = 4 * 60 * 60 * 1000;
+        if (last && now - last < interval) return;
+        const recent = JSON.parse(localStorage.getItem('yawmak-random-notification-ids') || '[]');
+        const pool = bank.filter(item => !recent.slice(-12).includes(item.id));
+        const chosen = (pool.length ? pool : bank)[Math.floor(Math.random() * (pool.length || bank.length))];
+        await sendNotification(chosen.title, chosen.body, `random-${chosen.id}-${dayKey()}`);
+        localStorage.setItem('yawmak-random-notification-at', String(now));
+        localStorage.setItem('yawmak-random-notification-ids', JSON.stringify([...recent, chosen.id].slice(-20)));
+      }
+      async function requestAzkarNotifications() {
+        if (!('Notification' in window)) { showToast('المتصفح ده مش بيدعم التنبيهات.'); return; }
+        if (state.faith.azkarNotifications) { state.faith.azkarNotifications = false; saveState(); updateAzkarNotificationLabel(); showToast('تذكير الأذكار اتوقف.'); return; }
+        try {
+          const permission = await Notification.requestPermission();
+          if (permission !== 'granted') { showToast('اسمح بالتنبيهات من إعدادات الموقع لتفعيل التذكير.'); return; }
+          state.faith.azkarNotifications = true; saveState(); updateAzkarNotificationLabel();
+          await loadNotificationBank();
+          showToast('اتفعّلت تذكيرات الأذكار والرسائل المتنوعة كل 4 ساعات أثناء استخدام التطبيق.');
+        } catch { showToast('تعذّر تفعيل التنبيهات على هذا الجهاز.'); }
+      }
+      function updateAzkarNotificationLabel() {
+        const button = $('#azkar-notification-toggle');
+        if (button) button.textContent = state.faith.azkarNotifications ? 'إيقاف تذكير أذكار الصباح والمساء' : 'تذكير بأذكار الصباح والمساء';
+      }
       async function requestNotifications(kind) {
         if (!('Notification' in window)) { showToast('المتصفح ده مش بيدعم التنبيهات.'); return; }
         const enabled = kind === 'prayer' ? state.faith.notifications : state.settings.taskNotifications;
@@ -1341,7 +1378,7 @@
           if (permission !== 'granted') { showToast('إذن التنبيهات مرفوض. فعّله من إعدادات الموقع في المتصفح.'); return; }
           if (kind === 'prayer') state.faith.notifications = true; else state.settings.taskNotifications = true;
           saveState(); renderPrayers(); showToast('التذكير اتفعّل أثناء فتح يومك. إغلاق التطبيق قد يوقف التنبيه.');
-        } catch { showToast('التنبيهات تحتاج متصفحا داعما واتصال HTTPS.'); }
+        } catch { showToast('تعذّر تفعيل التنبيهات على هذا الجهاز.'); }
       }
       function checkReminders() {
         const now = new Date(); const today = dayKey();
@@ -1356,6 +1393,16 @@
           const key = `task-${today}-${task.id}`;
           if (!state.notifySent.includes(key)) { state.notifySent.push(key); sendNotification('خطوة صغيرة مستنياك',task.title,key); saveState(); }
         });
+        if (state.faith.azkarNotifications) {
+          sendRandomBankNotification(now.getTime());
+          const slots = [{hour:7,minute:0,key:'morning',title:'أذكار الصباح',body:'ابدأ يومك بذكر الله.'},{hour:17,minute:0,key:'evening',title:'أذكار المساء',body:'اجعل ختام يومك بذكر الله.'}];
+          slots.forEach(slot => {
+            const key = `azkar-${today}-${slot.key}`;
+            if (now.getHours() === slot.hour && now.getMinutes() === slot.minute && !state.notifySent.includes(key)) {
+              state.notifySent.push(key); sendNotification(slot.title,slot.body,key); saveState();
+            }
+          });
+        }
         state.notifySent = state.notifySent.slice(-200);
       }
       const actions = {
@@ -1392,11 +1439,11 @@
         'locate': locateUser, 'monthly-prayers': showMonthlyPrayers,
         'download-prayers': () => { if (!monthlyRows.length) return; downloadFile('\uFEFFالتاريخ,الفجر,الشروق,الظهر,العصر,المغرب,العشاء\n'+monthlyRows.map(row => row.join(',')).join('\n'),`yawmak-prayers-${state.faith.location.id}-${dayKey().slice(0,7)}.csv`,'text/csv;charset=utf-8'); showToast('جدول المواقيت جاهز للتنزيل.'); },
         'prayer-next-day': () => { prayerOffset++; renderPrayers(); }, 'prayer-previous-day': () => { prayerOffset--; renderPrayers(); },
-        'prayer-notifications': () => requestNotifications('prayer'), 'task-notifications': () => requestNotifications('tasks'), 'compass': enableCompass,
+        'prayer-notifications': () => requestNotifications('prayer'), 'task-notifications': () => requestNotifications('tasks'), 'azkar-notifications': requestAzkarNotifications, 'compass': enableCompass,
         'khatma-settings': () => { $('#khatma-days').value=state.faith.khatma.days; $('#khatma-page').value=state.faith.khatma.page; $('#khatma-dialog').showModal(); },
         'restart-khatma': async () => { if (!await askConfirm('نبدأ ختمة جديدة؟','هتبدأ من الصفحة الأولى. إنجاز القراءة اليومي السابق هيفضل محفوظ.','ابدأ ختمة')) return; state.faith.khatma={days:Number($('#khatma-days').value),started:dayKey(),page:0}; saveState(); renderFaithOverview(); $('#khatma-page').value=0; showToast('ختمة جديدة. كل صفحة بتقرّبك.'); },
         'install': openInstall, 'prompt-install': promptInstall,
-        'check-update': async () => { if (!swRegistration) { showToast('التحديث يحتاج نسخة مثبتة أو موقع HTTPS.'); return; } try { await swRegistration.update(); showToast(swRegistration.waiting ? 'فيه تحديث جاهز.' : 'تم الفحص. لو فيه تحديث هتظهر رسالة عند جاهزيته.'); } catch { showToast('تعذّر فحص التحديث. راجع اتصالك بالنت.'); } },
+        'check-update': async () => { if (!swRegistration) { showToast('تعذّر الوصول إلى خدمة التحديث.'); return; } try { await swRegistration.update(); showToast(swRegistration.waiting ? 'فيه تحديث جاهز.' : 'تم الفحص. لو فيه تحديث هتظهر رسالة عند جاهزيته.'); } catch { showToast('تعذّر فحص التحديث. راجع اتصالك بالنت.'); } },
         'persist-storage': async () => { try { const granted=await navigator.storage?.persist?.(); showToast(granted ? 'المتصفح وافق على الحفظ الدائم. اعمل نسخ احتياطية برضه.' : 'المتصفح بيدير المساحة تلقائيا. احتفظ بنسخة احتياطية.'); refreshStorage(); } catch { showToast('الحفظ الدائم مش متاح في المتصفح ده.'); } },
         'clear-audio': async () => { if (!await askConfirm('نمسح التلاوات المنزلة؟','المصحف والملاحظات والمهام مش هتتمسح. التلاوات هتحتاج نت أو تنزيل جديد.','امسح التلاوات',true)) return; try { await caches.delete('yawmak-recitations-v1'); $('#quran-audio').pause(); showToast('التلاوات المنزلة اتمسحت. بياناتك التانية زي ما هي.'); refreshStorage(); } catch { showToast('تعذّر الوصول لمساحة التلاوات.'); } }
       };
@@ -1456,7 +1503,7 @@
       });
       $('.faith-tabs').addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const tabs=$$('[data-tab]');const current=tabs.findIndex(tab=>tab.dataset.tab===faithTab);const next=event.key==='Home'?0:event.key==='End'?tabs.length-1:(current+(event.key==='ArrowLeft'?1:-1)+tabs.length)%tabs.length;switchFaithTab(tabs[next].dataset.tab);tabs[next].focus();});
       window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();deferredInstall=event;updateOfflineStatus();});
-      window.addEventListener('appinstalled',()=>{deferredInstall=null;updateOfflineStatus();showToast('يومك اتثبّت. مساحتك بقت أقرب ليك.');});
+      window.addEventListener('appinstalled',()=>{deferredInstall=null;updateOfflineStatus();showToast('يومك اتثبّت. فعّل التنبيهات من الإعدادات لو حابب.');});
       window.addEventListener('online',()=>{updateOfflineStatus();renderPrayers();showToast('الاتصال رجع. تقدر تنزّل محتوى جديد.');});
       window.addEventListener('offline',()=>{updateOfflineStatus();showToast('أنت بدون نت. المهام والملاحظات والمحتوى المحفوظ متاحين.');});
 
