@@ -1,0 +1,12 @@
+يومك — إعدادات Open Graph وSEO
+
+1) ارفع محتويات هذا المجلد إلى جذر مشروع Vercel واستبدل الملفات القديمة.
+2) تأكد بعد النشر أن هذه الروابط تفتح مباشرة:
+   https://yawmak.vercel.app/og-image.jpg
+   https://yawmak.vercel.app/favicon.ico
+   https://yawmak.vercel.app/robots.txt
+   https://yawmak.vercel.app/sitemap.xml
+3) في Google Search Console اختر خاصية https://yawmak.vercel.app/ ثم افتح Sitemaps وأرسل: sitemap.xml
+4) بعد ذلك افتح URL Inspection للرابط https://yawmak.vercel.app/ واضغط Request Indexing.
+
+مهم: الملفات تجهّز الموقع للفهرسة، لكنها لا تضمن ظهور الموقع في نتائج Google. يلزم أن تكون الخاصية مملوكة/موثقة في حساب Search Console، وقد يستغرق الزحف والفهرسة عدة أيام أو أسابيع.
