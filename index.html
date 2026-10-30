@@ -1,489 +1,250 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" data-theme="light" data-palette="forest">
+
+<html data-theme="light" dir="rtl" lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://images.pexels.com; connect-src 'self' https://api.aladhan.com https://api.alquran.cloud; media-src 'self' blob: https://cdn.islamic.network; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#173e32">
-  <meta name="description" content="يومك مساحة عربية هادئة لتنظيم المهام والعادات والوقت، مع مؤقّت تركيز ودفتر ملاحظات وركن إسلامي للقرآن والأذكار ومواقيت الصلاة والقبلة.">
-  <meta name="robots" content="index, follow, max-image-preview:large">
-  <link rel="canonical" href="https://yawmak.vercel.app/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="يومك">
-  <meta property="og:locale" content="ar_EG">
-  <meta property="og:url" content="https://yawmak.vercel.app/">
-  <meta property="og:title" content="يومك | مساحة صغيرة ليوم أخف">
-  <meta property="og:description" content="كل ما تحتاجه في مكان واحد؛ نظّم مهامك وعاداتك، ركّز في يومك، واهتم بركنك الإسلامي.">
-  <meta property="og:image" content="https://yawmak.vercel.app/og-image.jpg">
-  <meta property="og:image:secure_url" content="https://yawmak.vercel.app/og-image.jpg">
-  <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="شعار يومك وواجهة التطبيق لتنظيم المهام والعادات والركن الإسلامي">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="يومك | مساحة صغيرة ليوم أخف">
-  <meta name="twitter:description" content="نظّم مهامك وعاداتك ووقتك، وخلي يومك أخف.">
-  <meta name="twitter:image" content="https://yawmak.vercel.app/og-image.jpg">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="يومك">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <title>يومك | مساحة صغيرة ليوم أخف</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
-    <defs>
-      <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.7"/><rect x="14" y="3" width="7" height="7" rx="1.7"/><rect x="3" y="14" width="7" height="7" rx="1.7"/><rect x="14" y="14" width="7" height="7" rx="1.7"/></symbol>
-      <symbol id="i-checklist" viewBox="0 0 24 24"><path d="m3 6 1.5 1.5L7 5M10 6h11M3 12l1.5 1.5L7 11M10 12h11M3 18l1.5 1.5L7 17M10 18h11"/></symbol>
-      <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="8"/><path d="M9 2h6M12 2v3M18 6l2-2M12 9v5l3 2"/></symbol>
-      <symbol id="i-note" viewBox="0 0 24 24"><path d="M14 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9M7 17h5M7 13h3M14 13l-3 1 1-3 8-8a1.4 1.4 0 0 1 2 2Z"/></symbol>
-      <symbol id="i-habit" viewBox="0 0 24 24"><path d="M12 21c-5 0-8-3-8-8 0-4 3-7 4-11 2 2 3 4 3 6 1-2 2-3 3-4 3 3 6 6 6 9 0 5-3 8-8 8Z"/><path d="M12 21c-2 0-3-1.5-3-3.5S11 14 12 12c1 2 3 3.5 3 5.5S14 21 12 21Z"/></symbol>
-      <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
-      <symbol id="i-settings" viewBox="0 0 24 24"><path d="m9.7 3-.7 2-2 .9-2-.4-2 3.5 1.4 1.6v2.3L3 14.5 5 18l2-.4 2 .9.7 2h4.6l.7-2 2-.9 2 .4 2-3.5-1.4-1.6v-2.3L21 9l-2-3.5-2 .4-2-.9-.7-2Z"/><circle cx="12" cy="12" r="3"/></symbol>
-      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></symbol>
-      <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.8 13.4A9 9 0 0 1 10.6 3.2a9 9 0 1 0 10.2 10.2Z"/></symbol>
-      <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
-      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M7 3v4M17 3v4M3 10h18"/></symbol>
-      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></symbol>
-      <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
-      <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"/></symbol>
-      <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
-      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
-      <symbol id="i-more" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></symbol>
-      <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V3m0 1c5-4 9 4 15 0v10c-6 4-10-4-15 0"/></symbol>
-      <symbol id="i-repeat" viewBox="0 0 24 24"><path d="M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3"/></symbol>
-      <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4ZM10 21h4"/></symbol>
-      <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M4 14V11a8 8 0 0 1 16 0v3"/><rect x="3" y="12" width="4" height="8" rx="2"/><rect x="17" y="12" width="4" height="8" rx="2"/></symbol>
-      <symbol id="i-expand" viewBox="0 0 24 24"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"/></symbol>
-      <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 4 12 8-12 8Z" fill="currentColor" stroke="none"/></symbol>
-      <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="3"/></symbol>
-      <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 2 9M3 4v6h6"/></symbol>
-      <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M20 3c-9-1-16 3-16 9a7 7 0 0 0 7 7c7 0 9-8 9-16ZM3 21l11-11"/></symbol>
-      <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
-      <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/></symbol>
-      <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
-      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m-5 5 5-5 5 5M4 16v5h16v-5"/></symbol>
-      <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></symbol>
-      <symbol id="i-share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></symbol>
-      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M9 3h6l-1 7 3 3v2H7v-2l3-3ZM12 15v6"/></symbol>
-      <symbol id="i-install" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 7v7m-3-3 3 3 3-3M10 18h4"/></symbol>
-      <symbol id="i-command" viewBox="0 0 24 24"><path d="M9 9V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V9"/></symbol>
-      <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></symbol>
-      <symbol id="i-wifi-off" viewBox="0 0 24 24"><path d="M2 8.5a16 16 0 0 1 20 0M5 12a11 11 0 0 1 14 0M8.5 15.5a6 6 0 0 1 7 0M12 19h.01M3 3l18 18"/></symbol>
-      <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 12c2-4 4-4 6 0s4 4 6 0 4-4 6 0"/></symbol>
-      <symbol id="i-mosque" viewBox="0 0 24 24"><path d="M2 21h20M4 21V10l3-3 3 3v11M14 21V9l4-5 4 5v12M7 7V3M5 3h4M16 13h4M16 17h4M6 14h2M6 18h2"/></symbol>
-      <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5c-3-2-6-2-10-1v15c4-1 7-1 10 1 3-2 6-2 10-1V4c-4-1-7-1-10 1Zm0 0v15"/></symbol>
-      <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></symbol>
-      <symbol id="i-beads" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><circle cx="18" cy="9" r="2"/><circle cx="18" cy="16" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="6" cy="16" r="2"/><circle cx="6" cy="9" r="2"/><path d="M12 3 8 6m8 0-2-1m6 6v3m-3 4-3 1m-4 0-3-1m-3-4v-3"/></symbol>
-      <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M5 3h14v18l-7-5-7 5V3Z"/></symbol>
-      <symbol id="i-location" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></symbol>
-      <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
-      <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
-    </defs>
-  </svg>
-  <noscript><div class="noscript">فعّل JavaScript علشان تقدر تستخدم يومك.</div></noscript>
-  <a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
+<meta content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://images.pexels.com; connect-src 'self' https://api.aladhan.com https://api.alquran.cloud https://cdn.islamic.network https://cdn.jsdelivr.net; media-src 'self' blob: https://cdn.islamic.network; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" http-equiv="Content-Security-Policy"/><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="#173e32" name="theme-color"/>
 
-  <aside class="sidebar" aria-label="القائمة الرئيسية">
-    <button class="brand" data-view="today" aria-label="يومك، الصفحة الرئيسية">
-      <svg class="brand-mark" viewBox="0 0 40 40" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><path d="M20 3v7M20 30v7M3 20h7M30 20h7M8 8l5 5M27 27l5 5M8 32l5-5M27 13l5-5"/></g><circle cx="20" cy="20" r="4" fill="currentColor"/></svg>
-      <span class="brand-name">يومك</span>
-    </button>
-    <p class="brand-tagline">مساحة صغيرة. ليوم أخف.</p>
-    <p class="nav-label">مساحتك الشخصية</p>
-    <nav class="nav-list">
-      <button class="nav-item active" data-view="today" title="نظرة على يومك"><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg><span>نظرة على يومك</span></button>
-      <button class="nav-item" data-view="tasks" title="كل مهامي"><svg class="icon" aria-hidden="true"><use href="#i-checklist"/></svg><span>كل مهامي</span></button>
-      <button class="nav-item" data-view="focus" title="وقت التركيز"><svg class="icon" aria-hidden="true"><use href="#i-timer"/></svg><span>وقت التركيز</span><i class="nav-timer-dot" id="nav-timer-dot" hidden></i></button>
-      <button class="nav-item" data-view="habits" title="عاداتي"><svg class="icon" aria-hidden="true"><use href="#i-habit"/></svg><span>عاداتي</span></button>
-      <button class="nav-item" data-view="notes" title="ملاحظاتي"><svg class="icon" aria-hidden="true"><use href="#i-note"/></svg><span>ملاحظاتي</span></button>
-      <button class="nav-item" data-view="insights" title="إحصائياتي"><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg><span>إحصائياتي</span></button>
-      <div class="nav-divider" aria-hidden="true"></div>
-      <p class="nav-label nav-label-secondary">ركنك الروحاني</p>
-      <button class="nav-item" data-view="islam" title="الركن الإسلامي"><svg class="icon" aria-hidden="true"><use href="#i-mosque"/></svg><span>الركن الإسلامي</span></button>
-    </nav>
-    <div class="sidebar-bottom">
-      <div class="sidebar-pause">
-        <svg class="plant" viewBox="0 0 120 145" fill="none" aria-hidden="true"><path d="M62 137c-2-30-6-58 1-100M61 113c-10-14-22-26-33-34M59 91c10-12 20-21 33-26M61 65c-7-10-16-18-27-23" stroke="#96af83" stroke-width="1.3" stroke-linecap="round"/><path d="M63 52C51 33 57 16 69 8c8 17 7 31-6 44Z" fill="#82a171" fill-opacity=".75"/><path d="M57 68C36 65 22 54 21 35c20 1 33 11 36 33Z" fill="#718f64" fill-opacity=".7"/><path d="M66 88c0-21 13-35 37-37-5 22-17 33-37 37Z" fill="#8caa77" fill-opacity=".7"/><path d="M54 111C33 108 19 96 16 75c21 4 35 16 38 36Z" fill="#759461" fill-opacity=".65"/><path d="M64 122c1-21 14-33 37-34-6 20-18 30-37 34Z" fill="#8baa73" fill-opacity=".65"/><path d="M50 138h25" stroke="#91a77d" stroke-width="1.3" stroke-linecap="round"/></svg>
-        <p>الحياة مش سباق.<br>خُدها خطوة خطوة.</p>
-      </div>
-      <div class="sidebar-settings">
-        <button class="nav-item" data-action="install" data-install-button hidden title="ثبّت التطبيق"><svg class="icon" aria-hidden="true"><use href="#i-install"/></svg><span>ثبّت يومك كتطبيق</span></button>
-        <button class="nav-item" data-action="settings" title="الإعدادات"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg><span>الإعدادات</span></button>
-      </div>
-      <div class="sidebar-developer"><span>تطوير</span><a class="developer-link" data-developer href="https://wa.me/201550802408?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85" target="_blank" rel="noopener noreferrer" aria-label="تواصل مع المطور elsayed hasan عبر واتساب برسالة جاهزة">elsayed hasan</a></div>
-      <div class="local-status"><i class="status-dot"></i><span data-storage-label>محفوظ على جهازك</span></div>
-    </div>
-  </aside>
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta content="default" name="apple-mobile-web-app-status-bar-style"/>
+<meta content="يومك" name="apple-mobile-web-app-title"/>
+<title>يومك | مساحة صغيرة ليوم أخف</title>
+<link href="./manifest.webmanifest" rel="manifest"/>
+<link href="./icon.svg" rel="icon" type="image/svg+xml"/>
+<link href="./icon.svg" rel="apple-touch-icon"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&amp;family=Cairo:wght@500;600;700;800&amp;family=DM+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/adhan@4.4.3/lib/bundles/adhan.umd.min.js"></script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
 
-  <div class="main-shell">
-    <header class="topbar">
-      <button class="mobile-brand" data-view="today">يومك</button>
-      <div class="topbar-date"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><time id="current-date"></time></div>
-      <div class="topbar-tools">
-        <span class="online-badge" id="online-badge" title="حالة الاتصال"><i></i><span>متصل</span></span>
-        <button class="icon-button" data-action="install" data-install-button hidden title="ثبّت التطبيق" aria-label="ثبّت التطبيق"><svg class="icon" aria-hidden="true"><use href="#i-install"/></svg></button>
-        <button class="icon-button" data-action="palette" title="بحث وأوامر (Ctrl+K)" aria-label="بحث وأوامر سريعة"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg></button>
-        <button class="icon-button" data-action="theme" id="theme-button" title="الوضع الداكن" aria-label="تبديل المظهر"><svg class="icon" aria-hidden="true"><use href="#i-moon"/></svg></button>
-        <button class="icon-button" data-action="settings" title="الإعدادات" aria-label="الإعدادات"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg></button>
-      </div>
-    </header>
+<meta content="EL-sayed Hasan" name="author"/><meta content="يومك مساحة عربية هادئة لتنظيم المهام والعادات والوقت، مع مؤقّت تركيز ودفتر ملاحظات وركن إسلامي للقرآن والأذكار ومواقيت الصلاة والقبلة. يعمل بدون إنترنت بعد تجهيز موارده." name="description"/><meta content="index, follow, max-image-preview:large" name="robots"/><meta content="website" property="og:type"/><meta content="يومك" property="og:site_name"/><meta content="ar_EG" property="og:locale"/><meta content="https://yawmak.vercel.app/" property="og:url"/><meta content="يومك | مساحة صغيرة ليوم أخف" property="og:title"/><meta content="كل ما تحتاجه في مكان واحد؛ نظّم مهامك وعاداتك، ركّز في يومك، واهتم بركنك الإسلامي." property="og:description"/><meta content="https://yawmak.vercel.app/og-image.jpg" property="og:image"/><meta content="https://yawmak.vercel.app/og-image.jpg" property="og:image:secure_url"/><meta content="image/jpeg" property="og:image:type"/><meta content="1200" property="og:image:width"/><meta content="630" property="og:image:height"/><meta content="شعار يومك وواجهة الموقع لتنظيم المهام والعادات والركن الإسلامي" property="og:image:alt"/><meta content="summary_large_image" name="twitter:card"/><meta content="يومك | مساحة صغيرة ليوم أخف" name="twitter:title"/><meta content="نظّم مهامك وعاداتك ووقتك، وخلي يومك أخف." name="twitter:description"/><meta content="https://yawmak.vercel.app/og-image.jpg" name="twitter:image"/><link href="https://yawmak.vercel.app/" rel="canonical"/><link href="./styles.css" rel="stylesheet"/><script defer="True" src="./app.js"></script></head>
+<body class="antialiased">
+<svg aria-hidden="true" height="0" style="position:absolute;overflow:hidden" width="0" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<symbol id="i-grid" viewbox="0 0 24 24"><rect height="7" rx="1.7" width="7" x="3" y="3"></rect><rect height="7" rx="1.7" width="7" x="14" y="3"></rect><rect height="7" rx="1.7" width="7" x="3" y="14"></rect><rect height="7" rx="1.7" width="7" x="14" y="14"></rect></symbol>
+<symbol id="i-checklist" viewbox="0 0 24 24"><path d="m3 6 1.5 1.5L7 5M10 6h11M3 12l1.5 1.5L7 11M10 12h11M3 18l1.5 1.5L7 17M10 18h11"></path></symbol>
+<symbol id="i-timer" viewbox="0 0 24 24"><circle cx="12" cy="13.5" r="8"></circle><path d="M9 2h6M12 2v3M18 6l2-2M12 9v5l3 2"></path></symbol>
+<symbol id="i-note" viewbox="0 0 24 24"><path d="M14 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-9M7 17h5M7 13h3M14 13l-3 1 1-3 8-8a1.4 1.4 0 0 1 2 2Z"></path></symbol>
+<symbol id="i-settings" viewbox="0 0 24 24"><path d="m9.7 3-.7 2-2 .9-2-.4-2 3.5 1.4 1.6v2.3L3 14.5 5 18l2-.4 2 .9.7 2h4.6l.7-2 2-.9 2 .4 2-3.5-1.4-1.6v-2.3L21 9l-2-3.5-2 .4-2-.9-.7-2Z"></path><circle cx="12" cy="12" r="3"></circle></symbol>
+<symbol id="i-sun" viewbox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M5 19l1.4-1.4M17.6 6.4 19 5"></path></symbol>
+<symbol id="i-moon" viewbox="0 0 24 24"><path d="M20.8 13.4A9 9 0 0 1 10.6 3.2a9 9 0 1 0 10.2 10.2Z"></path></symbol>
+<symbol id="i-search" viewbox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></symbol>
+<symbol id="i-calendar" viewbox="0 0 24 24"><rect height="16" rx="3" width="18" x="3" y="5"></rect><path d="M7 3v4M17 3v4M3 10h18M7 14h2M12 14h2M7 17h2"></path></symbol>
+<symbol id="i-lock" viewbox="0 0 24 24"><rect height="11" rx="2" width="14" x="5" y="10"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"></path></symbol>
+<symbol id="i-plus" viewbox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></symbol>
+<symbol id="i-arrow-left" viewbox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6"></path></symbol>
+<symbol id="i-check" viewbox="0 0 24 24"><path d="m5 12 4 4L19 6"></path></symbol>
+<symbol id="i-more" viewbox="0 0 24 24"><circle cx="5" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle></symbol>
+<symbol id="i-flag" viewbox="0 0 24 24"><path d="M5 21V3m0 1c5-4 9 4 15 0v10c-6 4-10-4-15 0"></path></symbol>
+<symbol id="i-headphones" viewbox="0 0 24 24"><path d="M4 14V11a8 8 0 0 1 16 0v3"></path><rect height="8" rx="2" width="4" x="3" y="12"></rect><rect height="8" rx="2" width="4" x="17" y="12"></rect></symbol>
+<symbol id="i-expand" viewbox="0 0 24 24"><path d="M14 4h6v6M10 20H4v-6M20 4l-7 7M4 20l7-7"></path></symbol>
+<symbol id="i-play" viewbox="0 0 24 24"><path d="m8 4 12 8-12 8Z" fill="currentColor" stroke="none"></path></symbol>
+<symbol id="i-pause" viewbox="0 0 24 24"><path d="M8 5v14M16 5v14" stroke-width="3"></path></symbol>
+<symbol id="i-reset" viewbox="0 0 24 24"><path d="M3 10a9 9 0 1 1 2 9M3 4v6h6"></path></symbol>
+<symbol id="i-leaf" viewbox="0 0 24 24"><path d="M20 3c-9-1-16 3-16 9a7 7 0 0 0 7 7c7 0 9-8 9-16ZM3 21l11-11"></path></symbol>
+<symbol id="i-close" viewbox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"></path></symbol>
+<symbol id="i-trash" viewbox="0 0 24 24"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"></path></symbol>
+<symbol id="i-download" viewbox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"></path></symbol>
+<symbol id="i-upload" viewbox="0 0 24 24"><path d="M12 16V4m-5 5 5-5 5 5M4 16v5h16v-5"></path></symbol>
+<symbol id="i-copy" viewbox="0 0 24 24"><rect height="13" rx="2" width="13" x="8" y="8"></rect><path d="M16 8V3H3v13h5"></path></symbol>
+<symbol id="i-sparkles" viewbox="0 0 24 24"><path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3ZM5 3v4M3 5h4M19 16v4M17 18h4"></path></symbol>
+<symbol id="i-message" viewbox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5Z"></path><path d="M8 11h.01M12 11h.01M16 11h.01"></path></symbol>
+<symbol id="i-external" viewbox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"></path></symbol>
+<symbol id="i-chart" viewbox="0 0 24 24"><path d="M3 3v18h18M7 14l4-4 4 3 6-7M17 6h4v4"></path></symbol>
+<symbol id="i-book" viewbox="0 0 24 24"><path d="M12 7v14M3 3h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5v17h-5a4 4 0 0 0-4 1 4 4 0 0 0-4-1H3Z"></path></symbol>
+<symbol id="i-heart" viewbox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"></path></symbol>
+<symbol id="i-circle" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="5"></circle><path d="M12 3v4"></path></symbol>
+<symbol id="i-compass" viewbox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="m16.2 7.8-2.8 5.6-5.6 2.8 2.8-5.6 5.6-2.8Z"></path></symbol>
+<symbol id="i-bookmark" viewbox="0 0 24 24"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2Z"></path></symbol>
+<symbol id="i-minus" viewbox="0 0 24 24"><path d="M5 12h14"></path></symbol>
+<symbol id="i-volume" viewbox="0 0 24 24"><path d="m11 5-6 4H2v6h3l6 4V5ZM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"></path></symbol>
+<symbol id="i-rain" viewbox="0 0 24 24"><path d="M4 14.9a7 7 0 1 1 12.2-6.4H18a4.5 4.5 0 0 1 2 8.5M8 16v4M8 22v.01M12 14v4M12 20v.01M16 16v4"></path></symbol>
+<symbol id="i-waves" viewbox="0 0 24 24"><path d="M2 6c2-2 4-2 6 0s4 2 6 0 4-2 8 0M2 12c2-2 4-2 6 0s4 2 6 0 4-2 8 0M2 18c2-2 4-2 6 0s4 2 6 0 4-2 8 0"></path></symbol>
+<symbol id="i-location" viewbox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></symbol>
+<symbol id="i-bell" viewbox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"></path></symbol>
+<symbol id="i-phone" viewbox="0 0 24 24"><rect height="20" rx="2" width="12" x="6" y="2"></rect><path d="M11 18h2"></path></symbol>
+<symbol id="i-wifi-off" viewbox="0 0 24 24"><path d="m2 2 20 20M8.5 16.5a5 5 0 0 1 7 0M12 20h.01M5 12.5a10 10 0 0 1 5.5-2.4M16 11a10 10 0 0 1 3 1.5M2 8.8a16 16 0 0 1 4-2.5M10 5.1a16 16 0 0 1 12 3.7"></path></symbol>
+</defs>
+</svg>
+<noscript><div class="noscript">فعّل JavaScript علشان تقدر تستخدم المهام والمؤقّت وحفظ الملاحظات.</div></noscript>
+<a class="skip-link" href="#main-content">انتقل إلى المحتوى</a>
+<aside aria-label="القائمة الرئيسية" class="sidebar">
+<button aria-label="يومك، الصفحة الرئيسية" class="brand" data-view="today">
+<svg aria-hidden="true" class="brand-mark" fill="none" viewbox="0 0 40 40"><g stroke="currentColor" stroke-linecap="round" stroke-width="3.5"><path d="M20 3v7M20 30v7M3 20h7M30 20h7M8 8l5 5M27 27l5 5M8 32l5-5M27 13l5-5"></path></g><circle cx="20" cy="20" fill="currentColor" r="4"></circle></svg>
+<span class="brand-name">يومك</span>
+</button>
+<p class="brand-tagline">مساحة صغيرة. ليوم أخف.</p>
+<span class="brand-premium"><svg aria-hidden="true" class="icon"><use href="#i-sparkles"></use></svg>PREMIUM · كله ليك</span>
+<p class="nav-label">مساحتك الشخصية</p>
+<nav class="nav-list">
+<button aria-current="page" class="nav-item active" data-view="today" title="نظرة على يومك"><svg aria-hidden="true" class="icon"><use href="#i-grid"></use></svg><span>نظرة على يومك</span></button>
+<button class="nav-item" data-view="tasks" title="كل مهامي"><svg aria-hidden="true" class="icon"><use href="#i-checklist"></use></svg><span>كل مهامي</span></button>
+<button class="nav-item" data-view="focus" title="وقت التركيز"><svg aria-hidden="true" class="icon"><use href="#i-timer"></use></svg><span>وقت التركيز</span><i class="nav-timer-dot" hidden="" id="nav-timer-dot"></i></button>
+<button class="nav-item" data-view="faith" title="الركن الإسلامي"><svg aria-hidden="true" class="icon"><use href="#i-moon"></use></svg><span>الركن الإسلامي</span></button>
+<button class="nav-item" data-view="notes" title="ملاحظاتي"><svg aria-hidden="true" class="icon"><use href="#i-note"></use></svg><span>ملاحظاتي</span></button>
+<button class="nav-item" data-view="insights" title="إنجازاتي"><svg aria-hidden="true" class="icon"><use href="#i-chart"></use></svg><span>إنجازاتي</span></button>
+</nav>
+<div class="sidebar-bottom">
+<div class="sidebar-pause"><svg aria-hidden="true" class="plant" fill="none" viewbox="0 0 120 145"><path d="M62 137c-2-30-6-58 1-100M61 113c-10-14-22-26-33-34M59 91c10-12 20-21 33-26M61 65c-7-10-16-18-27-23" stroke="#96af83" stroke-width="1.3"></path><path d="M63 52C51 33 57 16 69 8c8 17 7 31-6 44Z" fill="#82a171"></path><path d="M57 68C36 65 22 54 21 35c20 1 33 11 36 33Z" fill="#718f64"></path><path d="M66 88c0-21 13-35 37-37-5 22-17 33-37 37Z" fill="#8caa77"></path><path d="M54 111C33 108 19 96 16 75c21 4 35 16 38 36Z" fill="#759461"></path><path d="M64 122c1-21 14-33 37-34-6 20-18 30-37 34Z" fill="#8baa73"></path></svg><p>الحياة مش سباق.<br/>خُدها خطوة خطوة.</p></div>
+<div class="sidebar-settings"><button class="nav-item" data-action="settings" title="الإعدادات"><svg aria-hidden="true" class="icon"><use href="#i-settings"></use></svg><span>الإعدادات</span></button></div>
+<div class="local-status"><i class="status-dot"></i><span data-storage-label="">محفوظ على جهازك</span></div>
+<a class="developer-link" href="https://wa.me/201550802408?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D9%8A%D8%A7%20elsayed%20hasan%D8%8C%20%D8%AD%D8%A7%D8%A8%D8%A8%20%D8%A3%D8%AA%D9%88%D8%A7%D8%B5%D9%84%20%D9%85%D8%B9%D8%A7%D9%83%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20%D9%8A%D9%88%D9%85%D9%83." rel="noopener noreferrer" target="_blank" title="تواصل مع المطور elsayed hasan على واتساب"><svg aria-hidden="true" class="icon"><use href="#i-message"></use></svg><span><small>المطور</small><strong>elsayed hasan</strong></span><svg aria-hidden="true" class="icon external-icon"><use href="#i-external"></use></svg></a>
+</div>
+</aside>
+<div class="main-shell">
+<header class="topbar">
+<button class="mobile-brand" data-view="today">يومك</button>
+<div class="topbar-date"><svg aria-hidden="true" class="icon"><use href="#i-calendar"></use></svg><time id="current-date"></time></div>
+<div class="topbar-tools">
+<button aria-label="فتح البحث والأوامر السريعة" class="command-trigger" data-action="command" title="بحث وأوامر سريعة (Ctrl+K)"><svg aria-hidden="true" class="icon"><use href="#i-search"></use></svg><span>بحث أو أمر...</span><kbd>⌘ K</kbd></button>
+<button class="install-button" data-action="install"><svg aria-hidden="true" class="icon"><use href="#i-download"></use></svg><span id="install-label">ثبّت يومك</span></button>
+<button aria-label="تفعيل الوضع الداكن" class="icon-button" data-action="theme" id="theme-button" title="الوضع الداكن"><svg aria-hidden="true" class="icon"><use href="#i-moon"></use></svg></button>
+<button aria-label="الإعدادات" class="icon-button" data-action="settings" title="الإعدادات"><svg aria-hidden="true" class="icon"><use href="#i-settings"></use></svg></button>
+</div>
+</header>
+<main class="workspace" id="main-content" tabindex="-1">
+<section aria-labelledby="today-heading" class="view" id="view-today">
+<div class="page-heading reveal">
+<div><p class="greeting"><svg aria-hidden="true" class="icon"><use href="#i-sun"></use></svg><span id="greeting-text">أهلا بيك، يا صديق</span><span class="brand-premium" style="color:var(--gold);margin:0;font-size:7px">PREMIUM</span></p><h1 id="today-heading"><span class="brand-accent">يومك،</span> على مهلك.</h1><p class="page-description">شوية تركيز، خطوة صغيرة، وقرب من ربنا.</p></div>
+<button aria-label="إضافة مهمة جديدة" class="button button-primary new-task-button" data-action="new-task" title="مهمة جديدة (N)"><svg aria-hidden="true" class="icon"><use href="#i-plus"></use></svg><span class="button-label">مهمة جديدة</span></button>
+</div>
+<section aria-label="مواقيت الصلاة القادمة" class="prayer-ribbon reveal">
+<button class="prayer-ribbon-label" data-faith-tab="prayer" style="background:none;text-align:right"><svg aria-hidden="true" class="icon"><use href="#i-moon"></use></svg><span><strong>مواقيت الصلاة</strong><small id="ribbon-city">القاهرة · توقيت المحلي</small></span></button>
+<div class="ribbon-times" id="ribbon-times"></div>
+<button class="ribbon-countdown" data-faith-tab="prayer" style="background:none;text-align:right"><small id="ribbon-next-label">الصلاة الجاية</small><strong id="ribbon-countdown">نحسب المواقيت...</strong></button>
+</section>
+<div class="workspace-grid">
+<section aria-labelledby="today-tasks-title" class="task-panel surface reveal reveal-1">
+<div class="section-heading"><h2 id="today-tasks-title">مهام اليوم</h2><button class="text-button" data-view="tasks">كل المهام<svg aria-hidden="true" class="icon"><use href="#i-arrow-left"></use></svg></button></div>
+<p class="section-caption">مش لازم تعمل كل حاجة. نبدأ بالأهم.</p>
+<div aria-label="تصفية مهام اليوم" class="filter-tabs" role="group">
+<button aria-pressed="true" class="filter-tab active" data-filter="all" data-filter-view="today">الكل <span class="tab-count number" data-count="all" data-count-view="today">4</span></button>
+<button aria-pressed="false" class="filter-tab" data-filter="active" data-filter-view="today">قيد التنفيذ <span class="tab-count number" data-count="active" data-count-view="today">3</span></button>
+<button aria-pressed="false" class="filter-tab" data-filter="done" data-filter-view="today">المكتملة <span class="tab-count number" data-count="done" data-count-view="today">1</span></button>
+</div>
+<div aria-label="قائمة مهام اليوم" class="task-list" id="dashboard-task-list"></div>
+<form class="quick-add" id="quick-add-form">
+<svg aria-hidden="true" class="icon"><use href="#i-plus"></use></svg>
+<input aria-label="عنوان مهمة جديدة" autocomplete="off" id="quick-task-input" maxlength="160" name="task" placeholder="خطوة جديدة؟ اكتبها هنا..." required=""/>
+<button aria-label="أضف المهمة" class="quick-submit" title="أضف المهمة" type="submit"><svg aria-hidden="true" class="icon"><use href="#i-arrow-left"></use></svg></button>
+</form>
+<div class="daily-progress">
+<div class="progress-labels"><span id="progress-message">كل خطوة صغيرة بتفرق.</span><strong class="number" id="progress-percent">25%</strong></div>
+<div aria-label="نسبة إنجاز مهام اليوم" aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" class="progress-track" id="daily-progress" role="progressbar"><div class="progress-fill" id="progress-fill"></div></div>
+</div>
+</section>
+<div class="utility-stack">
+<section aria-labelledby="compact-focus-heading" class="focus-card reveal reveal-2">
+<img alt="" class="focus-background" fetchpriority="high" src="https://images.pexels.com/photos/36114893/pexels-photo-36114893.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;h=627&amp;w=1200"/>
+<div class="focus-topline"><span><svg aria-hidden="true" class="icon"><use href="#i-headphones"></use></svg>مساحة التركيز</span><button aria-label="افتح مساحة التركيز" class="photo-icon-button" data-view="focus" title="افتح مساحة التركيز"><svg aria-hidden="true" class="icon"><use href="#i-expand"></use></svg></button></div>
+<h2 class="focus-heading" id="compact-focus-heading">حاجة واحدة، بكل تركيز.</h2>
+<div aria-label="نوع الجلسة" class="timer-modes" role="group"><button aria-pressed="true" class="timer-mode active" data-timer-mode="focus">تركيز</button><button aria-pressed="false" class="timer-mode" data-timer-mode="break">استراحة</button></div>
+<div aria-label="الوقت المتبقي" aria-live="off" class="timer-display" data-timer-display="" role="timer">25:00</div>
+<p class="timer-caption" data-timer-caption="">دقيقة ليك وللي يهمك</p>
+<div class="timer-actions"><button class="timer-start" data-action="timer-toggle"><svg aria-hidden="true" class="icon"><use href="#i-play"></use></svg><span data-timer-button-label="">ابدأ التركيز</span></button><button aria-label="إعادة ضبط المؤقت" class="timer-reset" data-action="timer-reset" title="ابدأ العد من جديد"><svg aria-hidden="true" class="icon"><use href="#i-reset"></use></svg></button></div>
+<p class="focus-bottom"><svg aria-hidden="true" class="icon"><use href="#i-leaf"></use></svg>كل حاجة تانية تقدر تستنى.</p>
+</section>
+<section aria-labelledby="quick-note-heading" class="note-card reveal reveal-3">
+<h2 class="note-title" id="quick-note-heading"><svg aria-hidden="true" class="icon"><use href="#i-note"></use></svg>فكرة على السريع؟</h2>
+<textarea aria-label="ملاحظات سريعة" id="quick-note" maxlength="20000" placeholder="فكرة، حاجة مش عايز تنساها، أو حتى شوية كلام لنفسك..."></textarea>
+<div class="note-footer"><span class="save-status"><svg aria-hidden="true" class="icon"><use href="#i-check"></use></svg><span data-note-status="">بتتحفظ لوحدها</span></span><button class="text-button" data-view="notes">مساحة أكبر لأفكارك<svg aria-hidden="true" class="icon"><use href="#i-arrow-left"></use></svg></button></div>
+</section>
+</div>
+</div>
+</section>
+<section aria-labelledby="tasks-heading" class="view" hidden="" id="view-tasks">
+<div class="page-heading"><div><p class="greeting">كل خطوة في مكانها</p><h1 id="tasks-heading">خفّف اللي على بالك.</h1><p class="page-description">مهامك الصغيرة والكبيرة، كلها هنا.</p></div><button aria-label="إضافة مهمة جديدة" class="button button-primary new-task-button" data-action="new-task"><svg aria-hidden="true" class="icon"><use href="#i-plus"></use></svg><span class="button-label">مهمة جديدة</span></button></div>
+<section aria-label="جميع المهام" class="tasks-full surface">
+<div class="tasks-toolbar">
+<label class="search-field"><svg aria-hidden="true" class="icon"><use href="#i-search"></use></svg><input aria-label="ابحث في المهام" autocomplete="off" id="task-search" placeholder="بتدوّر على مهمة؟" type="search"/></label>
+<select aria-label="تصفية حسب التصنيف" class="toolbar-select" id="category-filter"><option value="all">كل التصنيفات</option><option value="personal">شخصي</option><option value="work">شغل</option><option value="learn">تعلّم</option><option value="health">صحة</option></select>
+<select aria-label="ترتيب المهام" class="toolbar-select" id="task-sort"><option value="newest">الأحدث أولا</option><option value="priority">الأهم أولا</option><option value="date">حسب الموعد</option></select>
+</div>
+<div aria-label="تصفية جميع المهام" class="filter-tabs" role="group">
+<button aria-pressed="true" class="filter-tab active" data-filter="all" data-filter-view="tasks">الكل <span class="tab-count number" data-count="all" data-count-view="tasks"></span></button>
+<button aria-pressed="false" class="filter-tab" data-filter="active" data-filter-view="tasks">قيد التنفيذ <span class="tab-count number" data-count="active" data-count-view="tasks"></span></button>
+<button aria-pressed="false" class="filter-tab" data-filter="done" data-filter-view="tasks">المكتملة <span class="tab-count number" data-count="done" data-count-view="tasks"></span></button>
+</div>
+<div aria-label="قائمة جميع المهام" class="task-list" id="all-task-list"></div>
+<p class="tasks-summary" id="tasks-summary"></p>
+</section>
+</section>
+<section aria-labelledby="focus-heading" class="view" hidden="" id="view-focus">
+<div class="page-heading"><div><p class="greeting">اقفل الزحمة، وافتح مساحة لنفسك</p><h1 id="focus-heading">دلوقتي، وقت التركيز.</h1><p class="page-description">اختار حاجة واحدة. والباقي ييجي في وقته.</p></div><button aria-label="إعدادات الجلسة" class="icon-button" data-action="settings" title="إعدادات الجلسة"><svg aria-hidden="true" class="icon"><use href="#i-settings"></use></svg></button></div>
+<section aria-label="مؤقت التركيز" class="focus-stage">
+<img alt="" class="focus-background" loading="lazy" src="https://images.pexels.com/photos/36114893/pexels-photo-36114893.jpeg?auto=compress&amp;cs=tinysrgb&amp;fit=crop&amp;h=627&amp;w=1200"/>
+<h2>مساحة أهدأ، لخطوة أوضح.</h2>
+<div aria-label="نوع الجلسة" class="timer-modes" role="group"><button aria-pressed="true" class="timer-mode active" data-timer-mode="focus">تركيز</button><button aria-pressed="false" class="timer-mode" data-timer-mode="break">استراحة</button></div>
+<div aria-label="الوقت المتبقي" aria-live="off" class="timer-display" data-timer-display="" role="timer">25:00</div>
+<p class="timer-caption" data-timer-caption="">دقيقة ليك وللي يهمك</p>
+<div class="timer-actions"><button class="timer-start" data-action="timer-toggle"><svg aria-hidden="true" class="icon"><use href="#i-play"></use></svg><span data-timer-button-label="">ابدأ التركيز</span></button><button aria-label="إعادة ضبط المؤقت" class="timer-reset" data-action="timer-reset" title="ابدأ العد من جديد"><svg aria-hidden="true" class="icon"><use href="#i-reset"></use></svg></button></div>
+<label class="focus-task-label">هتركّز على إيه؟<select id="focus-task"><option value="">جلسة من غير مهمة محددة</option></select></label>
+</section>
+<p class="session-summary"><svg aria-hidden="true" class="icon"><use href="#i-leaf"></use></svg><span id="session-summary">كل بداية بتفرق. جاهز لأول جلسة؟</span></p>
+<section aria-labelledby="ambient-title" class="ambient-panel surface"><div class="section-heading"><h2 id="ambient-title">صوت يروق بالك</h2><span aria-hidden="true" class="sound-bars" id="sound-bars"><i></i><i></i><i></i><i></i></span></div><p class="section-caption">أصوات مولّدة على جهازك. بتشتغل حتى من غير نت.</p><div class="ambient-controls"><button aria-pressed="true" class="ambient-choice active" data-ambient="off"><svg aria-hidden="true" class="icon"><use href="#i-volume"></use></svg>هدوء</button><button aria-pressed="false" class="ambient-choice" data-ambient="rain"><svg aria-hidden="true" class="icon"><use href="#i-rain"></use></svg>مطر خفيف</button><button aria-pressed="false" class="ambient-choice" data-ambient="brown"><svg aria-hidden="true" class="icon"><use href="#i-waves"></use></svg>ضجيج بني</button><label class="volume-control">الصوت<input aria-label="مستوى صوت الخلفية" id="ambient-volume" max="100" min="0" type="range" value="25"/></label></div></section>
+</section>
+<section aria-labelledby="notes-heading" class="view" hidden="" id="view-notes">
+<div class="page-heading note-page-heading"><div><p class="greeting">سيب لأفكارك مساحة</p><h1 id="notes-heading">على بالك إيه؟</h1><p class="page-description">مش لازم يكون كلام مرتب. المهم ما يضيعش.</p></div><div class="note-page-actions"><button class="button button-secondary" data-action="copy-notes"><svg aria-hidden="true" class="icon"><use href="#i-copy"></use></svg>نسخ</button><button class="button button-primary" data-action="download-notes"><svg aria-hidden="true" class="icon"><use href="#i-download"></use></svg>تنزيل الملاحظات</button></div></div>
+<div class="note-templates"><span>بداية صغيرة:</span><button data-template="plan">خطة اليوم</button><button data-template="meeting">اجتماع</button><button data-template="gratitude">امتنان</button><button data-action="download-markdown">تنزيل Markdown</button></div>
+<section aria-label="دفتر الملاحظات" class="notes-document"><div class="document-toolbar"><h2 class="document-title"><svg aria-hidden="true" class="icon"><use href="#i-note"></use></svg>دفترك الصغير</h2><span class="save-status"><svg aria-hidden="true" class="icon"><use href="#i-check"></use></svg><span data-note-status="">محفوظة تلقائيا</span></span></div><textarea aria-label="اكتب ملاحظاتك" id="notes-editor" maxlength="20000" placeholder="ابدأ من هنا... فكرة، خطة، أو حاجة بسيطة فرّحتك النهارده."></textarea><div class="document-footer"><span id="note-word-count">0 كلمة</span><button data-action="clear-notes">امسح الصفحة</button></div></section>
+</section>
+<section aria-labelledby="faith-heading" class="view" hidden="" id="view-faith">
+<div class="page-heading"><div><p class="greeting"><svg aria-hidden="true" class="icon"><use href="#i-moon"></use></svg>طُمأنينة تمشي معاك</p><h1 id="faith-heading">للقلب نصيب.</h1><p class="page-description">قرآن، ذكر، وصلاة. خلّي القرب عادة صغيرة كل يوم.</p></div><span class="eyebrow" id="hijri-date"></span></div>
+<div aria-label="أقسام الركن الإسلامي" class="faith-tabs" role="tablist">
+<button aria-controls="faith-overview" aria-selected="true" class="faith-tab active" data-tab="overview" id="faith-tab-overview" role="tab"><svg aria-hidden="true" class="icon"><use href="#i-grid"></use></svg>يومك الإيماني</button>
+<button aria-controls="faith-quran" aria-selected="false" class="faith-tab" data-tab="quran" id="faith-tab-quran" role="tab" tabindex="-1"><svg aria-hidden="true" class="icon"><use href="#i-book"></use></svg>القرآن الكريم</button>
+<button aria-controls="faith-azkar" aria-selected="false" class="faith-tab" data-tab="azkar" id="faith-tab-azkar" role="tab" tabindex="-1"><svg aria-hidden="true" class="icon"><use href="#i-heart"></use></svg>الأذكار</button>
+<button aria-controls="faith-tasbih" aria-selected="false" class="faith-tab" data-tab="tasbih" id="faith-tab-tasbih" role="tab" tabindex="-1"><svg aria-hidden="true" class="icon"><use href="#i-circle"></use></svg>السبحة</button>
+<button aria-controls="faith-prayer" aria-selected="false" class="faith-tab" data-tab="prayer" id="faith-tab-prayer" role="tab" tabindex="-1"><svg aria-hidden="true" class="icon"><use href="#i-moon"></use></svg>مواقيت الصلاة</button>
+<button aria-controls="faith-qibla" aria-selected="false" class="faith-tab" data-tab="qibla" id="faith-tab-qibla" role="tab" tabindex="-1"><svg aria-hidden="true" class="icon"><use href="#i-compass"></use></svg>القبلة</button>
+</div>
+<div aria-labelledby="faith-tab-overview" id="faith-overview" role="tabpanel">
+<div class="faith-overview-grid"><article class="faith-welcome"><div class="arch"></div><span class="eyebrow"><svg aria-hidden="true" class="icon"><use href="#i-book"></use></svg>ورد اليوم، نور لليوم</span><h2>أَلَا بِذِكْرِ اللَّهِ<br/>تَطْمَئِنُّ الْقُلُوبُ</h2><p>سورة الرعد · الآية ٢٨</p><button class="button" data-action="resume-quran"><svg aria-hidden="true" class="icon"><use href="#i-book"></use></svg><span id="resume-label">ابدأ وردك بالقرآن</span><svg aria-hidden="true" class="icon"><use href="#i-arrow-left"></use></svg></button></article><div class="faith-side"><article class="wird-card surface"><div class="section-heading"><h2>ختمة على مهلك</h2><svg aria-hidden="true" class="icon"><use href="#i-leaf"></use></svg></div><p>صفحات قليلة كل يوم، وأثر كبير.</p><div class="wird-stats"><div><strong class="number" id="wird-count">0</strong><span id="wird-goal-label"> / 10 صفحات اليوم</span></div><label>هدفك<select aria-label="هدف القراءة اليومي بالصفحات" id="wird-goal"><option value="2">صفحتان</option><option value="5">٥ صفحات</option><option selected="" value="10">١٠ صفحات</option><option value="20">٢٠ صفحة</option></select></label></div><div class="progress-track"><div class="progress-fill" id="wird-progress"></div></div><div class="flex items-center justify-between gap-3 mt-4"><span class="section-caption" id="khatma-summary">الخطة: ٦٠ يوم</span><button class="text-button" data-action="khatma-settings">خطتي للختم<svg aria-hidden="true" class="icon"><use href="#i-arrow-left"></use></svg></button></div></article><article class="dhikr-invite"><svg aria-hidden="true" class="icon"><use href="#i-sun"></use></svg><div><h3 id="daily-azkar-title">أذكار الصباح</h3><p>حصّن يومك بالذكر.</p></div><button aria-label="افتح أذكار اليوم" class="icon-button" data-action="daily-azkar"><svg aria-hidden="true" class="icon"><use href="#i-arrow-left"></use></svg></button></article></div></div>
+<section class="prayer-checkin surface"><div class="section-heading"><div><h2>صلاتك، عنوان يومك.</h2><p>سجّل صلواتك اللي أديتها. متابعة شخصية بينك وبين نفسك.</p></div><span class="eyebrow" id="prayer-checkin-count">0 / 5</span></div><div class="prayer-checks" id="prayer-checks"></div></section>
+<p class="faith-fineprint"><svg aria-hidden="true" class="icon"><use href="#i-lock"></use></svg>الركن الإسلامي مساحة للقراءة والذكر والمتابعة، وليس جهة فتوى. نصوص القرآن من AlQuran Cloud، والتفسير الميسر من مجمع الملك فهد.</p>
+</div>
+<div aria-labelledby="faith-tab-quran" hidden="" id="faith-quran" role="tabpanel">
+<section class="offline-pack" id="quran-pack-card"><svg aria-hidden="true" class="icon"><use href="#i-download"></use></svg><div><h3 id="quran-pack-title">المصحف كامل، حتى بدون نت.</h3><p id="quran-pack-status">١١٤ سورة · ٦٢٣٦ آية · تفسير الميسر. نزّله مرة واحدة.</p></div><button class="button button-primary" data-action="download-quran" id="quran-download">نزّل المصحف والتفسير</button></section>
+<div class="quran-toolbar"><label class="search-field"><svg aria-hidden="true" class="icon"><use href="#i-search"></use></svg><input aria-label="البحث في القرآن" autocomplete="off" id="quran-search" placeholder="ابحث عن كلمة أو آية في المصحف..." type="search"/></label><select aria-label="انتقل إلى سورة" class="toolbar-select" id="surah-jump"></select><button class="button button-secondary" data-action="show-bookmarks"><svg aria-hidden="true" class="icon"><use href="#i-bookmark"></use></svg>آياتي المحفوظة</button></div>
+<div class="bookmark-list" hidden="" id="bookmark-list"></div>
+<div class="audio-panel" hidden="" id="quran-audio-panel"><div class="audio-panel-top"><svg aria-hidden="true" class="icon"><use href="#i-headphones"></use></svg><span id="audio-title">تلاوة</span><button class="text-button" data-action="download-audio" id="audio-download"><svg aria-hidden="true" class="icon"><use href="#i-download"></use></svg><span>نزّل التلاوة</span></button><button aria-label="إغلاق مشغل التلاوة" class="icon-button" data-action="close-audio"><svg aria-hidden="true" class="icon"><use href="#i-close"></use></svg></button></div><audio controls="" id="quran-audio" preload="none"></audio><p id="audio-status">التلاوة تحتاج اتصالا بالنت، إلا لو نزلتها على جهازك.</p></div>
+<div class="quran-layout"><aside aria-label="فهرس السور" class="surah-sidebar surface"><h2>فهرس السور <span class="number">114</span></h2><input aria-label="ابحث في فهرس السور" class="surah-search" id="surah-search" placeholder="اسم السورة..."/><div class="surah-list" id="surah-list"></div></aside><article class="quran-reader surface"><header class="reader-header"><div class="reader-title-row"><h2 id="reader-surah-name">سورة الفاتحة</h2><div class="reader-tools"><button aria-label="تصغير خط المصحف" class="icon-button" data-action="quran-font-less" title="تصغير الخط"><svg aria-hidden="true" class="icon"><use href="#i-minus"></use></svg></button><button aria-label="تكبير خط المصحف" class="icon-button" data-action="quran-font-more" title="تكبير الخط"><svg aria-hidden="true" class="icon"><use href="#i-plus"></use></svg></button><button aria-label="تبديل عرض المصحف والآيات" class="icon-button" data-action="quran-layout" title="تبديل عرض المصحف والآيات"><svg aria-hidden="true" class="icon"><use href="#i-book"></use></svg></button></div></div><p class="reader-meta" id="reader-meta"></p><div class="reader-options"><select aria-label="اختيار القارئ" id="reciter-select"><option value="ar.alafasy">مشاري راشد العفاسي</option><option value="ar.husary">محمود خليل الحصري</option><option value="ar.minshawi">محمد صديق المنشاوي</option></select><button class="text-button" data-action="play-surah"><svg aria-hidden="true" class="icon"><use href="#i-play"></use></svg>استمع للسورة</button><button class="text-button" data-action="finish-quran-page"><svg aria-hidden="true" class="icon"><use href="#i-check"></use></svg>أكملت الصفحة</button></div></header><div class="quran-search-results" hidden="" id="quran-search-results"></div><div class="quran-verses" dir="rtl" id="quran-verses" lang="ar"></div><footer class="reader-footer"><button class="button button-secondary" data-action="next-surah" id="next-surah">السورة التالية<svg aria-hidden="true" class="icon"><use href="#i-arrow-left"></use></svg></button><button class="text-button" data-action="save-reading">احفظ موضع القراءة</button><button class="button button-secondary" data-action="previous-surah" id="previous-surah">السورة السابقة</button></footer><p class="reader-source">الرسم العثماني · اضغط على رقم الآية للتفسير والحفظ والاستماع. أرقام الصفحات متاحة مع المصحف الكامل. حفظ الموضع محلي على جهازك.</p></article></div>
+</div>
+<div aria-labelledby="faith-tab-azkar" hidden="" id="faith-azkar" role="tabpanel"><div class="azkar-top"><div aria-label="تصنيفات الأذكار" class="azkar-categories" role="group"><button aria-pressed="true" class="azkar-category active" data-azkar-category="morning">الصباح</button><button aria-pressed="false" class="azkar-category" data-azkar-category="evening">المساء</button><button aria-pressed="false" class="azkar-category" data-azkar-category="prayer">بعد الصلاة</button><button aria-pressed="false" class="azkar-category" data-azkar-category="sleep">النوم</button><button aria-pressed="false" class="azkar-category" data-azkar-category="daily">أدعية يومية</button></div><span class="azkar-progress" id="azkar-progress"></span></div><div class="azkar-grid" id="azkar-list"></div><p class="faith-fineprint"><svg aria-hidden="true" class="icon"><use href="#i-book"></use></svg>مختارات من القرآن والسنة، من حصن المسلم. اضغط على المصدر للتفاصيل. العدّاد يتجدد كل يوم، والمفضلة تفضل محفوظة.</p></div>
+<div aria-labelledby="faith-tab-tasbih" hidden="" id="faith-tasbih" role="tabpanel"><div class="tasbih-layout"><section class="tasbih-card"><select aria-label="اختيار الذكر" id="tasbih-phrase"><option value="سبحان الله">سبحان الله</option><option value="الحمد لله">الحمد لله</option><option value="الله أكبر">الله أكبر</option><option value="أستغفر الله">أستغفر الله</option><option value="لا إله إلا الله">لا إله إلا الله</option><option value="سبحان الله وبحمده">سبحان الله وبحمده</option></select><h2 class="tasbih-phrase" id="tasbih-phrase-display">سبحان الله</h2><button aria-label="سبّح: زيادة العداد" class="tasbih-button" data-action="tasbih-increment" id="tasbih-button"><strong id="tasbih-count">0</strong><span id="tasbih-target-label">الهدف 33 · اضغط للتسبيح</span></button><div class="tasbih-controls"><select aria-label="الهدف لكل جولة" id="tasbih-target"><option value="33">٣٣ تسبيحة</option><option value="100">١٠٠ تسبيحة</option><option value="1000">١٠٠٠ تسبيحة</option></select><button aria-label="تصفير الجولة الحالية" class="icon-button" data-action="tasbih-reset" title="تصفير الجولة الحالية"><svg aria-hidden="true" class="icon"><use href="#i-reset"></use></svg></button></div></section><aside class="tasbih-info surface"><span class="eyebrow">لحظة هدوء</span><h2>ذكر صغير.<br/>أثر في القلب.</h2><p>اضغط الدائرة مع كل ذكر. لما الجولة تكتمل هتحس باهتزازة خفيفة لو جهازك بيدعمها، ونبدأ جولة جديدة. إجمالي ذكر النهارده محفوظ.</p><div class="tasbih-total number" id="tasbih-total">0</div><small>تسبيحة النهارده</small><p class="faith-fineprint">المسافة بتشغّل العداد كمان، لما تكون الصفحة مفتوحة ومش بتكتب في حقل.</p></aside></div></div>
+<div aria-labelledby="faith-tab-prayer" hidden="" id="faith-prayer" role="tabpanel"><div class="adhan-layout"><section class="adhan-settings surface"><h2>مواقيتك، في مكانك.</h2><div class="form-field"><label for="prayer-city">المدينة</label><select id="prayer-city"></select></div><div class="adhan-actions"><button class="button button-secondary" data-action="locate"><svg aria-hidden="true" class="icon"><use href="#i-location"></use></svg>استخدم موقعي</button><button class="button button-secondary" data-action="monthly-prayers"><svg aria-hidden="true" class="icon"><use href="#i-calendar"></use></svg>جدول الشهر</button></div><div class="form-row mt-4"><div class="form-field"><label for="prayer-method">طريقة الحساب</label><select id="prayer-method"><option value="Egyptian">الهيئة المصرية العامة للمساحة</option><option value="UmmAlQura">أم القرى · مكة المكرمة</option><option value="MuslimWorldLeague">رابطة العالم الإسلامي</option><option value="Karachi">جامعة العلوم الإسلامية · كراتشي</option><option value="Dubai">دبي</option><option value="Kuwait">الكويت</option><option value="Qatar">قطر</option><option value="Singapore">سنغافورة</option><option value="Turkey">تركيا</option><option value="NorthAmerica">أمريكا الشمالية</option></select></div><div class="form-field"><label for="prayer-madhab">حساب العصر</label><select id="prayer-madhab"><option value="Shafi">الجمهور</option><option value="Hanafi">الحنفي</option></select></div></div><div class="form-field"><label for="prayer-adjustment">تعديل محلي بالدقائق، لكل الصلوات (اختياري)</label><input id="prayer-adjustment" max="30" min="-30" step="1" type="number" value="0"/></div><button class="button button-primary w-full" data-action="prayer-notifications"><svg aria-hidden="true" class="icon"><use href="#i-bell"></use></svg><span id="prayer-notification-label">فعّل تذكير الصلاة</span></button><p class="faith-fineprint">الحسابات فلكية بواسطة Adhan وتعمل بدون نت. راجع مسجدك للدقائق المحلية. خط العرض والوقت هما أساس الدقة. التذكير يحتاج فتح التطبيق، وليس تنبيها مضمونا بعد إغلاقه.</p></section><div><div class="prayer-date-nav"><button aria-label="اليوم التالي" class="icon-button" data-action="prayer-next-day"><svg aria-hidden="true" class="icon"><use href="#i-arrow-left"></use></svg></button><strong id="prayer-date-label">مواقيت اليوم</strong><button aria-label="اليوم السابق" class="icon-button" data-action="prayer-previous-day"><svg aria-hidden="true" class="icon" style="transform:rotate(180deg)"><use href="#i-arrow-left"></use></svg></button></div><article class="next-prayer-card"><h2>الصلاة القادمة</h2><strong id="next-prayer-name">الفجر</strong><div class="countdown number" id="next-prayer-countdown">--:--:--</div><p id="next-prayer-location">القاهرة · توقيت جهازك</p></article><section aria-label="جدول مواقيت الصلاة" class="prayer-table-card surface" id="prayer-table"></section></div></div><p class="faith-fineprint" id="prayer-location-note"></p></div>
+<div aria-labelledby="faith-tab-qibla" hidden="" id="faith-qibla" role="tabpanel"><div class="qibla-layout"><section class="compass-card surface"><span class="eyebrow" id="qibla-city">اتجاه القبلة من القاهرة</span><div aria-label="اتجاه القبلة بالنسبة إلى الشمال" class="compass" id="compass" role="img"><span class="compass-letter north">ش</span><span class="compass-letter south">ج</span><span class="compass-letter east">ق</span><span class="compass-letter west">غ</span><div class="compass-needle" id="compass-needle"><svg aria-hidden="true" class="icon"><use href="#i-moon"></use></svg></div><span class="compass-center"></span></div><div class="qibla-degrees number" id="qibla-bearing">136°</div><p id="qibla-mode">من الشمال الجغرافي · بوصلة يدوية</p><button class="button button-primary" data-action="compass" id="compass-button"><svg aria-hidden="true" class="icon"><use href="#i-compass"></use></svg>فعّل بوصلة الجهاز</button></section><aside class="qibla-guide surface"><h2>وجّه قلبك<br/>قبل اتجاهك.</h2><ol><li>اختار مدينتك أو استخدم موقعك من صفحة المواقيت.</li><li>ابعد عن المعادن والمغناطيس، وحرّك جهازك على شكل ٨ لمعايرة البوصلة.</li><li>فعّل بوصلة الجهاز لو متاحة، وامسكه أفقيا. السهم يشير ناحية القبلة.</li><li>لو المستشعر مش متاح، استخدم الزاوية المكتوبة مع بوصلة خارجية موثوقة.</li></ol><p class="faith-fineprint">الاتجاه محسوب نحو الكعبة. دقة المستشعر والمعايرة والموقع بتأثر على النتيجة؛ التطبيق لا يغني عن بوصلة معايرة. الإذن والموقع لا يُرسلان لخادم.</p></aside></div></div>
+</section>
+<section aria-labelledby="insights-heading" class="view" hidden="" id="view-insights"><div class="page-heading"><div><p class="greeting">الاستمرار أهم من المثالية</p><h1 id="insights-heading">خطواتك بتبان.</h1><p class="page-description">صورة صادقة عن وقتك، من نشاطك المحفوظ على جهازك.</p></div><button class="button button-secondary" data-action="export-data"><svg aria-hidden="true" class="icon"><use href="#i-download"></use></svg>صدّر بياناتي</button></div><div class="insights-grid"><section class="chart-card surface"><div class="section-heading"><h2>أسبوعك في صورة</h2><div aria-label="نوع الإحصاءات" class="chart-switch" role="group"><button aria-pressed="true" class="active" data-chart="focus">التركيز</button><button aria-pressed="false" data-chart="tasks">المهام</button></div></div><p id="chart-description">دقائق التركيز خلال آخر ٧ أيام</p><div class="chart-wrap"><canvas aria-label="رسم بياني لنشاط آخر سبعة أيام" id="insights-chart" role="img"></canvas><div class="empty-state" hidden="" id="chart-fallback"></div></div></section><section class="insight-summary"><p>وقت اديته لنفسك النهارده</p><div class="insight-big number" id="insight-minutes">0</div><h2>دقيقة تركيز</h2><div class="insight-small-stats"><div><strong id="insight-tasks">0</strong><span>مهمة مكتملة</span></div><div><strong id="insight-streak">0</strong><span>يوم استمرار</span></div></div></section></div><section class="activity-card surface"><div class="section-heading"><h2>كل يوم، فرصة جديدة.</h2><span class="eyebrow">آخر ١٢ أسبوع</span></div><div aria-label="خريطة النشاط اليومي" class="activity-heatmap" id="activity-heatmap"></div><div class="activity-legend"><span>أقل</span><i style="background:#e8efdf"></i><i style="background:#cbdab7"></i><i style="background:#9cb881"></i><i style="background:#658a4c"></i><i style="background:#315d38"></i><span>أكثر</span></div><div class="achievement-list" id="achievements"></div></section><section class="history-card surface"><h2>آخر الخطوات</h2><div id="history-list"></div></section></section>
+<footer class="app-footer"><span><svg aria-hidden="true" class="icon"><use href="#i-lock"></use></svg><span id="offline-status">مساحتك خاصة. بياناتك على جهازك.</span></span><button data-action="help">دليل يومك</button></footer>
+<div class="contact-footer"><span>صُنع بعناية بواسطة</span><a href="https://wa.me/201550802408?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D9%8A%D8%A7%20elsayed%20hasan%D8%8C%20%D8%AD%D8%A7%D8%A8%D8%A8%20%D8%A3%D8%AA%D9%88%D8%A7%D8%B5%D9%84%20%D9%85%D8%B9%D8%A7%D9%83%20%D8%A8%D8%AE%D8%B5%D9%88%D8%B5%20%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20%D9%8A%D9%88%D9%85%D9%83." rel="noopener noreferrer" target="_blank">elsayed hasan</a><svg aria-hidden="true" class="icon"><use href="#i-message"></use></svg><span>· تواصل على واتساب</span></div>
+</main>
+</div>
+<nav aria-label="التنقل السريع" class="mobile-nav"><button aria-current="page" class="active" data-view="today"><svg aria-hidden="true" class="icon"><use href="#i-grid"></use></svg><span>يومك</span></button><button data-view="tasks"><svg aria-hidden="true" class="icon"><use href="#i-checklist"></use></svg><span>مهامي</span></button><button data-view="faith"><svg aria-hidden="true" class="icon"><use href="#i-moon"></use></svg><span>الركن</span></button><button data-view="focus"><svg aria-hidden="true" class="icon"><use href="#i-timer"></use></svg><span>تركيز</span></button><button data-view="notes"><svg aria-hidden="true" class="icon"><use href="#i-note"></use></svg><span>ملاحظاتي</span></button><button data-view="insights"><svg aria-hidden="true" class="icon"><use href="#i-chart"></use></svg><span>إنجازاتي</span></button></nav>
+<dialog aria-labelledby="task-dialog-title" id="task-dialog">
+<div class="dialog-header"><h2 id="task-dialog-title">خطوة جديدة.</h2><button aria-label="إغلاق" class="icon-button" data-close-dialog="task-dialog"><svg aria-hidden="true" class="icon"><use href="#i-close"></use></svg></button></div>
+<form class="dialog-body" id="task-form"><p class="dialog-intro">خلّيها صغيرة وواضحة. البداية أهم حاجة.</p><input id="task-id" type="hidden"/><div class="form-field"><label for="task-title-input">إيه الخطوة اللي على بالك؟</label><input autocomplete="off" id="task-title-input" maxlength="160" placeholder="مثلا: أقرأ ١٠ صفحات من كتابي" required=""/></div><div class="form-row"><div class="form-field"><label for="task-category-input">التصنيف</label><select id="task-category-input"><option value="personal">شخصي</option><option value="work">شغل</option><option value="learn">تعلّم</option><option value="health">صحة</option></select></div><div class="form-field"><label for="task-priority-input">الأولوية</label><select id="task-priority-input"><option value="normal">على مهلك</option><option value="high">مهمة للأول</option></select></div></div><div class="form-row"><div class="form-field"><label for="task-date-input">يومها إمتى؟</label><input id="task-date-input" type="date"/></div><div class="form-field"><label for="task-repeat">التكرار</label><select id="task-repeat"><option value="none">مرة واحدة</option><option value="daily">كل يوم</option><option value="weekly">كل أسبوع</option></select></div></div><div class="form-field"><label for="task-description">تفاصيل صغيرة (اختياري)</label><textarea id="task-description" maxlength="1500" placeholder="سياق، رابط، أو حاجة تساعدك تبدأ..." rows="2" style="border:1px solid var(--line);border-radius:7px;padding:10px;background:var(--bg);resize:vertical"></textarea></div><div class="form-field"><label for="task-subtasks">خطوات فرعية، كل خطوة في سطر (اختياري)</label><textarea id="task-subtasks" maxlength="2000" placeholder="جهّز المكتب
+افتح الملف
+ابدأ بأول خطوة" rows="2" style="border:1px solid var(--line);border-radius:7px;padding:10px;background:var(--bg);resize:vertical"></textarea></div><div class="dialog-actions"><button class="button button-primary" id="task-submit-button" type="submit">أضف الخطوة</button><button class="button button-secondary" data-close-dialog="task-dialog" type="button">إلغاء</button><button class="delete-button" data-action="delete-task" hidden="" id="delete-task-button" type="button"><svg aria-hidden="true" class="icon"><use href="#i-trash"></use></svg>حذف</button></div></form>
+</dialog>
+<dialog aria-labelledby="settings-title" id="settings-dialog">
+<div class="dialog-header"><h2 id="settings-title">يومك، بطريقتك.</h2><button aria-label="إغلاق الإعدادات" class="icon-button" data-close-dialog="settings-dialog"><svg aria-hidden="true" class="icon"><use href="#i-close"></use></svg></button></div>
+<div class="dialog-body"><form id="settings-form"><div class="form-field"><label for="settings-name">تحب نناديك بإيه؟</label><input autocomplete="given-name" id="settings-name" maxlength="30" placeholder="اسمك الأول، لو حابب"/></div><div class="form-row"><div class="form-field"><label for="settings-focus">جلسة التركيز بالدقائق</label><input id="settings-focus" max="120" min="1" required="" step="1" type="number"/></div><div class="form-field"><label for="settings-break">الاستراحة بالدقائق</label><input id="settings-break" max="60" min="1" required="" step="1" type="number"/></div></div><div class="form-field"><label for="settings-long-break">استراحة طويلة بعد ٤ جلسات تركيز</label><input id="settings-long-break" max="90" min="5" required="" step="1" type="number"/></div><label class="switch-row" for="settings-auto"><span>ابدأ الجلسة التالية تلقائيا</span><input id="settings-auto" role="switch" type="checkbox"/></label><label class="switch-row" for="settings-sound"><span>صوت هادي لما الجلسة تخلص</span><input id="settings-sound" role="switch" type="checkbox"/></label><p class="form-hint" style="margin-bottom:16px">تغيير المدة يطبّق على الجلسة الجديدة، مش الجلسة اللي بدأت.</p><button class="button button-primary w-full" type="submit">احفظ اختياراتي</button></form><div class="settings-extra"><h3>يومك معاك، حتى بدون نت.</h3><div class="install-status-box" id="offline-settings-status">جارٍ فحص مساحة العمل بدون نت...</div><div class="backup-actions"><button class="button button-secondary" data-action="install">طريقة التثبيت</button><button class="button button-secondary" data-action="check-update">افحص التحديث</button></div><button class="text-button mt-3" data-action="persist-storage">اطلب حفظا دائما من المتصفح</button><p class="storage-meter" id="storage-meter"></p><button class="text-button mt-3" data-action="task-notifications">تذكير بمهام اليوم أثناء فتح التطبيق</button></div><div class="settings-separator"></div><h3 class="settings-label">أفكارك ومهامك، معاك.</h3><p class="data-warning">النسخة تشمل المهام والملاحظات والعدّادات والمفضلة. المصحف والتلاوات المنزلة تُحفظ بشكل منفصل على الجهاز. نزّل نسخة قبل مسح بيانات المتصفح.</p><div class="backup-actions"><button class="button button-secondary" data-action="export-data"><svg aria-hidden="true" class="icon"><use href="#i-download"></use></svg>نزّل نسخة</button><button class="button button-secondary" data-action="import-data"><svg aria-hidden="true" class="icon"><use href="#i-upload"></use></svg>استرجع نسخة</button></div><input accept="application/json,.json" hidden="" id="import-file" type="file"/><button class="reset-data-button" data-action="clear-audio">امسح التلاوات المنزلة لتوفير المساحة</button><br/><button class="reset-data-button" data-action="reset-data">امسح بياناتي وابدأ من جديد</button></div>
+</dialog>
+<dialog aria-labelledby="help-title" id="help-dialog"><div class="dialog-header"><h2 id="help-title">كل يومك، في مساحة واحدة.</h2><button aria-label="إغلاق" class="icon-button" data-close-dialog="help-dialog"><svg aria-hidden="true" class="icon"><use href="#i-close"></use></svg></button></div><div class="dialog-body"><p class="dialog-intro">كل المميزات متاحة ليك، بدون اشتراك أو تسجيل.</p><div class="help-list"><div class="help-item"><svg aria-hidden="true" class="icon"><use href="#i-checklist"></use></svg><div><h3>خطوات صغيرة، واستمرار حقيقي</h3><p>مهام بأولويات ومواعيد وتكرار وخطوات فرعية. راجع إنجازاتك، واسمع صوت مطر أو ضجيج بني أثناء التركيز. المهام الأولى أمثلة قابلة للتعديل.</p></div></div><div class="help-item"><svg aria-hidden="true" class="icon"><use href="#i-book"></use></svg><div><h3>ركن للقلب</h3><p>نزّل المصحف والتفسير مرة واحدة لقراءتهما بدون نت. الأذكار والسبحة والمواقيت والقبلة محسوبة أو محفوظة محليا. التلاوات تحتاج نت إلا لو نزّلت السورة أو الآية المطلوبة.</p></div></div><div class="help-item"><svg aria-hidden="true" class="icon"><use href="#i-download"></use></svg><div><h3>ثبّته وخده معاك</h3><p>على HTTPS أو localhost، انتظر جاهزية النسخة بدون نت ثم اضغط تثبيت يومك. على iPhone استخدم مشاركة Safari ثم إضافة إلى الشاشة الرئيسية. أول فتح يحتاج اتصالا لتجهيز الملفات.</p></div></div><div class="help-item"><svg aria-hidden="true" class="icon"><use href="#i-lock"></use></svg><div><h3>خصوصيتك مش مجرد وعد</h3><p>لا يوجد حساب أو خادم لحفظ محتواك. الموقع يُستخدم عند طلبه، ويُرسل نص البحث فقط عند البحث في القرآن قبل تنزيله. البيانات على المتصفح ده؛ النسخة الاحتياطية مسؤوليتك.</p></div></div></div><p class="help-fineprint">N لمهمة جديدة · Ctrl أو Cmd + K لكل الأوامر · الأسهم للتنقل في البحث · Enter للاختيار · المسافة للمؤقت أو السبحة حسب الصفحة.<br/>المصادر: AlQuran Cloud، التفسير الميسر، حصن المسلم، Adhan.js، Chart.js، Lucide. التنبيهات والاهتزاز والبوصلة والتثبيت حسب دعم المتصفح وإذنك.</p><a class="button button-primary w-full" href="https://wa.me/201550802408?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D9%8A%D8%A7%20elsayed%20hasan%D8%8C%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D9%82%D8%AA%D8%B1%D8%A7%D8%AD%20%D9%84%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20%D9%8A%D9%88%D9%85%D9%83." rel="noopener noreferrer" target="_blank">اقتراح للمطور elsayed hasan</a></div></dialog>
+<dialog aria-label="البحث والأوامر السريعة" class="command-dialog" id="command-dialog"><div class="command-input-row"><svg aria-hidden="true" class="icon"><use href="#i-search"></use></svg><input aria-autocomplete="list" aria-controls="command-results" aria-expanded="true" aria-label="ابحث في يومك" autocomplete="off" id="command-input" placeholder="مهمة، سورة، ذكر، أو أمر جديد..." role="combobox"/><button aria-label="إغلاق البحث" class="icon-button" data-close-dialog="command-dialog"><svg aria-hidden="true" class="icon"><use href="#i-close"></use></svg></button></div><div aria-label="نتائج البحث" class="command-results" id="command-results" role="listbox"></div><div class="command-footer"><span><kbd>↑ ↓</kbd> تنقّل · <kbd>Enter</kbd> اختيار · <kbd>Esc</kbd> إغلاق</span><span>كل يومك، على بعد خطوة.</span></div></dialog>
+<dialog aria-labelledby="ayah-dialog-title" class="ayah-dialog" id="ayah-dialog"><div class="dialog-header"><h2 id="ayah-dialog-title">آية ومعنى</h2><button aria-label="إغلاق الآية" class="icon-button" data-close-dialog="ayah-dialog"><svg aria-hidden="true" class="icon"><use href="#i-close"></use></svg></button></div><div class="dialog-body"><p class="ayah-dialog-text" id="ayah-dialog-text"></p><h3 class="settings-label">التفسير الميسر</h3><div class="tafsir-text" id="tafsir-text"></div><div class="ayah-dialog-actions"><button class="button button-primary" data-action="bookmark-ayah"><svg aria-hidden="true" class="icon"><use href="#i-bookmark"></use></svg><span id="bookmark-ayah-label">احفظ الآية</span></button><button class="button button-secondary" data-action="play-ayah"><svg aria-hidden="true" class="icon"><use href="#i-play"></use></svg>استمع</button><button class="button button-secondary" data-action="copy-ayah"><svg aria-hidden="true" class="icon"><use href="#i-copy"></use></svg>نسخ</button></div><p class="form-hint mt-4">المصدر: AlQuran Cloud · تفسير الميسر، مجمع الملك فهد لطباعة المصحف الشريف.</p></div></dialog>
+<dialog aria-labelledby="install-title" id="install-dialog"><div class="dialog-header"><h2 id="install-title">يومك، على شاشتك.</h2><button aria-label="إغلاق" class="icon-button" data-close-dialog="install-dialog"><svg aria-hidden="true" class="icon"><use href="#i-close"></use></svg></button></div><div class="dialog-body"><div class="install-illustration"><svg aria-hidden="true" class="icon"><use href="#i-phone"></use></svg></div><p class="dialog-intro">تجربة تطبيق مستقلة، من غير متجر ومن غير حساب.</p><div class="install-status-box" id="install-status"></div><ol class="install-steps"><li><strong>Android أو الكمبيوتر:</strong> افتح قائمة المتصفح أو أيقونة التثبيت، واختار «تثبيت التطبيق» أو «Install app».</li><li><strong>iPhone أو iPad:</strong> من Safari، اضغط مشاركة، ثم «إضافة إلى الشاشة الرئيسية».</li><li>بعد أول فتح وتجهيز الملفات، المهام والملاحظات والأذكار والمواقيت تشتغل بدون نت. نزّل المصحف والتلاوات بشكل منفصل.</li></ol><button class="button button-primary w-full" data-action="prompt-install" id="native-install-button">ثبّت يومك الآن</button><p class="form-hint mt-4">التثبيت يتطلب HTTPS أو localhost ومتصفحا داعما. لو فتحت الملف مباشرة، ارفعه على استضافة ملفات ثابتة لتفعيل التثبيت والعمل بدون نت.</p></div></dialog>
+<dialog aria-labelledby="monthly-title" id="monthly-dialog" style="max-width:650px"><div class="dialog-header"><h2 id="monthly-title">مواقيت الشهر</h2><button aria-label="إغلاق" class="icon-button" data-close-dialog="monthly-dialog"><svg aria-hidden="true" class="icon"><use href="#i-close"></use></svg></button></div><div class="dialog-body"><p class="dialog-intro" id="monthly-description"></p><div class="monthly-table-wrap" id="monthly-table"></div><button class="button button-primary w-full mt-4" data-action="download-prayers">نزّل جدول الشهر CSV</button></div></dialog>
+<dialog aria-labelledby="khatma-title" id="khatma-dialog"><div class="dialog-header"><h2 id="khatma-title">ختمة على مهلك.</h2><button aria-label="إغلاق" class="icon-button" data-close-dialog="khatma-dialog"><svg aria-hidden="true" class="icon"><use href="#i-close"></use></svg></button></div><form class="dialog-body" id="khatma-form"><p class="dialog-intro">٦٠٤ صفحة. خطوة كل يوم. حدد خطتك وسجّل تقدمك من القارئ.</p><div class="form-field"><label for="khatma-days">أحب أختم في كام يوم؟</label><select id="khatma-days"><option value="30">٣٠ يوم · نحو ٢٠ صفحة يوميا</option><option value="60">٦٠ يوم · نحو ١٠ صفحات يوميا</option><option value="90">٩٠ يوم · نحو ٧ صفحات يوميا</option><option value="180">١٨٠ يوم · نحو ٤ صفحات يوميا</option><option value="365">سنة · نحو صفحتين يوميا</option></select></div><div class="form-field"><label for="khatma-page">آخر صفحة أكملتها في الختمة الحالية</label><input id="khatma-page" max="604" min="0" required="" step="1" type="number"/><p class="form-hint">تسجيل تقدم يدوي، مش تتبع تلقائي لحركة العين. علّم «أكملت الصفحة» في القارئ أثناء القراءة.</p></div><button class="button button-primary w-full" type="submit">احفظ خطتي</button><button class="button button-secondary w-full mt-3" data-action="restart-khatma" type="button">ابدأ ختمة جديدة</button></form></dialog>
+<dialog aria-labelledby="confirm-title" id="confirm-dialog">
+<div class="dialog-header"><h2 id="confirm-title">متأكد؟</h2><button aria-label="إلغاء" class="icon-button" data-close-dialog="confirm-dialog"><svg aria-hidden="true" class="icon"><use href="#i-close"></use></svg></button></div>
+<div class="dialog-body"><p class="confirm-description" id="confirm-description"></p><div class="dialog-actions"><button class="button button-primary" id="confirm-yes">تأكيد</button><button class="button button-secondary" data-close-dialog="confirm-dialog">رجوع</button></div></div>
+</dialog>
+<div aria-live="polite" class="toast" hidden="" id="toast" role="status"><span class="toast-message" id="toast-message"></span><button class="toast-action" hidden="" id="toast-action"></button><button aria-label="إغلاق التنبيه" class="toast-close" data-action="close-toast"><svg aria-hidden="true" class="icon"><use href="#i-close"></use></svg></button></div>
 
-    <main class="workspace" id="main-content" tabindex="-1">
-      
-      <section class="view" id="view-today" aria-labelledby="today-heading">
-        <div class="page-heading">
-          <div>
-            <p class="greeting"><svg class="icon" aria-hidden="true"><use href="#i-sun"/></svg><span id="greeting-text">أهلا بيك</span></p>
-            <h1 id="today-heading"><span class="brand-accent">يومك،</span> على مهلك.</h1>
-            <p class="page-description" id="today-description">شوية تركيز، خطوة صغيرة، ويوم أخف.</p>
-          </div>
-          <div class="heading-actions"><button class="button button-primary" data-action="new-task" title="مهمة جديدة (N)" aria-label="إضافة مهمة جديدة"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span class="button-label">مهمة جديدة</span></button></div>
-        </div>
-        <div class="workspace-grid">
-          <div>
-            <section class="task-panel surface" aria-labelledby="today-tasks-title">
-              <div class="section-heading"><h2 id="today-tasks-title">مهام اليوم</h2><button class="text-button" data-view="tasks">كل المهام<svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button></div>
-              <p class="section-caption">مش لازم تعمل كل حاجة. نبدأ بالأهم.</p>
-              <div class="filter-tabs" role="group" aria-label="تصفية مهام اليوم">
-                <button class="filter-tab active" data-filter="all" data-filter-view="today">الكل <span class="tab-count number" data-count="all" data-count-view="today"></span></button>
-                <button class="filter-tab" data-filter="active" data-filter-view="today">قيد التنفيذ <span class="tab-count number" data-count="active" data-count-view="today"></span></button>
-                <button class="filter-tab" data-filter="done" data-filter-view="today">المكتملة <span class="tab-count number" data-count="done" data-count-view="today"></span></button>
-              </div>
-              <div class="task-list" id="dashboard-task-list"></div>
-              <form class="quick-add" id="quick-add-form">
-                <svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>
-                <input id="quick-task-input" placeholder="خطوة جديدة؟ اكتبها هنا..." aria-label="عنوان مهمة جديدة" maxlength="160" autocomplete="off">
-                <button class="quick-submit" type="submit" aria-label="أضف المهمة"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
-              </form>
-              <div class="daily-progress">
-                <div class="progress-labels"><span id="progress-message"></span><strong class="number" id="progress-percent">0%</strong></div>
-                <div class="progress-track" role="progressbar" id="daily-progress" aria-label="نسبة إنجاز مهام اليوم" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-fill" id="progress-fill"></div></div>
-                <div class="goal-line"><span id="goal-text"></span><button class="text-button" data-view="insights" style="font-size:10px">شوف إحصائياتك<svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button></div>
-              </div>
-            </section>
-            <div class="mini-grid">
-              <section class="surface mini-card" aria-labelledby="dash-habits-title">
-                <div class="section-heading"><h2 id="dash-habits-title"><svg class="icon" aria-hidden="true"><use href="#i-habit"/></svg>عاداتك النهارده</h2><button class="text-button" data-view="habits" style="font-size:10px">الكل</button></div>
-                <p class="section-caption" id="dash-habits-caption"></p>
-                <div class="habit-quick" id="dashboard-habits"></div>
-              </section>
-              <section class="surface mini-card" aria-labelledby="mood-title">
-                <h2 id="mood-title"><svg class="icon" aria-hidden="true"><use href="#i-smile"/></svg>إزيك النهارده؟</h2>
-                <p class="section-caption">لحظة صدق صغيرة مع نفسك.</p>
-                <div class="mood-buttons" id="mood-buttons" role="group" aria-label="تسجيل المزاج"></div>
-                <p class="mood-message" id="mood-message"></p>
-              </section>
-            </div>
-          </div>
-          <div class="utility-stack">
-            <section class="focus-card" aria-labelledby="compact-focus-heading">
-              <img class="focus-background" src="https://images.pexels.com/photos/36114893/pexels-photo-36114893.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" alt="">
-              <div class="focus-topline"><span><svg class="icon" aria-hidden="true"><use href="#i-headphones"/></svg>مساحة التركيز</span><button class="photo-icon-button" data-view="focus" title="افتح مساحة التركيز" aria-label="افتح مساحة التركيز"><svg class="icon" aria-hidden="true"><use href="#i-expand"/></svg></button></div>
-              <h2 class="focus-heading" id="compact-focus-heading">حاجة واحدة، بكل تركيز.</h2>
-              <div class="timer-modes" role="group" aria-label="نوع الجلسة"><button class="timer-mode" data-timer-mode="focus">تركيز</button><button class="timer-mode" data-timer-mode="break">استراحة</button><button class="timer-mode" data-timer-mode="long">استراحة طويلة</button></div>
-              <div class="timer-display" data-timer-display role="timer" aria-label="الوقت المتبقي">25:00</div>
-              <p class="timer-caption" data-timer-caption></p>
-              <div class="cycle-dots" data-cycle-dots aria-hidden="true"></div>
-              <div class="timer-actions"><button class="timer-start" data-action="timer-toggle"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg><span data-timer-button-label>ابدأ التركيز</span></button><button class="timer-reset" data-action="timer-reset" aria-label="إعادة ضبط المؤقت" title="ابدأ العد من جديد"><svg class="icon" aria-hidden="true"><use href="#i-reset"/></svg></button></div>
-              <p class="focus-bottom"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg>كل حاجة تانية تقدر تستنى.</p>
-            </section>
-            <section class="note-card" aria-labelledby="quick-note-heading">
-              <h2 class="note-title" id="quick-note-heading"><svg class="icon" aria-hidden="true"><use href="#i-note"/></svg>فكرة على السريع؟</h2>
-              <textarea id="quick-note" maxlength="20000" aria-label="ملاحظات سريعة" placeholder="فكرة، حاجة مش عايز تنساها، أو شوية كلام لنفسك..."></textarea>
-              <div class="note-footer"><span class="save-status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-note-status>بتتحفظ لوحدها</span></span><button class="text-button" data-view="notes">دفترك كله<svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button></div>
-            </section>
-          </div>
-        </div>
-        <button class="button button-secondary" data-view="islam" style="margin-top:20px;width:100%;justify-content:space-between;white-space:normal;text-align:right"><span style="display:flex;align-items:center;gap:10px"><svg class="icon" aria-hidden="true"><use href="#i-mosque"/></svg>ركنك الإسلامي: قرآن، أذكار، وصلاة على وقتها</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
-      </section>
-
-      
-      <section class="view" id="view-tasks" aria-labelledby="tasks-heading" hidden>
-        <div class="page-heading"><div><p class="greeting">كل خطوة في مكانها</p><h1 id="tasks-heading">خفّف اللي على بالك.</h1><p class="page-description">مهامك الصغيرة والكبيرة، كلها هنا.</p></div><div class="heading-actions"><button class="button button-primary" data-action="new-task" aria-label="إضافة مهمة جديدة"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span class="button-label">مهمة جديدة</span></button></div></div>
-        <section class="tasks-full surface" aria-label="جميع المهام">
-          <div class="tasks-toolbar">
-            <label class="search-field"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input id="task-search" type="search" placeholder="بتدوّر على مهمة؟" aria-label="ابحث في المهام" autocomplete="off"></label>
-            <select class="toolbar-select" id="date-filter" aria-label="تصفية حسب الموعد"><option value="all">كل المواعيد</option><option value="today">النهارده</option><option value="tomorrow">بكرة</option><option value="week">الأسبوع ده</option><option value="overdue">متأخرة</option><option value="nodate">بدون موعد</option></select>
-            <select class="toolbar-select" id="category-filter" aria-label="تصفية حسب التصنيف"><option value="all">كل التصنيفات</option><option value="personal">شخصي</option><option value="work">شغل</option><option value="learn">تعلّم</option><option value="health">صحة</option></select>
-            <select class="toolbar-select" id="task-sort" aria-label="ترتيب المهام"><option value="newest">الأحدث أولا</option><option value="priority">الأهم أولا</option><option value="date">حسب الموعد</option></select>
-          </div>
-          <div class="filter-tabs" role="group" aria-label="تصفية جميع المهام">
-            <button class="filter-tab active" data-filter="all" data-filter-view="tasks">الكل <span class="tab-count number" data-count="all" data-count-view="tasks"></span></button>
-            <button class="filter-tab" data-filter="active" data-filter-view="tasks">قيد التنفيذ <span class="tab-count number" data-count="active" data-count-view="tasks"></span></button>
-            <button class="filter-tab" data-filter="done" data-filter-view="tasks">المكتملة <span class="tab-count number" data-count="done" data-count-view="tasks"></span></button>
-          </div>
-          <div class="task-list" id="all-task-list"></div>
-          <p class="tasks-summary" id="tasks-summary"></p>
-        </section>
-      </section>
-
-      
-      <section class="view" id="view-focus" aria-labelledby="focus-heading" hidden>
-        <div class="page-heading"><div><p class="greeting">اقفل الزحمة، وافتح مساحة لنفسك</p><h1 id="focus-heading">دلوقتي، وقت التركيز.</h1><p class="page-description">اختار حاجة واحدة. والباقي ييجي في وقته.</p></div><div class="heading-actions"><button class="icon-button" data-action="settings" title="إعدادات الجلسة" aria-label="إعدادات الجلسة"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg></button></div></div>
-        <section class="focus-stage" id="focus-stage" aria-label="مؤقت التركيز">
-          <img class="focus-background" src="https://images.pexels.com/photos/36114893/pexels-photo-36114893.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" alt="" loading="lazy">
-          <div class="stage-tools"><button class="photo-icon-button" data-action="fullscreen" title="ملء الشاشة" aria-label="ملء الشاشة"><svg class="icon" aria-hidden="true"><use href="#i-expand"/></svg></button></div>
-          <h2>مساحة أهدأ، لخطوة أوضح.</h2>
-          <div class="timer-modes" role="group" aria-label="نوع الجلسة"><button class="timer-mode" data-timer-mode="focus">تركيز</button><button class="timer-mode" data-timer-mode="break">استراحة</button><button class="timer-mode" data-timer-mode="long">استراحة طويلة</button></div>
-          <div class="timer-display" data-timer-display role="timer" aria-label="الوقت المتبقي">25:00</div>
-          <p class="timer-caption" data-timer-caption></p>
-          <div class="cycle-dots" data-cycle-dots aria-hidden="true"></div>
-          <div class="timer-actions"><button class="timer-start" data-action="timer-toggle"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg><span data-timer-button-label>ابدأ التركيز</span></button><button class="timer-reset" data-action="timer-reset" aria-label="إعادة ضبط المؤقت" title="ابدأ العد من جديد"><svg class="icon" aria-hidden="true"><use href="#i-reset"/></svg></button></div>
-          <label class="focus-task-label">هتركّز على إيه؟<select id="focus-task"><option value="">جلسة من غير مهمة محددة</option></select></label>
-          <div class="ambient-row">
-            <svg class="icon" style="width:14px;height:14px" aria-hidden="true"><use href="#i-wave"/></svg>
-            <select id="ambient-select" aria-label="صوت محيط"></select>
-            <input type="range" id="ambient-volume" min="0" max="1" step="0.05" aria-label="مستوى الصوت">
-            <button class="photo-icon-button" data-action="ambient-toggle" id="ambient-toggle"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg><span>شغّل الصوت</span></button>
-          </div>
-        </section>
-        <p class="session-summary"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg><span id="session-summary"></span></p>
-      </section>
-
-      
-      <section class="view" id="view-habits" aria-labelledby="habits-heading" hidden>
-        <div class="page-heading"><div><p class="greeting">حاجات صغيرة، كل يوم</p><h1 id="habits-heading">عاداتك بتبني يومك.</h1><p class="page-description" id="habits-description">علّم على عادة كل ما تعملها، وشوف سلسلتك بتطول.</p></div><div class="heading-actions"><button class="button button-primary" data-action="new-habit" aria-label="عادة جديدة"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span class="button-label">عادة جديدة</span></button></div></div>
-        <section class="surface tasks-full" aria-label="قائمة العادات"><div class="habit-list" id="habits-list"></div></section>
-      </section>
-
-      
-      <section class="view" id="view-notes" aria-labelledby="notes-heading" hidden>
-        <div class="page-heading"><div><p class="greeting">سيب لأفكارك مساحة</p><h1 id="notes-heading">على بالك إيه؟</h1><p class="page-description">دفتر لكل فكرة. مش لازم يكون مرتب.</p></div><div class="heading-actions"><button class="button button-primary" data-action="new-note" aria-label="ملاحظة جديدة"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg><span class="button-label">ملاحظة جديدة</span></button></div></div>
-        <div class="notes-layout" id="notes-layout" data-mode="list">
-          <aside class="surface notes-list-pane" aria-label="قائمة الملاحظات">
-            <label class="search-field"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input id="notes-search" type="search" placeholder="ابحث في ملاحظاتك" aria-label="ابحث في الملاحظات" autocomplete="off"></label>
-            <div class="notes-list" id="notes-list"></div>
-          </aside>
-          <section class="surface notes-document" aria-label="محرر الملاحظة">
-            <div class="document-toolbar">
-              <button class="icon-button back-button" data-action="notes-back" aria-label="رجوع لقائمة الملاحظات"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
-              <input id="note-title-input" placeholder="عنوان الملاحظة" maxlength="80" aria-label="عنوان الملاحظة">
-              <button class="icon-button" data-action="pin-note" id="pin-note-button" title="تثبيت" aria-label="تثبيت الملاحظة"><svg class="icon" aria-hidden="true"><use href="#i-pin"/></svg></button>
-              <button class="icon-button" data-action="share-note" title="مشاركة" aria-label="مشاركة الملاحظة"><svg class="icon" aria-hidden="true"><use href="#i-share"/></svg></button>
-              <button class="icon-button" data-action="download-note" title="تنزيل كملف" aria-label="تنزيل الملاحظة"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg></button>
-              <button class="icon-button" data-action="delete-note" title="حذف" aria-label="حذف الملاحظة"><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg></button>
-            </div>
-            <textarea id="notes-editor" maxlength="20000" aria-label="نص الملاحظة" placeholder="ابدأ من هنا... فكرة، خطة، أو حاجة بسيطة فرّحتك النهارده."></textarea>
-            <div class="document-footer"><span id="note-word-count"></span><span class="save-status"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg><span data-note-status>محفوظة تلقائيا</span></span></div>
-          </section>
-        </div>
-      </section>
-
-      
-      <section class="view" id="view-insights" aria-labelledby="insights-heading" hidden>
-        <div class="page-heading"><div><p class="greeting">شوف الصورة الكبيرة</p><h1 id="insights-heading">رحلتك، بالأرقام.</h1><p class="page-description">مش للمقارنة. علشان تشوف قد إيه بتتقدم.</p></div></div>
-        <div id="insights-content"></div>
-      </section>
-
-      <section class="view" id="view-islam" aria-labelledby="islam-heading" hidden>
-        <header class="islam-cover">
-          <img src="https://images.pexels.com/photos/19819274/pexels-photo-19819274.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=720&w=1600" alt="ضوء الشمس يدخل بهدوء إلى مسجد" loading="lazy">
-          <div class="islam-cover-copy"><p class="islam-cover-kicker" id="islam-hijri">ركنك الروحاني</p><h1 id="islam-heading">مساحة للقلب.</h1><p>اقرأ، اذكر، وخلّي صلاتك أقرب لقلب يومك.</p><div class="islam-cover-prayer" id="islam-cover-prayer" aria-live="off">مواقيت الصلاة بتظهر هنا بعد تحديد موقعك.</div></div>
-        </header>
-        <nav class="islam-tabs" aria-label="أقسام الركن الإسلامي" role="tablist">
-          <button type="button" class="active" data-islam-tab="home" role="tab" aria-selected="true" aria-controls="islam-home"><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg>البداية</button>
-          <button type="button" data-islam-tab="quran" role="tab" aria-selected="false" aria-controls="islam-quran"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg>القرآن الكريم</button>
-          <button type="button" data-islam-tab="adhkar" role="tab" aria-selected="false" aria-controls="islam-adhkar"><svg class="icon" aria-hidden="true"><use href="#i-leaf"/></svg>الأذكار</button>
-          <button type="button" data-islam-tab="prayer" role="tab" aria-selected="false" aria-controls="islam-prayer"><svg class="icon" aria-hidden="true"><use href="#i-mosque"/></svg>مواقيت الصلاة</button>
-          <button type="button" data-islam-tab="qibla" role="tab" aria-selected="false" aria-controls="islam-qibla"><svg class="icon" aria-hidden="true"><use href="#i-compass"/></svg>القبلة</button>
-          <button type="button" data-islam-tab="tasbih" role="tab" aria-selected="false" aria-controls="islam-tasbih"><svg class="icon" aria-hidden="true"><use href="#i-beads"/></svg>السبحة</button>
-        </nav>
-        <div class="islam-panel" id="islam-home" role="tabpanel">
-          <div class="islam-home-grid">
-            <section class="surface islam-block" aria-labelledby="home-prayers-heading">
-              <div class="section-heading"><h2 id="home-prayers-heading">صلاتك النهارده</h2><button class="text-button" data-islam-go="prayer">ضبط الموقع<svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button></div>
-              <p class="section-caption" id="islam-location-home">الموقع الافتراضي: القاهرة</p>
-              <div class="islam-prayer-list" id="islam-home-prayers"><p class="islam-status">بنجّمع مواقيت الصلاة ليك...</p></div>
-              <p class="islam-stat-note">اضغط الدائرة بعد كل صلاة لتسجّلها. المواعيد محسوبة وقد تختلف عن مسجدك بدقائق.</p>
-            </section>
-            <div class="islam-home-side">
-              <section class="islam-verse" aria-labelledby="daily-verse-heading"><h2 id="daily-verse-heading" style="font-size:15px;font-weight:600">آية قريبة لقلبك</h2><p class="verse-text" id="daily-verse-text"></p><p class="verse-source" id="daily-verse-source"></p><button class="text-button" data-action="open-daily-verse">اقرأها في المصحف<svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button></section>
-              <section class="surface islam-continue"><h2 style="font-size:16px;font-weight:600">وردك، على مهلك</h2><p id="islam-reading-position">افتح سورة وابدأ من حيث تحب.</p><button class="text-button" data-action="resume-quran">كمّل القراءة<svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button></section>
-            </div>
-          </div>
-          <p class="islam-source">المصحف من Al Quran Cloud. مواقيت الصلاة من AlAdhan وفق طريقة الحساب التي تختارها. بياناتك الشخصية محفوظة على جهازك فقط.</p>
-        </div>
-        <div class="islam-panel" id="islam-quran" role="tabpanel" hidden>
-          <div id="quran-library">
-            <div class="islam-section-head"><div><h2>القرآن الكريم</h2><p>١١٤ سورة. اقرأ واحفظ موضعك، أو استمع للتلاوة.</p></div><button class="button button-secondary" data-action="resume-quran"><svg class="icon" aria-hidden="true"><use href="#i-bookmark"/></svg>آخر موضع</button></div>
-            <div class="quran-library-top"><label class="search-field"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input id="surah-filter" type="search" placeholder="دوّر على سورة بالاسم أو الرقم" aria-label="بحث في أسماء السور" autocomplete="off"></label><button class="button button-secondary" id="quran-download" data-action="download-quran"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>حمّل المصحف بدون نت</button><button class="button button-secondary" id="quran-cancel" data-action="cancel-quran-download" hidden>إيقاف التحميل</button></div>
-            <p class="quran-download-status" id="quran-download-status" role="status"></p>
-            <form class="islam-form-row" id="quran-search-form"><label>بحث في نص الآيات<input id="quran-text-query" type="search" placeholder="اكتب كلمة وابحث في المصحف" autocomplete="off" minlength="2" maxlength="70"></label><button class="button button-primary" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>ابحث</button></form>
-            <div class="quran-search-results" id="quran-search-results" hidden></div>
-            <div id="quran-bookmarks" class="quran-bookmarks" aria-label="الآيات المحفوظة"></div>
-            <div id="surah-list" class="quran-surah-grid" aria-label="فهرس السور"></div>
-          </div>
-          <div class="quran-reader" id="quran-reader" hidden>
-            <div class="reader-toolbar"><button class="button button-secondary" data-action="quran-back"><svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg>الفهرس</button><h2 id="reader-title">سورة الفاتحة</h2><div class="reader-size"><button data-action="quran-smaller" aria-label="تصغير خط المصحف">أ−</button><button data-action="quran-larger" aria-label="تكبير خط المصحف">أ+</button></div><button class="button button-secondary" id="reader-audio-button" data-action="quran-audio">استمع للتلاوة</button></div>
-            <p class="quran-progress" id="quran-progress"></p>
-            <article class="reader-book"><div class="reader-book-head"><h3 id="reader-surah-name"></h3><p id="reader-surah-meta"></p></div><p class="reader-basmala" id="reader-basmala" hidden>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p><div id="quran-ayah-list"></div></article>
-            <div class="reader-footer"><button class="button button-secondary" data-action="quran-prev">السورة السابقة</button><button class="button button-secondary" data-action="quran-next">السورة التالية</button></div>
-            <p class="islam-source">النص بالرسم العثماني من Al Quran Cloud. التلاوة بصوت مشاري العفاسي عبر Islamic Network وتتطلب اتصالا أول مرة، وتحفظ الآيات المسموعة تلقائيا عند توفر مساحة.</p>
-          </div>
-          <audio id="quran-audio-element" preload="none"></audio>
-        </div>
-        <div class="islam-panel" id="islam-adhkar" role="tabpanel" hidden>
-          <div class="islam-section-head"><div><h2>اذكر واطمئن</h2><p>أذكار مختارة مع المصدر. عدّادك بيتحفظ خلال اليوم وبيبدأ من جديد بكرة.</p></div><button class="text-button" data-action="reset-adhkar">صفّر عدّادات القسم</button></div>
-          <div class="azkar-cats" role="group" aria-label="أقسام الأذكار"><button class="active" data-zikr-cat="morning">الصباح</button><button data-zikr-cat="evening">المساء</button><button data-zikr-cat="after">بعد الصلاة</button><button data-zikr-cat="sleep">قبل النوم</button><button data-zikr-cat="general">أدعية وأذكار</button><button data-zikr-cat="favorite">المفضلة</button></div>
-          <p class="section-caption" id="adhkar-summary"></p><div class="azkar-list" id="adhkar-list"></div>
-          <p class="islam-source">النصوص قرآنية أو أذكار مأثورة مع الإشارة إلى مصدرها. يُستحسن مراجعة العدد واللفظ من المصحف أو كتب الأذكار المحققة.</p>
-        </div>
-        <div class="islam-panel" id="islam-prayer" role="tabpanel" hidden>
-          <div class="islam-section-head"><div><h2>صلاتك على وقتها</h2><p id="prayer-location-caption">حدد مدينتك أو استخدم موقعك عشان تعرف المواقيت.</p></div></div>
-          <div class="islam-form-row"><label>المدينة<select id="prayer-city" aria-label="اختر مدينة"></select></label><button class="button button-secondary" data-action="use-geolocation"><svg class="icon" aria-hidden="true"><use href="#i-location"/></svg>موقعي الحالي</button><label>طريقة الحساب<select id="prayer-method"><option value="5">الهيئة المصرية للمساحة</option><option value="4">أم القرى</option><option value="2">رابطة العالم الإسلامي</option><option value="3">أمريكا الشمالية</option><option value="13">الشؤون الدينية التركية</option><option value="21">وزارة الأوقاف المغربية</option></select></label><label>العصر<select id="prayer-school"><option value="0">الجمهور</option><option value="1">الحنفي</option></select></label></div>
-          <details style="margin:0 0 14px"><summary class="text-button" style="cursor:pointer">مدينة غير موجودة؟ أدخل إحداثياتها</summary><div class="islam-form-row" style="margin-top:12px"><label>خط العرض<input type="number" id="custom-lat" min="-90" max="90" step="any" placeholder="30.0444"></label><label>خط الطول<input type="number" id="custom-lon" min="-180" max="180" step="any" placeholder="31.2357"></label><button class="button button-primary" data-action="custom-location" type="button">اعتمد الموقع</button></div></details>
-          <button class="button button-secondary" id="prayer-alert-toggle" data-action="toggle-prayer-alerts" aria-pressed="false" style="margin-bottom:13px"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg>فعّل تنبيهات الصلاة والتطبيق مفتوح</button>
-          <div class="prayer-hero"><div><p>الصلاة القادمة</p><h2 id="prayer-next-name">جاري الحساب...</h2><small id="prayer-next-city"></small></div><div><strong id="prayer-next-countdown" dir="ltr">--:--:--</strong><small id="prayer-next-at"></small></div></div>
-          <div class="prayer-layout"><section class="surface islam-block"><div class="section-heading"><h2>المواقيت اليوم</h2><span class="section-caption" id="prayer-date-label"></span></div><div class="islam-prayer-list" id="prayer-full-list"></div><p class="islam-stat-note" id="prayer-data-source">قد تختلف الأوقات عن مسجدك حسب طريقة الحساب والتوقيت الصيفي. وقت الشروق ليس صلاة مفروضة.</p></section><section class="surface islam-block"><h2>سجلّ صلاتك</h2><p class="section-caption" id="prayer-log-summary">اضغط الدائرة بعد الصلاة لتسجيلها.</p><div class="prayer-week" id="prayer-week" aria-label="آخر سبعة أيام"></div><p class="islam-stat-note">العلامات اللي بتسجّلها على جهازك للمتابعة الشخصية، ومش تقييم لعبادتك.</p></section></div>
-        </div>
-        <div class="islam-panel" id="islam-qibla" role="tabpanel" hidden>
-          <div class="islam-section-head"><div><h2>اتجاه القبلة</h2><p>حساب جغرافي من مكانك إلى الكعبة المشرفة.</p></div></div>
-          <div class="surface islam-block compass-layout"><div class="compass-visual" role="img" aria-label="مؤشر اتجاه القبلة"><span class="direction n">N</span><span class="direction s">S</span><span class="direction e">E</span><span class="direction w">W</span><svg class="compass-arrow" id="qibla-arrow" viewBox="0 0 42 188" aria-hidden="true"><path d="M21 0 41 100 21 82 1 100Z" fill="var(--accent)"/><path d="M21 188 1 100 21 110 41 100Z" fill="var(--line)"/></svg><span class="compass-center"></span></div><div class="compass-copy"><p class="greeting" style="justify-content:center">من <span id="qibla-city">القاهرة</span> إلى مكة المكرمة</p><h2>قبلة الصلاة</h2><strong class="compass-bearing" id="qibla-bearing" dir="ltr">--°</strong><p id="qibla-sensor-status">السهم بيشير للقبلة من الشمال الجغرافي. فعّل البوصلة عشان يتابع دوران جهازك.</p><div class="tasbih-controls"><button class="button button-primary" data-action="enable-compass"><svg class="icon" aria-hidden="true"><use href="#i-compass"/></svg>فعّل البوصلة</button><button class="button button-secondary" data-action="use-geolocation"><svg class="icon" aria-hidden="true"><use href="#i-location"/></svg>حدد موقعي</button></div><p class="islam-source">اتجاه تقريبي من شمال الكرة الأرضية. حساسات الأجهزة تتأثر بالمعدن والمغناطيس، فتأكد من معايرة الجهاز، والتطبيق يحتاج إذن الموقع والحساس عند استخدامهما.</p></div></div>
-        </div>
-        <div class="islam-panel" id="islam-tasbih" role="tabpanel" hidden>
-          <div class="islam-section-head"><div><h2>سبّح على مهلك</h2><p>سبحة بسيطة، حتى لو قفلت التطبيق وفتحت تاني.</p></div></div>
-          <div class="tasbih-layout"><div class="islam-form-row"><label>الذكر<select id="tasbih-phrase"><option value="سبحان الله">سبحان الله</option><option value="الحمد لله">الحمد لله</option><option value="الله أكبر">الله أكبر</option><option value="لا إله إلا الله">لا إله إلا الله</option><option value="أستغفر الله">أستغفر الله</option><option value="لا حول ولا قوة إلا بالله">لا حول ولا قوة إلا بالله</option><option value="اللهم صل وسلم على نبينا محمد">اللهم صل وسلم على نبينا محمد</option></select></label><label>هدفك<select id="tasbih-target"><option value="33">٣٣ مرة</option><option value="100">١٠٠ مرة</option><option value="0">من غير هدف</option></select></label></div><p class="tasbih-phrase" id="tasbih-current-phrase">سبحان الله</p><button class="tasbih-button" data-action="tasbih-plus" aria-label="تسبيحة جديدة"><span id="tasbih-current-count">0</span><span>اضغط للذكر</span></button><div class="tasbih-progress"><i id="tasbih-progress-fill" style="width:0%"></i></div><div class="tasbih-controls"><button class="button button-secondary" data-action="tasbih-undo">تراجع</button><button class="button button-secondary" data-action="tasbih-reset">ابدأ من جديد</button></div><p class="tasbih-total" id="tasbih-total"></p></div>
-        </div>
-      </section>
-
-      <footer class="app-footer"><span><svg class="icon" aria-hidden="true"><use href="#i-lock"/></svg>من غير حساب. بياناتك بتفضل على جهازك، ويشتغل بدون إنترنت.</span><span><button data-action="help">عن يومك</button> · <button data-action="shortcuts">الاختصارات</button> · تطوير <a class="developer-link" data-developer href="https://wa.me/201550802408?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85" target="_blank" rel="noopener noreferrer" aria-label="تواصل مع المطور elsayed hasan على واتساب برسالة جاهزة">elsayed hasan</a></span></footer>
-    </main>
-  </div>
-
-  <nav class="mobile-nav" aria-label="التنقل السريع">
-    <button class="active" data-view="today"><svg class="icon" aria-hidden="true"><use href="#i-grid"/></svg><span>يومك</span></button>
-    <button data-view="tasks"><svg class="icon" aria-hidden="true"><use href="#i-checklist"/></svg><span>مهامي</span></button>
-    <button data-view="focus"><svg class="icon" aria-hidden="true"><use href="#i-timer"/></svg><span>تركيز</span></button>
-    <button data-view="habits"><svg class="icon" aria-hidden="true"><use href="#i-habit"/></svg><span>عاداتي</span></button>
-    <button data-view="notes"><svg class="icon" aria-hidden="true"><use href="#i-note"/></svg><span>ملاحظاتي</span></button>
-    <button data-view="islam"><svg class="icon" aria-hidden="true"><use href="#i-mosque"/></svg><span>إسلامي</span></button>
-  </nav>
-
-  
-  <dialog id="task-dialog" aria-labelledby="task-dialog-title">
-    <div class="dialog-header"><h2 id="task-dialog-title">خطوة جديدة.</h2><button class="icon-button" data-close-dialog="task-dialog" aria-label="إغلاق"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
-    <form class="dialog-body" id="task-form">
-      <input type="hidden" id="task-id">
-      <div class="form-field"><label for="task-title-input">إيه الخطوة اللي على بالك؟</label><input id="task-title-input" placeholder="مثلا: أقرأ ١٠ صفحات من كتابي" maxlength="160" autocomplete="off"></div>
-      <div class="form-row"><div class="form-field"><label for="task-category-input">التصنيف</label><select id="task-category-input"><option value="personal">شخصي</option><option value="work">شغل</option><option value="learn">تعلّم</option><option value="health">صحة</option></select></div><div class="form-field"><label for="task-priority-input">الأولوية</label><select id="task-priority-input"><option value="normal">على مهلك</option><option value="high">مهمة للأول</option></select></div></div>
-      <div class="form-row"><div class="form-field"><label for="task-date-input">يومها إمتى؟</label><input id="task-date-input" type="date"></div><div class="form-field"><label for="task-reminder-input">تذكير الساعة</label><input id="task-reminder-input" type="time"></div></div>
-      <div class="form-field"><label for="task-repeat-input">تتكرر؟</label><select id="task-repeat-input"><option value="none">مرة واحدة</option><option value="daily">كل يوم</option><option value="weekly">كل أسبوع</option><option value="monthly">كل شهر</option></select><p class="form-hint">لما تخلصها، هنجهّز المرة الجاية تلقائيا. التذكير بيشتغل والتطبيق مفتوح.</p></div>
-      <div class="form-field"><label for="task-details-input">تفاصيل (اختياري)</label><textarea id="task-details-input" maxlength="1000" placeholder="أي ملاحظة تساعدك تبدأ"></textarea></div>
-      <div class="dialog-actions"><button type="submit" class="button button-primary" id="task-submit-button">أضف الخطوة</button><button type="button" class="button button-secondary" data-close-dialog="task-dialog">إلغاء</button><button type="button" class="delete-button" id="delete-task-button" data-action="delete-task" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>حذف</button></div>
-    </form>
-  </dialog>
-
-  
-  <dialog id="habit-dialog" aria-labelledby="habit-dialog-title">
-    <div class="dialog-header"><h2 id="habit-dialog-title">عادة جديدة.</h2><button class="icon-button" data-close-dialog="habit-dialog" aria-label="إغلاق"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
-    <form class="dialog-body" id="habit-form">
-      <input type="hidden" id="habit-id">
-      <div class="form-field"><label for="habit-name-input">اسم العادة</label><input id="habit-name-input" placeholder="مثلا: أمشي ١٠ دقايق" maxlength="60" autocomplete="off"></div>
-      <div class="form-field"><span class="field-label">رمز صغير</span><div class="emoji-picker" id="emoji-picker" role="group" aria-label="اختيار رمز"></div></div>
-      <div class="form-field"><label for="habit-target-input">كام مرة في الأسبوع؟</label><select id="habit-target-input"><option value="7">كل يوم</option><option value="6">٦ أيام</option><option value="5">٥ أيام</option><option value="4">٤ أيام</option><option value="3">٣ أيام</option><option value="2">يومين</option><option value="1">مرة واحدة</option></select></div>
-      <div class="dialog-actions"><button type="submit" class="button button-primary" id="habit-submit-button">أضف العادة</button><button type="button" class="button button-secondary" data-close-dialog="habit-dialog">إلغاء</button><button type="button" class="delete-button" id="delete-habit-button" data-action="delete-habit" hidden><svg class="icon" aria-hidden="true"><use href="#i-trash"/></svg>حذف</button></div>
-    </form>
-  </dialog>
-
-  
-  <dialog id="settings-dialog" aria-labelledby="settings-title">
-    <div class="dialog-header"><h2 id="settings-title">يومك، بطريقتك.</h2><button class="icon-button" data-close-dialog="settings-dialog" aria-label="إغلاق الإعدادات"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
-    <div class="dialog-body">
-      <form id="settings-form">
-        <div class="form-row"><div class="form-field"><label for="settings-name">تحب نناديك بإيه؟</label><input id="settings-name" maxlength="30" placeholder="اسمك الأول" autocomplete="given-name"></div><div class="form-field"><label for="settings-goal">هدفك اليومي (مهام)</label><input id="settings-goal" type="number" min="1" max="20" step="1"></div></div>
-        <h3 class="settings-label">المؤقّت</h3>
-        <div class="form-row"><div class="form-field"><label for="settings-focus">تركيز (دقائق)</label><input id="settings-focus" type="number" min="1" max="120" step="1"></div><div class="form-field"><label for="settings-break">استراحة (دقائق)</label><input id="settings-break" type="number" min="1" max="60" step="1"></div></div>
-        <div class="form-row"><div class="form-field"><label for="settings-long">استراحة طويلة (دقائق)</label><input id="settings-long" type="number" min="1" max="60" step="1"></div><div class="form-field"><label for="settings-every">بعد كام جلسة؟</label><input id="settings-every" type="number" min="2" max="8" step="1"></div></div>
-        <label class="switch-row" for="settings-autostart"><span>ابدأ الجلسة الجاية تلقائيا</span><input type="checkbox" id="settings-autostart" role="switch"></label>
-        <label class="switch-row" for="settings-sound"><span>صوت هادي لما الجلسة تخلص</span><input type="checkbox" id="settings-sound" role="switch"></label>
-        <label class="switch-row" for="settings-notifications"><span>إشعارات للتذكيرات ونهاية الجلسات</span><input type="checkbox" id="settings-notifications" role="switch"></label>
-        <h3 class="settings-label">المظهر</h3>
-        <div class="form-field"><label for="settings-theme">الوضع</label><select id="settings-theme"><option value="light">فاتح</option><option value="dark">داكن</option><option value="system">زي الجهاز</option></select></div>
-        <div class="form-field"><span class="field-label">لون المساحة</span><div class="palette-swatches" id="palette-swatches"></div></div>
-        <button type="submit" class="button button-primary" style="width:100%;margin-top:6px">احفظ اختياراتي</button>
-      </form>
-      <div class="settings-separator"></div>
-      <h3 class="settings-label">التطبيق</h3>
-      <p class="data-warning" id="app-status-text"></p>
-      <div class="backup-actions"><button class="button button-secondary" data-action="install"><svg class="icon" aria-hidden="true"><use href="#i-install"/></svg>ثبّت كتطبيق</button><button class="button button-secondary" data-action="help">دليل الاستخدام</button></div>
-      <div class="settings-separator"></div>
-      <h3 class="settings-label">أفكارك ومهامك، معاك.</h3>
-      <p class="data-warning" id="backup-status">الحفظ على المتصفح ده فقط. نزّل نسخة احتياطية قبل تغيير الجهاز أو مسح بيانات المتصفح.</p>
-      <div class="backup-actions"><button class="button button-secondary" data-action="export-data"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>نزّل نسخة</button><button class="button button-secondary" data-action="import-data"><svg class="icon" aria-hidden="true"><use href="#i-upload"/></svg>استرجع نسخة</button></div>
-      <input id="import-file" type="file" accept="application/json,.json" hidden>
-      <button class="reset-data-button" data-action="reset-data">امسح بياناتي وابدأ من جديد</button>
-    </div>
-  </dialog>
-
-  
-  <dialog id="help-dialog" aria-labelledby="help-title">
-    <div class="dialog-header"><h2 id="help-title">أهلا بيك في يومك.</h2><button class="icon-button" data-close-dialog="help-dialog" aria-label="إغلاق"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
-    <div class="dialog-body">
-      <p class="dialog-intro">مش تطبيق يخليك تعمل أكتر. مساحة تساعدك تبدأ أهدى. كل حاجة بتتحفظ على جهازك وبتشتغل من غير إنترنت.</p>
-      <div class="help-list">
-        <div class="help-item"><svg class="icon" aria-hidden="true"><use href="#i-checklist"/></svg><div><h3>مهام بتفهمك</h3><p>مواعيد، أولويات، تذكيرات، ومهام بتتكرر لوحدها. حدّد هدفك اليومي واحتفل لما توصله.</p></div></div>
-        <div class="help-item"><svg class="icon" aria-hidden="true"><use href="#i-timer"/></svg><div><h3>تركيز بطريقة بومودورو</h3><p>جلسات تركيز واستراحات قصيرة وطويلة، أصوات محيطة (مطر، هوا)، ملء الشاشة، والشاشة مش هتطفي أثناء الجلسة.</p></div></div>
-        <div class="help-item"><svg class="icon" aria-hidden="true"><use href="#i-habit"/></svg><div><h3>عادات وسلاسل</h3><p>علّم على عاداتك كل يوم وشوف سلسلتك بتطول. وسجّل مزاجك بلمسة واحدة.</p></div></div>
-        <div class="help-item"><svg class="icon" aria-hidden="true"><use href="#i-note"/></svg><div><h3>دفتر ملاحظات</h3><p>ملاحظات متعددة مع تثبيت وبحث ومشاركة وتنزيل. والملاحظة السريعة في الصفحة الرئيسية دايما قريبة.</p></div></div>
-        <div class="help-item"><svg class="icon" aria-hidden="true"><use href="#i-chart"/></svg><div><h3>إحصائيات بتشجعك</h3><p>إنجازك الأسبوعي، دقايق التركيز، سلسلة أيامك، وتوزيع مهامك.</p></div></div>
-        <div class="help-item"><svg class="icon" aria-hidden="true"><use href="#i-mosque"/></svg><div><h3>ركنك الإسلامي</h3><p>١١٤ سورة مع قراءة واستماع وبحث وموضع محفوظ. أذكار بعدّاد، مواقيت حسب المدينة وطريقة الحساب، قبلة، سبحة، وسجل للصلاة. حمّل المصحف وأوقات الشهر مسبقا للاستفادة بدون نت. التلاوة الصوتية وتنزيل سور جديدة يحتاجان إنترنت، والتنبيهات تعمل فقط أثناء فتح التطبيق.</p></div></div>
-        <div class="help-item"><svg class="icon" aria-hidden="true"><use href="#i-install"/></svg><div><h3>ثبّته كتطبيق</h3><p>من زر «ثبّت» أو قائمة المتصفح. هيفتح زي أي تطبيق، وبدون إنترنت.</p></div></div>
-      </div>
-      <p class="help-fineprint">مفيش حساب أو خادم. البيانات مرتبطة بالمتصفح والجهاز، والنسخة الاحتياطية من الإعدادات بتحافظ عليها.</p>
-      <button class="button button-primary" data-close-dialog="help-dialog" style="width:100%">نبدأ على مهلك</button>
-    </div>
-  </dialog>
-
-  
-  <dialog id="shortcuts-dialog" aria-labelledby="shortcuts-title">
-    <div class="dialog-header"><h2 id="shortcuts-title">اختصارات لوحة المفاتيح</h2><button class="icon-button" data-close-dialog="shortcuts-dialog" aria-label="إغلاق"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
-    <div class="dialog-body">
-      <div class="help-list" style="gap:10px;font-size:12px">
-        <div class="switch-row" style="cursor:default"><span>بحث وأوامر سريعة</span><span><kbd>Ctrl</kbd> + <kbd>K</kbd></span></div>
-        <div class="switch-row" style="cursor:default"><span>مهمة جديدة</span><kbd>N</kbd></div>
-        <div class="switch-row" style="cursor:default"><span>ملاحظة جديدة</span><kbd>M</kbd></div>
-        <div class="switch-row" style="cursor:default"><span>تشغيل/إيقاف المؤقّت (في صفحة التركيز)</span><kbd>Space</kbd></div>
-        <div class="switch-row" style="cursor:default"><span>التنقل بين الصفحات</span><span><kbd>1</kbd> … <kbd>7</kbd></span></div>
-        <div class="switch-row" style="cursor:default"><span>العد في السبحة (داخل صفحة السبحة)</span><kbd>Space</kbd></div>
-        <div class="switch-row" style="cursor:default"><span>تبديل المظهر</span><kbd>T</kbd></div>
-        <div class="switch-row" style="cursor:default"><span>إغلاق أي نافذة</span><kbd>Esc</kbd></div>
-      </div>
-    </div>
-  </dialog>
-
-  
-  <dialog id="install-dialog" aria-labelledby="install-title">
-    <div class="dialog-header"><h2 id="install-title">ثبّت يومك على جهازك</h2><button class="icon-button" data-close-dialog="install-dialog" aria-label="إغلاق"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
-    <div class="dialog-body"><p class="dialog-intro" id="install-intro"></p><ol class="install-steps" id="install-steps"></ol><button class="button button-primary" data-close-dialog="install-dialog" style="width:100%">تمام</button></div>
-  </dialog>
-
-  
-  <dialog id="confirm-dialog" aria-labelledby="confirm-title">
-    <div class="dialog-header"><h2 id="confirm-title">متأكد؟</h2><button class="icon-button" data-close-dialog="confirm-dialog" aria-label="إلغاء"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
-    <div class="dialog-body"><p class="confirm-description" id="confirm-description"></p><div class="dialog-actions"><button class="button button-primary" id="confirm-yes">تأكيد</button><button class="button button-secondary" data-close-dialog="confirm-dialog">رجوع</button></div></div>
-  </dialog>
-
-  
-  <dialog id="palette-dialog" class="palette" aria-label="بحث وأوامر سريعة">
-    <div class="palette-input"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input id="palette-input" placeholder="ابحث في مهامك وملاحظاتك، أو اكتب أمر..." autocomplete="off" aria-label="بحث"><kbd>Esc</kbd></div>
-    <div class="palette-results" id="palette-results" role="listbox"></div>
-    <div class="palette-foot">↑ ↓ للتنقل · Enter للاختيار</div>
-  </dialog>
-
-  <canvas id="confetti" hidden aria-hidden="true"></canvas>
-  <div class="toast" id="toast" role="status" aria-live="polite" hidden><span class="toast-message" id="toast-message"></span><button class="toast-action" id="toast-action" hidden></button><button class="toast-close" data-action="close-toast" aria-label="إغلاق التنبيه"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></div>
-
-  <script src="app.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,4 @@
+Author: EL-sayed Hasan
+Website: https://yawmak.vercel.app/
+Open Graph image: https://yawmak.vercel.app/og-image.jpg
+Canonical: https://yawmak.vercel.app/
