@@ -1,6 +1,6 @@
-const CORE = 'yawmak-core-v4';
-const ASSETS = 'yawmak-assets-v4';
-const QURAN = 'yawmak-quran-v4';
+const CORE = 'yawmak-core-v6';
+const ASSETS = 'yawmak-assets-v6';
+const QURAN = 'yawmak-quran-v6';
 const AUDIO = 'yawmak-audio-v2';
 const LOCAL = ['./', './index.html', './styles.css', './app.js', './manifest.webmanifest', './icon.svg', './icon-maskable.svg', './favicon.ico', './favicon-48.png', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './og-image.jpg'];
 const LIBRARIES = [
