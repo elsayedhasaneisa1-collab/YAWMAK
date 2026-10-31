@@ -1,7 +1,7 @@
 const CORE = 'yawmak-core-v3';
 const ASSETS = 'yawmak-assets-v3';
 const QURAN = 'yawmak-quran-v3';
-const AUDIO = 'yawmak-recitations-v1';
+const AUDIO = 'yawmak-recitations-v2';
 const LOCAL = ['./', './index.html', './Surah.html', './manifest.webmanifest', './icon.svg'];
 const LIBRARIES = [
   'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
@@ -131,7 +131,7 @@ self.addEventListener('fetch', event => {
     event.respondWith(networkFirst(request, CORE, './index.html'));
     return;
   }
-  if (url.hostname === 'cdn.islamic.network' && url.pathname.includes('/audio')) {
+  if ((url.hostname === 'cdn.islamic.network' && url.pathname.includes('/audio')) || (url.hostname === 'everyayah.com' && url.pathname.includes('/data/'))) {
     event.respondWith(cacheFirst(request, AUDIO).catch(() => new Response('', { status: 503 })));
     return;
   }
