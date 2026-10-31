@@ -233,8 +233,6 @@
       let commandIndex = 0;
       let lastPrayerTick = 0;
       const tafsirRequests = new Map();
-      let notificationBank = [];
-      let notificationBankReady = false;
       const arabicNormalize = text => String(text).normalize('NFD').replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').toLowerCase();
       function defaultState(withExamples = true) {
         const now = Date.now();
@@ -689,16 +687,23 @@
           transaction.onabort = () => reject(transaction.error || new Error('Storage aborted'));
         });
       }
-      async function fetchJSON(url,timeout = 25000) {
-        const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(),timeout);
-        try {
-          const response = await fetch(url,{signal:controller.signal});
-          if (!response.ok) throw new Error('Network response failed');
-          const data = await response.json();
-          if (data.code !== 200 || !data.data) throw new Error('Invalid Quran data');
-          return data.data;
-        } finally { clearTimeout(timer); }
+      async function fetchJSON(url,timeout = 180000) {
+        let lastError;
+        for (let attempt = 1; attempt <= 3; attempt++) {
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(),timeout);
+          try {
+            const response = await fetch(url,{signal:controller.signal,cache:'no-store'});
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            if (data.code !== 200 || !data.data) throw new Error('بيانات القرآن غير مكتملة');
+            return data.data;
+          } catch (error) {
+            lastError = error;
+            if (attempt < 3 && navigator.onLine) await new Promise(resolve => setTimeout(resolve,1000 * attempt));
+          } finally { clearTimeout(timer); }
+        }
+        throw lastError || new Error('تعذر الاتصال بمصدر القرآن');
       }
       function compactSurahs(data) {
         if (!Array.isArray(data) || data.length !== 114 || data.reduce((sum,surah) => sum + (surah.ayahs?.length || 0),0) !== 6236) throw new Error('Incomplete Quran');
@@ -712,7 +717,7 @@
         const tafsirReady = !!quranCorpus?.tafsir;
         $('#quran-pack-card').classList.toggle('downloaded',ready && tafsirReady);
         $('#quran-pack-title').textContent = ready && tafsirReady ? 'المصحف والتفسير جاهزين بدون نت.' : ready ? 'المصحف جاهز. كمّل تنزيل التفسير.' : 'المصحف كامل، حتى بدون نت.';
-        $('#quran-pack-status').textContent = ready && tafsirReady ? '١١ سورة · ٦٢٣٦ آية · التفسير الميسر محفوظ على جهازك.' : '١١ سورة · ٦٢٣٦ آية · تفسير الميسر. نزّله مرة واحدة.';
+        $('#quran-pack-status').textContent = ready && tafsirReady ? '١١٤ سورة · ٦٢٣٦ آية · التفسير الميسر محفوظ على جهازك.' : '١١٤ سورة · ٦٢٣٦ آية · تفسير الميسر. نزّله مرة واحدة.';
         $('#quran-download').textContent = ready && tafsirReady ? 'تحقق من المحتوى' : ready ? 'أكمل تنزيل التفسير' : 'نزّل المصحف والتفسير';
         $('#quran-download').disabled = quranLoading;
       }
@@ -728,23 +733,33 @@
         if (!navigator.onLine) { showToast('تنزيل المصحف الكامل يحتاج اتصالا بالنت أول مرة.'); return; }
         quranLoading = true; updateQuranPack();
         try {
+          if (navigator.storage?.persist) await navigator.storage.persist().catch(() => false);
+          if (navigator.storage?.estimate) {
+            const estimate = await navigator.storage.estimate();
+            const free = (estimate.quota || 0) - (estimate.usage || 0);
+            if (estimate.quota && free < 12 * 1024 * 1024) throw new Error('مساحة التخزين المتاحة غير كافية.');
+          }
           if (!quranCorpus?.surahs) {
-            $('#quran-pack-status').textContent = '١ / ٢ · بننزّل القرآن الكريم كاملا. سيب الصفحة مفتوحة...';
-            const data = await fetchJSON('https://api.alquran.cloud/v1/quran/quran-uthmani',90000);
+            $('#quran-pack-status').textContent = '١ / ٢ · جاري تنزيل نص القرآن كاملًا...';
+            const data = await fetchJSON('https://api.alquran.cloud/v1/quran/quran-uthmani');
             const surahs = compactSurahs(data);
             await quranStore('corpus-v1',{surahs,tafsir:null});
             quranCorpus = {surahs,tafsir:null};
+            renderQuran(); renderSurahList();
           }
-          $('#quran-pack-status').textContent = '٢ / ٢ · القرآن اتحفظ. بنجهّز التفسير الميسر...';
-          const data = await fetchJSON('https://api.alquran.cloud/v1/quran/ar.muyassar',90000);
+          $('#quran-pack-status').textContent = '٢ / ٢ · تم حفظ القرآن. جاري تنزيل التفسير الميسر...';
+          const data = await fetchJSON('https://api.alquran.cloud/v1/quran/ar.muyassar');
           const tafsirSurahs = compactSurahs(data);
           const tafsir = Object.fromEntries(tafsirSurahs.flatMap(surah => surah.verses.map((verse,index) => [`${surah.number}:${index+1}`,verse.text])));
-          quranCorpus.tafsir = tafsir;
-          await quranStore('corpus-v1',quranCorpus);
+          await quranStore('corpus-v1',{surahs:quranCorpus.surahs,tafsir});
+          quranCorpus = {surahs:quranCorpus.surahs,tafsir};
           renderQuran(); renderSurahList();
           showToast('المصحف والتفسير بقوا معاك، حتى بدون نت.');
-        } catch { showToast('التنزيل ما اكتملش. راجع الاتصال ومساحة الجهاز، وجرّب تاني.'); }
-        finally { quranLoading = false; updateQuranPack(); }
+        } catch (error) {
+          const message = error?.name === 'QuotaExceededError' ? 'مساحة الجهاز لا تكفي لحفظ المحتوى. حرّر مساحة ثم جرّب.' : error?.message?.includes('مساحة') ? error.message : 'تعذر إكمال التنزيل. تأكد من اتصال ثابت ومساحة كافية ثم حاول مرة أخرى.';
+          $('#quran-pack-status').textContent = message;
+          showToast(message);
+        } finally { quranLoading = false; updateQuranPack(); }
       }
       function getVerses(number) {
         if (quranCorpus?.surahs) return quranCorpus.surahs[number-1].verses;
@@ -829,7 +844,7 @@
           button.className = 'ayah-number'; button.dataset.ayah = `${q.surah}:${index+1}`;
           button.textContent = (index+1).toLocaleString('ar-EG');
           button.setAttribute('aria-label',`تفسير وحفظ الآية ${index+1} من سورة ${surah.name}`);
-          span.append(button); fragment.append(document.createTextNode(' '));
+          span.append(button); fragment.append(span,document.createTextNode(' '));
         });
         container.append(fragment);
       }
@@ -1336,24 +1351,6 @@
           else new Notification(title,{body,tag});
         } catch {}
       }
-      async function loadNotificationBank() {
-        if (notificationBankReady) return notificationBank;
-        try { const response = await fetch('./notifications.json'); if (!response.ok) throw new Error('bank'); const data = await response.json(); notificationBank = Array.isArray(data.notifications) ? data.notifications.filter(item => item && /^yw-\d{3}$/.test(item.id) && typeof item.title === 'string' && typeof item.body === 'string') : []; notificationBankReady = true; } catch { notificationBank = []; }
-        return notificationBank;
-      }
-      async function sendRandomBankNotification(now = Date.now()) {
-        if (!state.faith.azkarNotifications || Notification.permission !== 'granted') return;
-        const bank = await loadNotificationBank(); if (!bank.length) return;
-        const last = Number(localStorage.getItem('yawmak-random-notification-at') || 0);
-        const interval = 4 * 60 * 60 * 1000;
-        if (last && now - last < interval) return;
-        const recent = JSON.parse(localStorage.getItem('yawmak-random-notification-ids') || '[]');
-        const pool = bank.filter(item => !recent.slice(-12).includes(item.id));
-        const chosen = (pool.length ? pool : bank)[Math.floor(Math.random() * (pool.length || bank.length))];
-        await sendNotification(chosen.title, chosen.body, `random-${chosen.id}-${dayKey()}`);
-        localStorage.setItem('yawmak-random-notification-at', String(now));
-        localStorage.setItem('yawmak-random-notification-ids', JSON.stringify([...recent, chosen.id].slice(-20)));
-      }
       async function requestAzkarNotifications() {
         if (!('Notification' in window)) { showToast('المتصفح ده مش بيدعم التنبيهات.'); return; }
         if (state.faith.azkarNotifications) { state.faith.azkarNotifications = false; saveState(); updateAzkarNotificationLabel(); showToast('تذكير الأذكار اتوقف.'); return; }
@@ -1361,8 +1358,7 @@
           const permission = await Notification.requestPermission();
           if (permission !== 'granted') { showToast('اسمح بالتنبيهات من إعدادات الموقع لتفعيل التذكير.'); return; }
           state.faith.azkarNotifications = true; saveState(); updateAzkarNotificationLabel();
-          await loadNotificationBank();
-          showToast('اتفعّلت تذكيرات الأذكار والرسائل المتنوعة كل 4 ساعات أثناء استخدام التطبيق.');
+          showToast('اتفعّل تذكير أذكار الصباح 7 صباحا والمساء 5 مساءً.');
         } catch { showToast('تعذّر تفعيل التنبيهات على هذا الجهاز.'); }
       }
       function updateAzkarNotificationLabel() {
@@ -1394,7 +1390,6 @@
           if (!state.notifySent.includes(key)) { state.notifySent.push(key); sendNotification('خطوة صغيرة مستنياك',task.title,key); saveState(); }
         });
         if (state.faith.azkarNotifications) {
-          sendRandomBankNotification(now.getTime());
           const slots = [{hour:7,minute:0,key:'morning',title:'أذكار الصباح',body:'ابدأ يومك بذكر الله.'},{hour:17,minute:0,key:'evening',title:'أذكار المساء',body:'اجعل ختام يومك بذكر الله.'}];
           slots.forEach(slot => {
             const key = `azkar-${today}-${slot.key}`;

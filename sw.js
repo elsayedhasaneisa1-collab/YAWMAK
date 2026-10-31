@@ -1,8 +1,8 @@
 const CORE = 'yawmak-core-v8';
 const ASSETS = 'yawmak-assets-v8';
-const QURAN = 'yawmak-quran-v7';
+const QURAN = 'yawmak-quran-v8';
 const AUDIO = 'yawmak-audio-v2';
-const LOCAL = ['./', './index.html', './styles.css', './app.js', './notifications.json', './manifest.webmanifest', './icon.svg', './icon-maskable.svg', './favicon.ico', './favicon-48.png', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './og-image.jpg'];
+const LOCAL = ['./', './index.html', './styles.css', './app.js', './manifest.webmanifest', './icon.svg', './icon-maskable.svg', './favicon.ico', './favicon-48.png', './icon-192.png', './icon-512.png', './apple-touch-icon.png', './og-image.jpg', './404.html'];
 const LIBRARIES = [
   'https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4',
   'https://cdn.jsdelivr.net/npm/adhan@4.4.3/lib/bundles/adhan.umd.min.js',
@@ -57,7 +57,7 @@ self.addEventListener('message', event => {
 async function networkFirst(request, cacheName, fallbackURL) {
   const cache=await caches.open(cacheName); const key=request.url;
   const controller=new AbortController(); const timeout=setTimeout(()=>controller.abort(),5000);
-  try { const response=await fetch(request,{signal:controller.signal}); if(response.ok && response.type!=='opaque'&&!response.headers.get('Cache-Control')?.includes('no-store')) await cache.put(key,response.clone()); return response; }
+  try { const response=await fetch(request,{signal:controller.signal}); if(response.status===404 && request.mode==='navigate'){const notFound=await caches.match(new URL('./404.html',self.registration.scope).href);if(notFound)return notFound;} if(response.ok && response.type!=='opaque'&&!response.headers.get('Cache-Control')?.includes('no-store')) await cache.put(key,response.clone()); return response; }
   catch { const cached=await cache.match(key); if(cached)return cached; if(fallbackURL){const fallback=await caches.match(fallbackURL);if(fallback)return fallback;} return new Response('',{status:503}); }
   finally {clearTimeout(timeout);}
 }
