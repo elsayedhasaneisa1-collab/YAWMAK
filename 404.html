@@ -1,1 +1,574 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#173e32"><title>الصفحة غير موجودة | يومك</title><link rel="icon" href="./icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./styles.css"><style>body{min-height:100vh;display:grid;place-items:center;padding:24px;background:#f7f8f4;color:#293c32;font-family:'IBM Plex Sans Arabic',Tahoma,sans-serif}.not-found{width:min(100%,520px);padding:clamp(28px,7vw,54px);text-align:center;background:#fff;border:1px solid #e9ece4;border-radius:22px;box-shadow:0 18px 65px #173e3215}.not-found .mark{width:66px;height:66px;margin:0 auto 22px;display:grid;place-items:center;border-radius:20px;background:#edf2e6;color:#285840;font-size:30px}.not-found strong{display:block;color:#8a9b7a;font:600 13px 'DM Sans',sans-serif;letter-spacing:4px}.not-found h1{font-size:clamp(27px,6vw,38px);margin:9px 0 12px}.not-found p{font-size:14px;color:#8b9289;line-height:2;margin-bottom:25px}.not-found a{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 25px;border-radius:9px;background:#285840;color:#fff;font-size:13px}</style></head><body><main class="not-found"><div class="mark" aria-hidden="true">ي</div><strong>404</strong><h1>الصفحة مش موجودة</h1><p>يبدو أن الرابط غير صحيح أو أن الصفحة انتقلت لمكان آخر.</p><a href="./index.html">العودة إلى يومك</a></main></body></html>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f8f4">
+<meta name="robots" content="noindex, follow">
+<title>الصفحة غير موجودة | يومك</title>
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./styles.css">
+
+<style>
+:root {
+    --error-bg: #f7f8f4;
+    --error-card: #ffffff;
+    --error-text: #293c32;
+    --error-muted: #8b9289;
+    --error-green: #285840;
+    --error-lime: #d8e8b6;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    overflow-x: hidden;
+    background: var(--error-bg);
+    color: var(--error-text);
+    font-family: var(--font), sans-serif;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: #dce9cf;
+    filter: blur(110px);
+    opacity: .35;
+    top: -230px;
+    right: -170px;
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: #e9e6cf;
+    filter: blur(110px);
+    opacity: .3;
+    bottom: -220px;
+    left: -130px;
+    pointer-events: none;
+}
+
+.error-page {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 510px);
+    padding: clamp(28px, 7vw, 52px) clamp(20px, 6vw, 42px);
+    text-align: center;
+    background: var(--error-card);
+    border: 1px solid #e9ece4;
+    border-radius: 22px;
+    box-shadow: 0 20px 70px #173e3210;
+    animation: pageEnter .8s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 35px;
+    color: var(--error-green);
+    font-size: 27px;
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+.brand-mark {
+    width: 35px;
+    height: 35px;
+}
+
+.visual {
+    position: relative;
+    width: 190px;
+    height: 190px;
+    margin: 0 auto 20px;
+    display: grid;
+    place-items: center;
+}
+
+.visual-halo {
+    position: absolute;
+    width: 155px;
+    height: 155px;
+    border-radius: 50%;
+    background: #edf2e6;
+    animation: haloPulse 4s ease-in-out infinite;
+}
+
+.visual-ring {
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    border: 1px solid #dfe8d7;
+    border-radius: 50%;
+    animation: ringRotate 24s linear infinite;
+}
+
+.visual-ring::before {
+    content: "";
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #91aa78;
+    top: 22px;
+    left: 35px;
+    box-shadow: 0 0 0 5px #91aa781c;
+}
+
+.visual-ring::after {
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #c3ad75;
+    bottom: 24px;
+    right: 35px;
+}
+
+.main-icon {
+    position: relative;
+    z-index: 2;
+    width: 115px;
+    height: 115px;
+    overflow: visible;
+    animation: iconFloat 4s ease-in-out infinite;
+}
+
+.clock-face {
+    transform-origin: 60px 60px;
+    animation: clockPulse 4s ease-in-out infinite;
+}
+
+.clock-hand {
+    transform-origin: 60px 60px;
+    animation: clockTick 12s linear infinite;
+}
+
+.leaf {
+    transform-origin: 88px 34px;
+    animation: leafSway 3s ease-in-out infinite;
+}
+
+.number {
+    position: relative;
+    display: block;
+    margin: 0 auto 5px;
+    color: #91a17f;
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(65px, 15vw, 85px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -5px;
+    animation: numberAppear 1s .25s both;
+}
+
+h1 {
+    margin: 12px 0 10px;
+    font-size: clamp(23px, 5vw, 29px);
+    line-height: 1.7;
+    font-weight: 600;
+    color: var(--error-text);
+    animation: textAppear .8s .35s both;
+}
+
+.description {
+    max-width: 355px;
+    margin: 0 auto;
+    color: var(--error-muted);
+    font-size: 13px;
+    line-height: 2.1;
+    animation: textAppear .8s .5s both;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 29px;
+    flex-wrap: wrap;
+    animation: textAppear .8s .65s both;
+}
+
+.action {
+    min-height: 46px;
+    padding: 0 21px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform .25s, box-shadow .25s, background .25s;
+}
+
+.action svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.action-primary {
+    background: var(--error-green);
+    color: #fff;
+}
+
+.action-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px #28584025;
+}
+
+.action-secondary {
+    background: #f2f5ef;
+    color: var(--error-green);
+    border: 1px solid #e8ece3;
+}
+
+.action-secondary:hover {
+    transform: translateY(-3px);
+    background: #eaf0e3;
+}
+
+.footer {
+    margin-top: 38px;
+    padding-top: 19px;
+    border-top: 1px solid #eef0e9;
+    color: #a0a99a;
+    font-size: 10px;
+    letter-spacing: .2px;
+    animation: textAppear .8s .8s both;
+}
+
+.footer strong {
+    color: #718568;
+    font-weight: 600;
+}
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(22px) scale(.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes haloPulse {
+    0%, 100% {
+        transform: scale(.94);
+        opacity: .7;
+    }
+    50% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+}
+
+@keyframes ringRotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-7px);
+    }
+}
+
+@keyframes clockTick {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes clockPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.035);
+    }
+}
+
+@keyframes leafSway {
+    0%, 100% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(8deg);
+    }
+}
+
+@keyframes numberAppear {
+    from {
+        opacity: 0;
+        transform: scale(.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes textAppear {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    .error-page {
+        padding: 30px 19px 24px;
+        border-radius: 18px;
+    }
+
+    .brand {
+        margin-bottom: 26px;
+    }
+
+    .visual {
+        width: 165px;
+        height: 165px;
+    }
+
+    .visual-ring {
+        width: 155px;
+        height: 155px;
+    }
+
+    .visual-halo {
+        width: 135px;
+        height: 135px;
+    }
+
+    .main-icon {
+        width: 105px;
+        height: 105px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+
+    .action {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    .footer {
+        margin-top: 28px;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --error-bg: #17231c;
+        --error-card: #1f2e24;
+        --error-text: #e9eee1;
+        --error-muted: #96a38f;
+        --error-green: #c8dca8;
+    }
+
+    body::before {
+        background: #315b3d;
+        opacity: .15;
+    }
+
+    body::after {
+        background: #6c6840;
+        opacity: .12;
+    }
+
+    .error-page {
+        border-color: #334233;
+        box-shadow: 0 20px 70px #00000020;
+    }
+
+    .visual-halo {
+        background: #293b2c;
+    }
+
+    .visual-ring {
+        border-color: #405342;
+    }
+
+    .number {
+        color: #b4c69c;
+    }
+
+    .action-secondary {
+        background: #293b2c;
+        color: #d8e8b6;
+        border-color: #405342;
+    }
+
+    .action-secondary:hover {
+        background: #344a36;
+    }
+
+    .footer {
+        border-color: #334233;
+    }
+
+    .footer strong {
+        color: #c1d7a4;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<main class="error-page">
+
+    <a href="./index.html" class="brand" aria-label="يومك - الصفحة الرئيسية">
+        <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <rect x="5" y="5" width="38" height="38" rx="13" fill="#edf2e6"/>
+            <path d="M24 12V15M24 33V36M12 24H15M33 24H36" stroke="#285840" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="24" cy="24" r="11" stroke="#285840" stroke-width="2"/>
+            <path d="M24 17V24L29 27" stroke="#285840" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        يومك
+    </a>
+
+    <div class="visual" aria-hidden="true">
+
+        <div class="visual-halo"></div>
+        <div class="visual-ring"></div>
+
+        <svg class="main-icon" viewBox="0 0 120 120" fill="none">
+
+            <circle class="clock-face" cx="60" cy="60" r="39" fill="#F7F8F4" stroke="#285840" stroke-width="3"/>
+
+            <path d="M60 27V33M60 87V93M27 60H33M87 60H93"
+                  stroke="#91A17F" stroke-width="2.5" stroke-linecap="round"/>
+
+            <circle cx="60" cy="60" r="3.5" fill="#285840"/>
+
+            <path class="clock-hand"
+                  d="M60 60V40M60 60L75 68"
+                  stroke="#285840"
+                  stroke-width="3"
+                  stroke-linecap="round"/>
+
+            <path d="M60 60L46 73"
+                  stroke="#C3AD75"
+                  stroke-width="2"
+                  stroke-linecap="round"/>
+
+            <g class="leaf">
+                <path d="M87 18C103 15 108 26 101 39C95 50 83 53 76 45C70 37 75 23 87 18Z"
+                      fill="#D8E8B6"
+                      stroke="#6D8B62"
+                      stroke-width="2"/>
+
+                <path d="M78 45C84 37 91 30 101 23"
+                      stroke="#6D8B62"
+                      stroke-width="2"
+                      stroke-linecap="round"/>
+
+                <path d="M87 35L85 26M92 31L99 32"
+                      stroke="#6D8B62"
+                      stroke-width="1.5"
+                      stroke-linecap="round"/>
+            </g>
+
+            <circle cx="91" cy="87" r="13" fill="#285840"/>
+            <path d="M85 87L89 91L97 82"
+                  stroke="#fff"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"/>
+
+        </svg>
+    </div>
+
+    <span class="number">404</span>
+
+    <h1>الصفحة مش موجودة</h1>
+
+    <p class="description">
+        يبدو أن الصفحة التي تبحث عنها غير متاحة الآن.
+        خذ نفسًا هادئًا، وارجع لمساحتك الصغيرة.
+    </p>
+
+    <div class="actions">
+
+        <a href="./index.html" class="action action-primary">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 10.5L12 3L21 10.5"/>
+                <path d="M5.5 9.5V20H18.5V9.5"/>
+                <path d="M9 20V13H15V20"/>
+            </svg>
+            العودة إلى يومك
+        </a>
+
+        <a href="javascript:history.back()" class="action action-secondary">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 18L9 12L15 6"/>
+                <path d="M9 12H21"/>
+            </svg>
+            الصفحة السابقة
+        </a>
+
+    </div>
+
+    <footer class="footer">
+        مساحة صغيرة ليوم أخف · <strong>YAWMAK</strong>
+    </footer>
+
+</main>
+
+</body>
+</html>
