@@ -160,84 +160,97 @@ export default function InvitationsPage() {
 
   const createInvitation = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
     if (!user) {
       toast({ type: "warning", title: "يرجى تسجيل الدخول لإنشاء دعوة" });
       return;
     }
+
     setSubmitting(true);
     try {
+      const payload = {
+        type,
+        title: title.trim(),
+        description: description.trim(),
+        templateId,
+        themeColor,
+        fontFamily,
+        targetUrl: targetUrl.trim(),
+        ogImageId: selectedOgId || null,
+        status,
+        metadata:
+          type === "mourning"
+            ? {
+                deceasedName: mourningName,
+                deceasedPhotoUrl: mourningPhoto,
+                deceasedDate: mourningDate,
+                senderMessage: mourningMessage,
+                dedicationDua: mourningDua,
+              }
+            : type === "wedding_attendance"
+            ? {
+                groomName,
+                brideName,
+                groomFamily,
+                brideFamily,
+                eventDate,
+                eventTime,
+                venue,
+                venueUrl,
+                invitationMessage: description,
+                imageUrl: typeImageUrl,
+              }
+            : type === "wedding_congrats"
+            ? {
+                groomName,
+                brideName,
+                message: description,
+                senderName,
+                imageUrl: typeImageUrl,
+              }
+            : type === "birthday"
+            ? {
+                personName,
+                occasion,
+                eventDate,
+                message: description,
+                imageUrl: typeImageUrl,
+              }
+            : type === "congrats"
+            ? {
+                personName,
+                occasion: occasion || "تهنئة",
+                message: description,
+                senderName,
+              }
+            : {},
+      };
+
       const res = await fetch("/api/invitations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type,
-          title,
-          description,
-          templateId,
-          themeColor,
-          fontFamily,
-          targetUrl,
-          ogImageId: selectedOgId || null,
-          status,
-          metadata:
-            type === "mourning"
-              ? {
-                  deceasedName: mourningName,
-                  deceasedPhotoUrl: mourningPhoto,
-                  deceasedDate: mourningDate,
-                  senderMessage: mourningMessage,
-                  dedicationDua: mourningDua,
-                }
-              : type === "wedding_attendance"
-              ? {
-                  groomName,
-                  brideName,
-                  groomFamily,
-                  brideFamily,
-                  eventDate,
-                  eventTime,
-                  venue,
-                  venueUrl,
-                  invitationMessage: description,
-                  imageUrl: typeImageUrl,
-                }
-              : type === "wedding_congrats"
-              ? {
-                  groomName,
-                  brideName,
-                  message: description,
-                  senderName,
-                  imageUrl: typeImageUrl,
-                }
-              : type === "birthday"
-              ? {
-                  personName,
-                  occasion,
-                  eventDate,
-                  message: description,
-                  imageUrl: typeImageUrl,
-                }
-              : type === "congrats"
-              ? {
-                  personName,
-                  occasion: occasion || "تهنئة",
-                  message: description,
-                  senderName,
-                }
-              : {},
-        }),
+        body: JSON.stringify(payload),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
+
       if (!res.ok) {
-        toast({ type: "error", title: data.error || "تعذر إنشاء الدعوة" });
-      } else {
-        toast({ type: "success", title: "تم حفظ الدعوة بنجاح" });
-        setTitle("");
-        setDescription("");
-        setTargetUrl("");
-        setTab("mine");
-        loadAll();
+        toast({
+          type: "error",
+          title: typeof data.error === "string" ? data.error : `تعذر إنشاء الدعوة (HTTP ${res.status})`,
+        });
+        return;
       }
+
+      toast({ type: "success", title: "تم إنشاء الدعوة ونشرها بنجاح" });
+      setTitle("");
+      setDescription("");
+      setTargetUrl("");
+      setSelectedOgId("");
+      setTab("mine");
+      await loadAll();
+    } catch (error) {
+      console.error("Invitation creation request failed", error);
+      toast({ type: "error", title: "تعذر الاتصال بالخادم. تحقق من الإنترنت وحاول مرة أخرى." });
     } finally {
       setSubmitting(false);
     }

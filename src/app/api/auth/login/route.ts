@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { profiles } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { loginSchema } from "@/lib/validation";
-import { verifyPassword, checkRateLimit, getClientFingerprint } from "@/lib/security";
+import { verifyPassword, checkRateLimit, getClientFingerprint, sha256Hex } from "@/lib/security";
 import { createSessionForUser, resolveAvatarUrl, logAudit } from "@/lib/auth";
 
 const GENERIC_AUTH_ERROR = "بيانات الدخول غير صحيحة، يرجى التحقق من رقم الهاتف وكلمة المرور";
@@ -25,12 +25,22 @@ export async function POST(req: Request) {
     }
 
     const { phone, password } = parsed.data;
-    const fp = getClientFingerprint(req, phone.slice(-4));
-    const rl = await checkRateLimit(`login:${fp}`, 10, 10 * 60 * 1000);
-    if (!rl.allowed) {
+    const ipFingerprint = getClientFingerprint(req);
+    const ipLimit = await checkRateLimit(`login:ip:${ipFingerprint}`, 30, 15 * 60 * 1000);
+    if (!ipLimit.allowed) {
       return NextResponse.json(
-        { error: `تم تجاوز عدد محاولات الدخول. يرجى المحاولة بعد ${rl.retryAfterSeconds} ثانية.` },
-        { status: 429 }
+        { error: `تم تجاوز عدد محاولات الدخول من هذا الاتصال. حاول بعد ${ipLimit.retryAfterSeconds} ثانية.` },
+        { status: 429, headers: { "Retry-After": String(ipLimit.retryAfterSeconds) } }
+      );
+    }
+
+    // Account-level throttling remains effective even when the client changes devices or browsers.
+    const accountKey = sha256Hex(phone);
+    const accountLimit = await checkRateLimit(`login:account:${accountKey}`, 8, 15 * 60 * 1000);
+    if (!accountLimit.allowed) {
+      return NextResponse.json(
+        { error: `تعذر تسجيل الدخول مؤقتًا. حاول بعد ${accountLimit.retryAfterSeconds} ثانية.` },
+        { status: 429, headers: { "Retry-After": String(accountLimit.retryAfterSeconds) } }
       );
     }
 

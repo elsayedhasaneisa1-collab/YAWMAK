@@ -18,7 +18,7 @@ import {
   Flame,
   HeartHandshake,
   Send,
-  Moon,
+  Sparkles,
   Users,
 } from "@/components/ui/icons";
 import {
@@ -84,7 +84,7 @@ const PERSONAS: Record<string, Persona> = {
     accent: "#D4AF62",
     accentSoft: "#A7F3D0",
     backdrop: "emerald",
-    icon: Moon,
+    icon: Sparkles,
     headline: "ذكرٌ يملأ اليوم بركة",
     action: "شارك الذكر وادعُ بظهر الغيب",
     note: "الأذكار موثقة بمصادرها، والعدّ محفوظ لك في عدادك الشخصي.",
@@ -117,7 +117,7 @@ const PERSONAS: Record<string, Persona> = {
     accent: "#E0B94B",
     accentSoft: "#D4AF62",
     backdrop: "gold",
-    icon: Moon,
+    icon: Sparkles,
     headline: "مناسبةٌ نُحيّيها بذكرٍ ودعاء",
     action: "شارك المناسبة مع من تحب",
     note: "مناسبات تُعاش بتوازن، وذكرٌ لا ينقطع.",
@@ -149,16 +149,32 @@ const PERSONAS: Record<string, Persona> = {
 function PersonaOrnament({ accent }: { accent: string }) {
   return (
     <svg
-      viewBox="0 0 240 240"
-      className="w-full h-full opacity-[0.16]"
+      viewBox="0 0 320 320"
+      className="w-full h-full opacity-[0.19]"
       aria-hidden="true"
       focusable="false"
+      preserveAspectRatio="xMidYMid meet"
     >
-      <g fill="none" stroke={accent} strokeWidth="1.4">
-        <polygon points="120,14 148,42 188,42 188,82 216,110 188,138 188,178 148,178 120,206 92,178 52,178 52,138 24,110 52,82 52,42 92,42" />
-        <polygon points="120,52 142,74 172,74 172,104 194,126 172,148 172,178 142,178 120,200 98,178 68,178 68,148 46,126 68,104 68,74 98,74" />
-        <circle cx="120" cy="126" r="42" />
-        <circle cx="120" cy="126" r="62" strokeDasharray="4 9" />
+      <g fill="none" stroke={accent} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="160" cy="160" r="137" strokeWidth="1.1" strokeDasharray="2 9" />
+        <circle cx="160" cy="160" r="119" strokeWidth="0.8" />
+        <path strokeWidth="1.35" d="M160 17 181 66 232 39 225 93 281 99 245 140 293 176 239 191 254 245 203 226 176 282 151 232 103 270 105 215 49 211 87 170 34 137 89 119 74 64 126 83Z" />
+        <path strokeWidth="1.1" d="M160 49 177 91 221 82 207 124 249 150 207 173 217 219 174 205 151 247 132 203 86 218 101 174 61 148 105 128 96 83 139 99Z" />
+        <circle cx="160" cy="160" r="72" strokeWidth="1.25" />
+        <circle cx="160" cy="160" r="57" strokeWidth="0.8" strokeDasharray="3 6" />
+        <path strokeWidth="1.2" d="M160 89 171 137 219 160 171 183 160 231 149 183 101 160 149 137Z" />
+        <path strokeWidth="0.9" d="M160 111V209M111 160H209M125 125 195 195M195 125 125 195" />
+        <circle cx="160" cy="160" r="9" strokeWidth="1.2" />
+        {[0,45,90,135,180,225,270,315].map((angle) => (
+          <circle
+            key={angle}
+            cx={160 + Math.cos((angle * Math.PI) / 180) * 126}
+            cy={160 + Math.sin((angle * Math.PI) / 180) * 126}
+            r="2.8"
+            fill={accent}
+            stroke="none"
+          />
+        ))}
       </g>
     </svg>
   );
@@ -256,23 +272,29 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
         <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-20 pt-8 space-y-10">
           <DepthStage>
             <motion.div
-              initial={reduced ? false : { opacity: 0, y: 46, rotateX: -14, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              initial={reduced ? false : { opacity: 0, y: 72, z: -140, rotateX: -22, rotateY: 9, scale: 0.88 }}
+              animate={{ opacity: 1, y: 0, z: 0, rotateX: 0, rotateY: 0, scale: 1 }}
+              transition={{ duration: 1.15, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+              style={{ perspective: 1800, transformStyle: "preserve-3d" }}
             >
-              <TiltCard maxTilt={7} lift={10}>
+              <TiltCard maxTilt={9} lift={14}>
                 <OrnamentFrame tone={invitation.templateId === "ivory-mosque" ? "silver" : "gold"}>
                   <div
-                    className="rounded-[26px] p-7 sm:p-12 space-y-7"
+                    className="relative isolate overflow-hidden rounded-[26px] p-7 sm:p-12 space-y-7"
                     style={{
+                      transformStyle: "preserve-3d",
                       background: invitation.templateId === "ivory-mosque"
                         ? "linear-gradient(155deg,#FAF6EC,#EDE2CC)"
                         : "linear-gradient(155deg, #FFFFFF, #F7F3FC 55%, #FBF9FF)",
-                      boxShadow: "0 50px 110px -55px rgba(212,175,55,0.85)",
+                      boxShadow: "0 50px 110px -55px rgba(212,175,55,0.85), 0 12px 28px -18px rgba(184,149,69,0.48)",
                       color: template.text,
                     }}
                   >
-                    <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="pointer-events-none absolute inset-3 rounded-[20px] border border-[#B89545]/20" aria-hidden="true" />
+                    <div className="pointer-events-none absolute -top-16 left-1/2 h-44 w-44 -translate-x-1/2 opacity-[0.08]" aria-hidden="true">
+                      <PersonaOrnament accent={persona.accent} />
+                    </div>
+                    <div className="relative z-10 flex flex-wrap items-center justify-between gap-3" style={{ transform: "translateZ(28px)" }}>
                       <YawmakBadge tone="gold">
                         <Icon className="w-3.5 h-3.5" />
                         {persona.headline}
@@ -282,7 +304,7 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
                       </span>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="relative z-10 space-y-4" style={{ transform: "translateZ(42px)" }}>
                       <h1
                         className={`text-3xl sm:text-5xl leading-[1.45] font-bold ${fontFamilyClass}`}
                         style={{ color: persona.accentSoft }}
@@ -298,8 +320,8 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
                     </div>
 
                     <div
-                      className="flex flex-wrap items-center gap-2.5 pt-4 text-xs"
-                      style={{ borderTop: `1px solid ${template.border}` }}
+                      className="relative z-10 flex flex-wrap items-center gap-2.5 pt-4 text-xs"
+                      style={{ transform: "translateZ(24px)", borderTop: `1px solid ${template.border}` }}
                     >
                       <span className="inline-flex items-center gap-1.5" style={{ color: template.muted }}>
                         <Users className="w-3.5 h-3.5" />
@@ -366,7 +388,7 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               {
-                icon: Moon,
+                icon: Sparkles,
                 title: "دعوة بصدق",
                 body: "دعوة صادقة من القلب تصل بركتها إن شاء الله، ومشاركتها تضيف أجرًا لصاحبها.",
               },

@@ -218,20 +218,33 @@ export async function POST(req: Request) {
       })
       .returning();
 
-    await logAudit({
-      actorId: user.id,
-      actorRole: user.role,
-      action: "INVITATION_CREATED",
-      targetType: "invitation",
-      targetId: created.id,
-    });
+    if (!created) {
+      throw new Error("Invitation insert returned no row");
+    }
+
+    // Audit logging must not turn a successfully-created invitation into a failed response.
+    try {
+      await logAudit({
+        actorId: user.id,
+        actorRole: user.role,
+        action: "INVITATION_CREATED",
+        targetType: "invitation",
+        targetId: created.id,
+      });
+    } catch (auditError) {
+      console.error("[invitations] audit log failed after creation", auditError);
+    }
 
     return NextResponse.json({ invitation: created }, { status: 201 });
   } catch (err) {
     if (err instanceof AuthError) {
       return NextResponse.json({ error: err.message }, { status: err.status });
     }
-    return NextResponse.json({ error: "تعذر إنشاء الدعوة" }, { status: 500 });
+    console.error("[invitations] create failed", err);
+    return NextResponse.json(
+      { error: "تعذر إنشاء الدعوة حاليًا. راجع البيانات وحاول مرة أخرى." },
+      { status: 500 }
+    );
   }
 }
 

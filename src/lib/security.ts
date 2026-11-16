@@ -43,9 +43,10 @@ export function generateSlug(base: string): string {
 }
 
 export function getClientFingerprint(req: Request, secondaryKey = ""): string {
-  const forwarded = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "local";
-  const ua = req.headers.get("user-agent")?.slice(0, 80) || "unknown";
-  return sha256Hex(`${forwarded}|${ua}|${secondaryKey}`).slice(0, 32);
+  const forwarded = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim()
+    || req.headers.get("x-real-ip")?.trim()
+    || "unknown";
+  return sha256Hex(`${forwarded}|${secondaryKey}`).slice(0, 40);
 }
 
 export async function checkRateLimit(
@@ -57,41 +58,37 @@ export async function checkRateLimit(
   const resetAt = new Date(now.getTime() + windowMs);
 
   try {
-    const existing = await db
-      .select()
-      .from(rateLimitBuckets)
-      .where(eq(rateLimitBuckets.key, bucketKey))
-      .limit(1);
+    // A single atomic UPSERT prevents concurrent requests from bypassing the limit.
+    const [bucket] = await db
+      .insert(rateLimitBuckets)
+      .values({ key: bucketKey, count: 1, resetAt })
+      .onConflictDoUpdate({
+        target: rateLimitBuckets.key,
+        set: {
+          count: sql`CASE WHEN ${rateLimitBuckets.resetAt} <= ${now} THEN 1 ELSE ${rateLimitBuckets.count} + 1 END`,
+          resetAt: sql`CASE WHEN ${rateLimitBuckets.resetAt} <= ${now} THEN ${resetAt} ELSE ${rateLimitBuckets.resetAt} END`,
+        },
+      })
+      .returning({ count: rateLimitBuckets.count, resetAt: rateLimitBuckets.resetAt });
 
-    if (existing.length === 0 || existing[0].resetAt <= now) {
-      await db
-        .insert(rateLimitBuckets)
-        .values({ key: bucketKey, count: 1, resetAt })
-        .onConflictDoUpdate({
-          target: rateLimitBuckets.key,
-          set: { count: 1, resetAt },
-        });
-      return { allowed: true, remaining: maxRequests - 1, retryAfterSeconds: 0 };
+    if (!bucket) {
+      return { allowed: false, remaining: 0, retryAfterSeconds: 60 };
     }
 
-    const current = existing[0];
-    if (current.count >= maxRequests) {
-      const retryAfterSeconds = Math.max(1, Math.ceil((current.resetAt.getTime() - now.getTime()) / 1000));
-      return { allowed: false, remaining: 0, retryAfterSeconds };
-    }
-
-    await db
-      .update(rateLimitBuckets)
-      .set({ count: sql`${rateLimitBuckets.count} + 1` })
-      .where(eq(rateLimitBuckets.key, bucketKey));
+    const allowed = bucket.count <= maxRequests;
+    const retryAfterSeconds = allowed
+      ? 0
+      : Math.max(1, Math.ceil((bucket.resetAt.getTime() - now.getTime()) / 1000));
 
     return {
-      allowed: true,
-      remaining: Math.max(0, maxRequests - (current.count + 1)),
-      retryAfterSeconds: 0,
+      allowed,
+      remaining: Math.max(0, maxRequests - bucket.count),
+      retryAfterSeconds,
     };
-  } catch {
-    return { allowed: true, remaining: 1, retryAfterSeconds: 0 };
+  } catch (error) {
+    console.error("YAWMAK rate limit storage unavailable:", error);
+    // Fail closed: authentication endpoints must not become unlimited during DB errors.
+    return { allowed: false, remaining: 0, retryAfterSeconds: 60 };
   }
 }
 
