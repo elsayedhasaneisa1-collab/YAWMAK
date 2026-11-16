@@ -37,12 +37,14 @@ export default function RegisterPage() {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState("");
+  const [phoneAlreadyRegistered, setPhoneAlreadyRegistered] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submittingRef.current) return;
     setFormError("");
+    setPhoneAlreadyRegistered(false);
     setErrors({});
 
     const parsed = registerSchema.safeParse({
@@ -91,6 +93,7 @@ export default function RegisterPage() {
       const data = await res.json();
       if (!res.ok) {
         setFormError(data.error || "تعذر إتمام التسجيل");
+        setPhoneAlreadyRegistered(data.code === "PHONE_ALREADY_REGISTERED");
         return;
       }
 
@@ -253,8 +256,13 @@ export default function RegisterPage() {
           {errors.termsAccepted && <p className="text-xs text-red-400">{errors.termsAccepted}</p>}
 
           {formError && (
-            <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/35 text-xs text-red-300">
-              {formError}
+            <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 space-y-2">
+              <p>{formError}</p>
+              {phoneAlreadyRegistered && (
+                <Link href="/login" className="inline-flex items-center justify-center rounded-lg bg-[var(--yawmak-primary)] px-4 py-2 font-bold text-white transition-colors hover:bg-white hover:text-[var(--yawmak-primary)] border border-[var(--yawmak-primary)]">
+                  الانتقال إلى تسجيل الدخول
+                </Link>
+              )}
             </div>
           )}
 

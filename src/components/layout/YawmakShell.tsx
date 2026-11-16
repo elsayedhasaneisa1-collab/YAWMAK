@@ -434,45 +434,23 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
         </footer>
       </div>
 
-      <div className="lg:hidden fixed inset-x-0 bottom-0 z-40 pointer-events-none pb-safe">
-        <div
-          aria-hidden="true"
-          className="absolute inset-x-4 bottom-4 h-16 rounded-full yawmak-nav-glow"
-        />
+      <div className="lg:hidden fixed inset-x-0 bottom-0 z-40 pointer-events-none pb-safe px-3">
         <nav
           aria-label="التنقل السفلي"
-          className="pointer-events-auto relative mx-4 mb-4 h-[68px] rounded-full yawmak-floating-nav"
+          className="pointer-events-auto relative mx-auto mb-2 h-[72px] max-w-xl rounded-full yawmak-floating-nav"
         >
-          <div className="relative grid grid-cols-5 h-full">
-            <span
-              aria-hidden="true"
-              className="absolute top-1/2 -translate-y-1/2 h-12 w-[68px] rounded-full bg-[var(--yawmak-primary)] transition-transform duration-300 ease-out"
-              style={{
-                transform: `translateY(-50%) translateX(var(--nav-indicator, 0px))`,
-              }}
-              ref={(node) => {
-                if (!node) return;
-                const index = Math.max(
-                  0,
-                  PRIMARY_NAV.findIndex((item) => isActive(item.href))
-                );
-                const slot = node.parentElement?.clientWidth
-                  ? node.parentElement.clientWidth / 5
-                  : 0;
-                node.style.setProperty("--nav-indicator", `${(index - 2) * -slot}px`);
-              }}
-            />
-            {PRIMARY_NAV.map((item) => {
+          <div className="relative grid grid-cols-5 h-full px-1">
+            {PRIMARY_NAV.map((item, index) => {
               const Icon = item.icon;
               const active = isActive(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`relative flex flex-col items-center justify-center gap-0.5 text-[10px] font-semibold transition-all duration-200 ${
+                  className={`relative z-10 mx-auto my-2 flex w-[calc(100%-8px)] flex-col items-center justify-center gap-1 rounded-2xl text-[10px] font-semibold transition-all duration-200 active:scale-95 ${
                     active
-                      ? "text-white scale-[1.06]"
-                      : "text-[var(--yawmak-text-muted)] hover:text-[var(--yawmak-primary)]"
+                      ? "bg-[var(--yawmak-primary)] text-white shadow-md shadow-emerald-900/10"
+                      : "text-[var(--yawmak-text-muted)] hover:bg-[var(--yawmak-primary-tint)] hover:text-[var(--yawmak-primary)]"
                   }`}
                 >
                   <Icon size={19} strokeWidth={active ? 2.1 : 1.7} />

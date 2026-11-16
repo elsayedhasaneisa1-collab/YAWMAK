@@ -72,7 +72,7 @@ export interface YawmakButtonProps extends React.ButtonHTMLAttributes<HTMLButton
 
 const VARIANT_STYLES: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--yawmak-primary)] text-white border border-transparent hover:bg-[var(--yawmak-primary-tint)] hover:text-[var(--yawmak-primary)] hover:border-[var(--yawmak-primary)]",
+    "bg-[var(--yawmak-primary)] text-white border border-[var(--yawmak-primary)] hover:bg-white hover:text-[var(--yawmak-primary)] hover:border-[var(--yawmak-primary)] active:bg-white active:text-[var(--yawmak-primary)]",
   secondary:
     "bg-[var(--yawmak-primary-tint)] text-[var(--yawmak-primary)] border border-[var(--yawmak-border)] hover:bg-[var(--yawmak-bg)] hover:border-[var(--yawmak-primary)]",
   outline:
@@ -82,7 +82,7 @@ const VARIANT_STYLES: Record<ButtonVariant, string> = {
   danger:
     "bg-[#E05252] text-white border border-transparent hover:bg-transparent hover:text-[#E05252] hover:border-[#E05252]",
   success:
-    "bg-[#2FA36B] text-white border border-transparent hover:bg-transparent hover:text-[#2FA36B] hover:border-[#2FA36B]",
+    "bg-[var(--yawmak-primary)] text-white border border-[var(--yawmak-primary)] hover:bg-white hover:text-[var(--yawmak-primary)] hover:border-[var(--yawmak-primary)] active:bg-white active:text-[var(--yawmak-primary)]",
 };
 
 const SIZE_STYLES: Record<ButtonSize, string> = {

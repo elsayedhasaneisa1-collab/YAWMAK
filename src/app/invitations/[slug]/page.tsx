@@ -47,9 +47,13 @@ function resolveImage(row: Awaited<ReturnType<typeof loadInvitation>>) {
     (row.creatorPlan === "PRO" || row.creatorPlan === "VIP") &&
     row.creatorVerified === "approved";
   if (canShowCustom) return row.ogImageUrl!;
-  return row.invitation.type === MOURNING_INVITATION_TYPE
-    ? `${APP_SITE_URL}/images/og-memorial.png`
-    : `${APP_SITE_URL}/images/og-default.png`;
+  if (row.invitation.type === MOURNING_INVITATION_TYPE) {
+    return `${APP_SITE_URL}/images/athar-og-mourning.png`;
+  }
+  if (row.invitation.type.toLowerCase().includes("wedding")) {
+    return `${APP_SITE_URL}/images/og-gold.png`;
+  }
+  return `${APP_SITE_URL}/images/athar-og-default.png`;
 }
 
 function resolveTitle(row: NonNullable<Awaited<ReturnType<typeof loadInvitation>>>) {
@@ -72,7 +76,7 @@ export async function generateMetadata({
     return { title: "دعوة غير متاحة", robots: { index: false, follow: false } };
   }
 
-  const imageUrl = `${APP_SITE_URL}/api/og/${encodeURIComponent(row.invitation.slug)}`;
+  const imageUrl = resolveImage(row);
   const canonical = `${APP_SITE_URL}/invitations/${row.invitation.slug}`;
   const title = resolveTitle(row);
   const description = row.invitation.description.slice(0, 160);
@@ -87,7 +91,7 @@ export async function generateMetadata({
       url: canonical,
       title,
       description,
-      images: [{ url: imageUrl, width: 1200, height: 630, alt: title }],
+      images: [{ url: imageUrl, width: 1024, height: 1024, alt: title }],
     },
     twitter: {
       card: "summary_large_image",

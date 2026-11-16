@@ -54,9 +54,15 @@ export async function POST(req: Request) {
 
     if (existing.length > 0) {
       if (existing[0].username === data.username) {
-        return NextResponse.json({ error: "اسم المستخدم مستخدم بالفعل، يرجى اختيار اسم آخر" }, { status: 409 });
+        return NextResponse.json(
+          { error: "اسم المستخدم مستخدم بالفعل. اختر اسم مستخدم مختلفًا." },
+          { status: 409 }
+        );
       }
-      return NextResponse.json({ error: "تعذر إتمام التسجيل بهذه البيانات، يرجى المراجعة أو تسجيل الدخول" }, { status: 409 });
+      return NextResponse.json(
+        { error: "رقم الهاتف مسجل بالفعل. سجّل الدخول بهذا الرقم أو استخدم رقمًا آخر." , code: "PHONE_ALREADY_REGISTERED" },
+        { status: 409 }
+      );
     }
 
     // Strictly enforce FREE membership & user role server-side regardless of payload
@@ -131,7 +137,11 @@ export async function POST(req: Request) {
       },
       { status: 201 }
     );
-  } catch {
-    return NextResponse.json({ error: "حدث خطأ غير متوقع أثناء التسجيل، يرجى المحاولة لاحقًا" }, { status: 500 });
+  } catch (error) {
+    console.error("YAWMAK registration failed:", error);
+    return NextResponse.json(
+      { error: "تعذر إنشاء الحساب الآن بسبب مشكلة في الخادم. لم يتم تأكيد التسجيل؛ حاول مرة أخرى لاحقًا." },
+      { status: 500 }
+    );
   }
 }
