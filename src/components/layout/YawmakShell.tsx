@@ -355,7 +355,7 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
           {children}
         </main>
 
-        <footer className="border-t border-[var(--yawmak-border)] bg-[var(--yawmak-card)] pb-24 lg:pb-0">
+        <footer className="yawmak-rounded-footer border border-[var(--yawmak-border)] bg-[var(--yawmak-card)] pb-24 lg:pb-0">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-9 space-y-7">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-7">
               <div className="space-y-3">

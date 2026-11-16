@@ -501,3 +501,27 @@ a:hover > .yawmak-icon, button:hover > .yawmak-icon { transform: scale(1.08); }
 .yawmak-3d-panel { transform:rotateX(1.2deg) translateZ(0); transform-style:preserve-3d; box-shadow:0 22px 55px -38px rgba(20,70,48,.38),0 1px 0 rgba(255,255,255,.8) inset; transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s ease; }
 @media (hover:hover) and (prefers-reduced-motion:no-preference) { .yawmak-3d-panel:hover { transform:rotateX(0deg) translateY(-4px) translateZ(12px); box-shadow:0 28px 65px -38px rgba(20,70,48,.42); } }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; } }
+
+
+/* Theme-aware vector icon system and floating footer */
+.yawmak-rounded-footer {
+  position: relative;
+  margin: 1.25rem 0.75rem 0;
+  border-radius: 2rem 2rem 0 0;
+  overflow: hidden;
+  box-shadow: 0 -14px 42px -34px var(--yawmak-primary), inset 0 1px rgba(255,255,255,.7);
+}
+.yawmak-rounded-footer svg,
+.yawmak-floating-nav svg,
+.yawmak-mobile-drawer svg,
+.yawmak-icon-tile svg {
+  stroke: currentColor;
+  transition: color .22s ease, stroke .22s ease, transform .22s ease, opacity .22s ease;
+}
+.yawmak-floating-nav svg { color: var(--yawmak-text-muted); }
+.yawmak-floating-nav a[aria-current="page"] svg,
+.yawmak-floating-nav a[data-active="true"] svg { color: var(--yawmak-primary); }
+.yawmak-rounded-footer a:hover svg { color: var(--yawmak-primary); transform: translateY(-1px); }
+.yawmak-theme-icon { color: var(--yawmak-primary); }
+@media (min-width: 1024px) { .yawmak-rounded-footer { margin-inline: 1.25rem; } }
+@media (prefers-reduced-motion: reduce) { .yawmak-rounded-footer svg, .yawmak-floating-nav svg { transition: none; } }
