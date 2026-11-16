@@ -5,12 +5,9 @@ import { eq, or, sql } from "drizzle-orm";
 import { registerSchema } from "@/lib/validation";
 import { hashPassword, checkRateLimit, getClientFingerprint } from "@/lib/security";
 import { createSessionForUser, resolveAvatarUrl, logAudit } from "@/lib/auth";
-import { ensureSeeded } from "@/db/seed";
 
 export async function POST(req: Request) {
   try {
-    await ensureSeeded();
-
     const body = await req.json().catch(() => null);
     if (!body || typeof body !== "object") {
       return NextResponse.json({ error: "بيانات الطلب غير صالحة" }, { status: 400 });
@@ -65,51 +62,55 @@ export async function POST(req: Request) {
       );
     }
 
-    // Strictly enforce FREE membership & user role server-side regardless of payload
-    const [created] = await db
-      .insert(profiles)
-      .values({
-        username: data.username,
-        phone: data.phone,
-        email: data.email || null,
-        passwordHash: hashPassword(data.password),
-        passwordHint: data.passwordHint,
-        gender: data.gender,
-        governorate: data.governorate,
-        role: "user",
-        accountStatus: "active",
-        membershipPlan: "FREE",
-        verificationStatus: "none",
-        onboardingCompleted: false,
-        termsAcceptedAt: new Date(),
-      })
-      .returning();
+    // Create the profile and its dependent records atomically. A failed secondary
+    // insert must not leave a half-created account that blocks the next attempt.
+    const created = await db.transaction(async (tx) => {
+      const [profile] = await tx
+        .insert(profiles)
+        .values({
+          username: data.username,
+          phone: data.phone,
+          email: data.email || null,
+          passwordHash: hashPassword(data.password),
+          passwordHint: data.passwordHint,
+          gender: data.gender,
+          governorate: data.governorate,
+          role: "user",
+          accountStatus: "active",
+          membershipPlan: "FREE",
+          verificationStatus: "none",
+          onboardingCompleted: false,
+          termsAcceptedAt: new Date(),
+        })
+        .returning();
 
-    await db.insert(userSettings).values({
-      userId: created.id,
-      prayerCity: data.governorate,
-    });
-
-    await db.insert(notifications).values({
-      userId: created.id,
-      category: "system",
-      title: "مرحبًا بك في YAWMAK | يومك",
-      body: "يسعدنا انضمامك إلى منظومة يومك الرقمية. ابدأ يومك بالقرآن والأذكار ويومك… ببساطة وترتيب.",
-      actionUrl: "/quran",
-    });
-
-    // Update daily aggregated registrations counter
-    const dateKey = new Date().toISOString().slice(0, 10);
-    await db
-      .insert(analyticsDaily)
-      .values({ dateKey, registrations: 1, totalVisits: 1, uniqueVisitors: 1, pageViews: 1 })
-      .onConflictDoUpdate({
-        target: analyticsDaily.dateKey,
-        set: {
-          registrations: sql`${analyticsDaily.registrations} + 1`,
-          updatedAt: new Date(),
-        },
+      await tx.insert(userSettings).values({
+        userId: profile.id,
+        prayerCity: data.governorate,
       });
+
+      await tx.insert(notifications).values({
+        userId: profile.id,
+        category: "system",
+        title: "مرحبًا بك في YAWMAK | يومك",
+        body: "يسعدنا انضمامك إلى منظومة يومك الرقمية. ابدأ يومك بالقرآن والأذكار ويومك… ببساطة وترتيب.",
+        actionUrl: "/quran",
+      });
+
+      const dateKey = new Date().toISOString().slice(0, 10);
+      await tx
+        .insert(analyticsDaily)
+        .values({ dateKey, registrations: 1, totalVisits: 1, uniqueVisitors: 1, pageViews: 1 })
+        .onConflictDoUpdate({
+          target: analyticsDaily.dateKey,
+          set: {
+            registrations: sql`${analyticsDaily.registrations} + 1`,
+            updatedAt: new Date(),
+          },
+        });
+
+      return profile;
+    });
 
     await createSessionForUser(created.id, req);
 

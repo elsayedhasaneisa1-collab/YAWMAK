@@ -10,7 +10,7 @@ import {
   RotateCcw,
   Send,
   Share2,
-  Sparkles,
+  Moon,
 } from "@/components/ui/icons";
 import {
   CakeArt,
@@ -117,7 +117,7 @@ function WeddingAttendanceExperience({ invitation }: { invitation: InvitationVie
             style={{ background: "linear-gradient(135deg,#E8D8A8,#D4AF62 55%,#B89545)", boxShadow: "0 20px 40px -18px rgba(184,149,69,0.7)" }}
           >
             <span className="w-8 h-8 rounded-full bg-white/25 flex items-center justify-center">
-              <Sparkles className="w-4 h-4" />
+              <Moon className="w-4 h-4" />
             </span>
             فتح الدعوة
           </button>

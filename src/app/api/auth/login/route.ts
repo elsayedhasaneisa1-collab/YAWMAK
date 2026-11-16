@@ -5,14 +5,11 @@ import { eq } from "drizzle-orm";
 import { loginSchema } from "@/lib/validation";
 import { verifyPassword, checkRateLimit, getClientFingerprint } from "@/lib/security";
 import { createSessionForUser, resolveAvatarUrl, logAudit } from "@/lib/auth";
-import { ensureSeeded } from "@/db/seed";
 
 const GENERIC_AUTH_ERROR = "بيانات الدخول غير صحيحة، يرجى التحقق من رقم الهاتف وكلمة المرور";
 
 export async function POST(req: Request) {
   try {
-    await ensureSeeded();
-
     const body = await req.json().catch(() => null);
     if (!body || typeof body !== "object") {
       return NextResponse.json({ error: "بيانات الطلب غير صالحة" }, { status: 400 });
@@ -89,7 +86,8 @@ export async function POST(req: Request) {
       },
       triggerOnboarding: false,
     });
-  } catch {
-    return NextResponse.json({ error: "تعذر تسجيل الدخول في الوقت الحالي" }, { status: 500 });
+  } catch (error) {
+    console.error("YAWMAK login failed:", error);
+    return NextResponse.json({ error: "تعذر تسجيل الدخول في الوقت الحالي. تحقق من إعداد قاعدة البيانات ثم حاول مجددًا." }, { status: 500 });
   }
 }

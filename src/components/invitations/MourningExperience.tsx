@@ -11,7 +11,6 @@ import {
   Moon,
   Send,
   ShieldCheck,
-  Sparkles,
   Users,
 } from "@/components/ui/icons";
 import {
@@ -275,7 +274,7 @@ export default function MourningExperience({ invitation }: { invitation: Invitat
           <section className="space-y-5">
             <div className="space-y-1.5">
               <YawmakBadge tone="neutral">
-                <Sparkles className="w-3.5 h-3.5" /> أدعية موثقة ندعو بها
+                <Moon className="w-3.5 h-3.5" /> أدعية موثقة ندعو بها
               </YawmakBadge>
               <h2 className="font-display text-2xl sm:text-3xl font-bold" style={{ color: CALM.accentSoft }}>
                 أدعية للمتوفى

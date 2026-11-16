@@ -104,30 +104,16 @@ export const DEV_SIGNATURE = '<Developed by ="EL-sayed Hasan™" andPowerd=true/
 export const DEV_NAME = "EL-sayed Hasan™";
 
 export const YAWMAK_THEMES: readonly ThemeDefinition[] = [
-  {
-    id: "light",
-    nameAr: "فاتح",
-    descriptionAr: "الخلفية الكريمية الافتراضية",
-    previewBg: "#FAF8F3",
-    previewAccent: "#B89545",
-    previewGold: "#B89545",
-  },
-  {
-    id: "dark",
-    nameAr: "داكن",
-    descriptionAr: "ألوان هادئة مريحة للعين",
-    previewBg: "#15121D",
-    previewAccent: "#D4AF62",
-    previewGold: "#D4AF62",
-  },
-  {
-    id: "system",
-    nameAr: "حسب النظام",
-    descriptionAr: "يتبع إعداد جهازك تلقائيًا",
-    previewBg: "#EEEAF3",
-    previewAccent: "#B89545",
-    previewGold: "#B89545",
-  },
+  { id: "light", nameAr: "أبيض مؤسسي", descriptionAr: "واجهة نظيفة للعمل اليومي", previewBg: "#FFFFFF", previewAccent: "#168653", previewGold: "#168653" },
+  { id: "dark", nameAr: "ليل هادئ", descriptionAr: "وضع داكن مريح", previewBg: "#101B17", previewAccent: "#4AB987", previewGold: "#D8B96C" },
+  { id: "system", nameAr: "حسب الجهاز", descriptionAr: "يتبع إعدادات جهازك", previewBg: "#EEF4F0", previewAccent: "#168653", previewGold: "#168653" },
+  { id: "royal", nameAr: "ملكي ذهبي", descriptionAr: "فحمي ولمسات ذهبية", previewBg: "#171512", previewAccent: "#C7A45A", previewGold: "#D8BC7A" },
+  { id: "ocean", nameAr: "المحيط", descriptionAr: "أزرق عميق وهادئ", previewBg: "#EFF6FB", previewAccent: "#2676A8", previewGold: "#2676A8" },
+  { id: "lavender", nameAr: "لافندر", descriptionAr: "بنفسجي هادئ", previewBg: "#F6F2FA", previewAccent: "#8063A8", previewGold: "#8063A8" },
+  { id: "sand", nameAr: "رمال", descriptionAr: "درجات رملية دافئة", previewBg: "#F7F2E9", previewAccent: "#9B7446", previewGold: "#9B7446" },
+  { id: "forest", nameAr: "الغابة", descriptionAr: "أخضر طبيعي عميق", previewBg: "#EFF5EF", previewAccent: "#376B4C", previewGold: "#376B4C" },
+  { id: "rose", nameAr: "وردي هادئ", descriptionAr: "وردي ناعم ومتزن", previewBg: "#FBF1F3", previewAccent: "#B65E78", previewGold: "#B65E78" },
+  { id: "midnight", nameAr: "منتصف الليل", descriptionAr: "داكن أزرق بلمسات سماوية", previewBg: "#101827", previewAccent: "#62A8D8", previewGold: "#62A8D8" },
 ] as const;
 
 export const INVITATION_TYPES = [

@@ -37,3 +37,30 @@
    npm run build
    ```
 5. ارفع المشروع إلى **Vercel** واضبط متغيرات البيئة في إعدادات Vercel دون رفع ملف `.env` أبدًا.
+
+
+## واجهة YAWMAK المطوّرة
+- تحسين بطاقات الخطط والباقات بتسلسل بصري أوضح وإبراز الباقات المدفوعة.
+- تحسين حركة القائمة الجانبية والطبقة الخلفية للموبايل.
+- استبدال أيقونات الصور النقطية غير المتاحة بأيقونات Lucide SVG واضحة.
+- إضافة هوية أيقونة زمردية ملكية بصيغ PNG متعددة وSVG.
+- إصلاح متغيرات ألوان الوضع الداكن مع الإبقاء على الوضع الفاتح.
+
+## Authentication deployment checks
+
+- Registration now creates the profile, settings, welcome notification, and daily registration counter in one database transaction. If any dependent write fails, the profile insert rolls back rather than leaving a duplicate-phone partial account.
+- Login and registration no longer execute the full platform seed routine on every request. Seed/migration work should be performed as a deployment/administrative task, not during authentication.
+- Before deploying, ensure `DATABASE_URL` points to the intended PostgreSQL database and apply the Drizzle schema/migrations for all tables used by auth (`profiles`, `sessions`, `user_settings`, `notifications`, `analytics_daily`, and `rate_limit_buckets`).
+- Verify Vercel logs for `YAWMAK registration failed` / `YAWMAK login failed` if a server error remains. Never expose database error details to the browser.
+
+## Local verification
+
+Run `npm ci`, then `npm run build`. This archive was not build-verified in the packaging environment because npm dependencies could not be downloaded from the registry.
+
+## تحديث الهوية والتجربة البصرية
+- تطوير لوحة البداية بسطح مؤسسي وطبقات عمق ثلاثية الأبعاد وحركات تفاعلية خفيفة.
+- إضافة 10 مظاهر: الأبيض، الداكن، حسب الجهاز، الذهبي الملكي، المحيط، اللافندر، الرملي، الغابة، الوردي، ومنتصف الليل.
+- حفظ المظهر المختار محليًا وتطبيق ألوانه عبر متغيرات CSS.
+- توزيع المظاهر المتقدمة حسب العضوية: المجاني للمظاهر الأساسية والرملي والغابة، Plus للمحيط واللافندر، Pro للوردي ومنتصف الليل، وVIP للذهبي الملكي.
+- استبدال العلامات الزخرفية اللامعة في تجارب الدعوات بعلامة الهلال.
+- لم يتم تعديل مخطط قاعدة البيانات أو بيانات المستخدمين أو منطق تسجيل الدخول.

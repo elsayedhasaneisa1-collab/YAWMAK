@@ -88,7 +88,7 @@ export default function PricingPage() {
         <YawmakBadge tone="gold">
           <Crown className="w-3.5 h-3.5" /> نظام العضويات الشفاف
         </YawmakBadge>
-        <h1 className="font-display text-3xl sm:text-5xl font-bold yawmak-gold-text">
+        <h1 className="font-display text-3xl sm:text-5xl font-bold yawmak-section-heading">
           خطط وباقات YAWMAK | يومك
         </h1>
         <p className="text-sm text-[var(--yawmak-text-muted)] leading-relaxed">
@@ -111,9 +111,7 @@ export default function PricingPage() {
               <YawmakCard
                 key={p.code}
                 glow={highlight}
-                className={`flex flex-col justify-between space-y-6 ${
-                  p.code === "VIP" ? "bg-gradient-to-b from-[#FAF3E3]/90 to-[var(--yawmak-surface)]" : ""
-                }`}
+                className={`yawmak-plan-card flex flex-col justify-between space-y-6 relative z-0 ${highlight ? "yawmak-plan-featured" : ""} p-5 sm:p-6`}
               >
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
@@ -131,14 +129,14 @@ export default function PricingPage() {
                   <div>
                     <h2 className="text-xl font-bold">{p.nameAr}</h2>
                     <div className="mt-2 flex items-baseline gap-1.5">
-                      <span className="text-3xl font-extrabold yawmak-gold-text">{p.priceEgp}</span>
+                      <span className="yawmak-plan-price text-4xl font-extrabold yawmak-section-heading">{p.priceEgp}</span>
                       <span className="text-xs text-[var(--yawmak-text-muted)]">
                         {p.priceEgp === 0 ? "ج.م / مجانًا" : "ج.م / شهريًا"}
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-white/[0.03] border border-[var(--yawmak-border-subtle)] text-xs space-y-1">
+                  <div className="p-4 rounded-2xl bg-[var(--yawmak-primary-tint)] border border-[var(--yawmak-border-subtle)] text-xs space-y-2.5">
                     <p>
                       الدعوات:{" "}
                       <strong>
@@ -197,7 +195,7 @@ export default function PricingPage() {
       )}
 
       <YawmakCard className="space-y-2 border-emerald-500/30">
-        <h3 className="text-sm font-bold flex items-center gap-2 text-emerald-300">
+        <h3 className="text-sm font-bold flex items-center gap-2 text-[var(--yawmak-primary)]">
           <ShieldCheck className="w-4 h-4" />
           قواعد العضويات والتوثيق
         </h3>

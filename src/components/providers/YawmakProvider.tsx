@@ -112,7 +112,8 @@ export function YawmakProvider({ children }: { children: React.ReactNode }) {
   );
 
   const setTheme = useCallback((themeId: string) => {
-    const valid = ["light", "dark", "system"].includes(themeId) ? themeId : "light";
+    const validThemes = ["light", "dark", "system", "royal", "ocean", "lavender", "sand", "forest", "rose", "midnight"];
+    const valid = validThemes.includes(themeId) ? themeId : "light";
     setThemeState(valid);
     try {
       localStorage.setItem("yawmak_theme", valid);
@@ -120,6 +121,7 @@ export function YawmakProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     document.documentElement.setAttribute("data-mode", resolveAppliedMode(valid));
+    document.documentElement.setAttribute("data-theme", valid);
   }, []);
 
   const refreshUser = useCallback(async () => {
@@ -156,6 +158,7 @@ export function YawmakProvider({ children }: { children: React.ReactNode }) {
         const saved = localStorage.getItem("yawmak_theme") || "light";
         setThemeState(saved);
         document.documentElement.setAttribute("data-mode", resolveAppliedMode(saved));
+        document.documentElement.setAttribute("data-theme", saved);
       } catch {
         return;
       }

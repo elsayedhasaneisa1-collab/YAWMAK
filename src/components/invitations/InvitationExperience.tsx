@@ -18,7 +18,7 @@ import {
   Flame,
   HeartHandshake,
   Send,
-  Sparkles,
+  Moon,
   Users,
 } from "@/components/ui/icons";
 import {
@@ -84,7 +84,7 @@ const PERSONAS: Record<string, Persona> = {
     accent: "#D4AF62",
     accentSoft: "#A7F3D0",
     backdrop: "emerald",
-    icon: Sparkles,
+    icon: Moon,
     headline: "ذكرٌ يملأ اليوم بركة",
     action: "شارك الذكر وادعُ بظهر الغيب",
     note: "الأذكار موثقة بمصادرها، والعدّ محفوظ لك في عدادك الشخصي.",
@@ -117,7 +117,7 @@ const PERSONAS: Record<string, Persona> = {
     accent: "#E0B94B",
     accentSoft: "#D4AF62",
     backdrop: "gold",
-    icon: Sparkles,
+    icon: Moon,
     headline: "مناسبةٌ نُحيّيها بذكرٍ ودعاء",
     action: "شارك المناسبة مع من تحب",
     note: "مناسبات تُعاش بتوازن، وذكرٌ لا ينقطع.",
@@ -366,7 +366,7 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               {
-                icon: Sparkles,
+                icon: Moon,
                 title: "دعوة بصدق",
                 body: "دعوة صادقة من القلب تصل بركتها إن شاء الله، ومشاركتها تضيف أجرًا لصاحبها.",
               },

@@ -77,9 +77,16 @@ const TOOL_NAV = [
 ];
 
 const THEME_OPTIONS = [
-  { id: "light", label: "فاتح", icon: Palette },
-  { id: "dark", label: "داكن", icon: Moon },
-  { id: "system", label: "النظام", icon: Settings },
+  { id: "light", label: "أبيض", icon: Palette, minPlan: "FREE" },
+  { id: "dark", label: "داكن", icon: Moon, minPlan: "FREE" },
+  { id: "system", label: "الجهاز", icon: Settings, minPlan: "FREE" },
+  { id: "royal", label: "ذهبي", icon: Crown, minPlan: "VIP" },
+  { id: "ocean", label: "محيط", icon: Compass, minPlan: "PLUS" },
+  { id: "lavender", label: "لافندر", icon: Sparkles, minPlan: "PLUS" },
+  { id: "sand", label: "رملي", icon: CircleDot, minPlan: "FREE" },
+  { id: "forest", label: "غابة", icon: Zap, minPlan: "FREE" },
+  { id: "rose", label: "وردي", icon: HeartHandshake, minPlan: "PRO" },
+  { id: "midnight", label: "ليلي", icon: Moon, minPlan: "PRO" },
 ];
 
 export function YawmakShell({ children }: { children: React.ReactNode }) {
@@ -90,6 +97,8 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
   const [toolsOpen, setToolsOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [logoutOpen, setLogoutOpen] = useState(false);
+  const planRank: Record<string, number> = { FREE: 0, PLUS: 1, PRO: 2, VIP: 3 };
+  const canUseTheme = (option: (typeof THEME_OPTIONS)[number]) => !option.minPlan || (planRank[user?.membershipPlan || "FREE"] ?? 0) >= planRank[option.minPlan];
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
@@ -157,18 +166,20 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
         </div>
 
         <div className="mt-auto space-y-3 pt-4 border-t border-[var(--yawmak-border)]">
-          <div className="grid grid-cols-3 gap-1.5">
+          <div className="grid grid-cols-2 gap-1.5 max-h-40 overflow-y-auto yawmak-scroll-slim">
             {THEME_OPTIONS.map((option) => {
               const Icon = option.icon;
               return (
                 <button
                   key={option.id}
                   type="button"
-                  onClick={() => setTheme(option.id)}
+                  onClick={() => canUseTheme(option) && setTheme(option.id)}
+                  disabled={!canUseTheme(option)}
+                  title={!canUseTheme(option) ? `متاح في خطة ${option.minPlan}` : option.label}
                   className={`h-9 rounded-xl text-[11px] font-semibold flex flex-col items-center justify-center gap-0.5 border transition-colors cursor-pointer ${
                     theme === option.id
                       ? "bg-[var(--yawmak-primary)] text-white border-transparent"
-                      : "border-[var(--yawmak-border)] text-[var(--yawmak-text-muted)] hover:border-[var(--yawmak-primary)]/50"
+                      : !canUseTheme(option) ? "border-[var(--yawmak-border)] text-[var(--yawmak-text-muted)] opacity-40 cursor-not-allowed" : "border-[var(--yawmak-border)] text-[var(--yawmak-text-muted)] hover:border-[var(--yawmak-primary)]/50"
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
@@ -258,7 +269,7 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
               aria-expanded={mobileOpen}
               className="w-11 h-11 shrink-0 rounded-xl border border-emerald-700/20 bg-emerald-50 flex items-center justify-center text-emerald-800 shadow-sm cursor-pointer active:scale-95 transition-transform"
             >
-              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileOpen ? <X className="w-6 h-6" strokeWidth={2.5} /> : <Menu className="w-6 h-6" strokeWidth={2.5} />}
             </button>
           </div>
         </header>
@@ -292,16 +303,18 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
               })}
             </div>
 
-            <div className="grid grid-cols-3 gap-1.5 mt-3">
+            <div className="grid grid-cols-2 gap-1.5 mt-3 max-h-36 overflow-y-auto yawmak-scroll-slim">
               {THEME_OPTIONS.map((option) => (
                 <button
                   key={option.id}
                   type="button"
-                  onClick={() => setTheme(option.id)}
+                  onClick={() => canUseTheme(option) && setTheme(option.id)}
+                  disabled={!canUseTheme(option)}
+                  title={!canUseTheme(option) ? `متاح في خطة ${option.minPlan}` : option.label}
                   className={`h-10 rounded-xl text-[11px] font-semibold border cursor-pointer ${
                     theme === option.id
                       ? "bg-[var(--yawmak-primary)] text-white border-transparent"
-                      : "border-[var(--yawmak-border)] text-[var(--yawmak-text-muted)]"
+                      : !canUseTheme(option) ? "border-[var(--yawmak-border)] text-[var(--yawmak-text-muted)] opacity-40 cursor-not-allowed" : "border-[var(--yawmak-border)] text-[var(--yawmak-text-muted)]"
                   }`}
                 >
                   {option.label}

@@ -108,7 +108,7 @@ export default function DashboardView() {
         ref={heroRef}
         onPointerMove={handleHeroMove}
         onPointerLeave={() => setTilt({ x: 0, y: 0 })}
-        className="ym-panel ym-soft-depth rounded-[28px] overflow-hidden"
+        className="ym-panel yawmak-enterprise-surface yawmak-3d-stage yawmak-3d-panel rounded-[28px] overflow-hidden"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center p-6 sm:p-9">
           <div className="lg:col-span-7 space-y-6">
@@ -146,16 +146,16 @@ export default function DashboardView() {
             </div>
 
             <div className="grid grid-cols-3 gap-3">
-              <div className="rounded-2xl bg-white/80 border border-[var(--yawmak-border)] p-3.5">
+              <div className="yawmak-card-3d rounded-2xl bg-[var(--yawmak-card)] border border-[var(--yawmak-border)] p-3.5">
                 <p className="text-[11px] text-[var(--yawmak-text-muted)]">الإنجاز</p>
                 <p className="text-2xl font-bold text-[var(--yawmak-primary)]">{summary.percent}%</p>
                 <YawmakProgressBar value={summary.percent} className="mt-1.5" />
               </div>
-              <div className="rounded-2xl bg-white/80 border border-[var(--yawmak-border)] p-3.5">
+              <div className="yawmak-card-3d rounded-2xl bg-[var(--yawmak-card)] border border-[var(--yawmak-border)] p-3.5">
                 <p className="text-[11px] text-[var(--yawmak-text-muted)]">متبقية</p>
                 <p className="text-2xl font-bold text-[var(--yawmak-text)]">{summary.pending.length}</p>
               </div>
-              <div className="rounded-2xl bg-white/80 border border-[var(--yawmak-border)] p-3.5">
+              <div className="yawmak-card-3d rounded-2xl bg-[var(--yawmak-card)] border border-[var(--yawmak-border)] p-3.5">
                 <p className="text-[11px] text-[var(--yawmak-text-muted)]">تركيز اليوم</p>
                 <p className="text-2xl font-bold text-[var(--yawmak-text)]">
                   {formatDuration(summary.focusSeconds)}
