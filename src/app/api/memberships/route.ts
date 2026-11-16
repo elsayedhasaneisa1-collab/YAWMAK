@@ -9,7 +9,7 @@ import {
   profiles,
   notifications,
 } from "@/db/schema";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq, inArray } from "drizzle-orm";
 import { getCurrentUser, requireUser, AuthError, logAudit } from "@/lib/auth";
 import { subscriptionRequestSchema, verificationRequestSchema } from "@/lib/validation";
 import { ensureSeeded } from "@/db/seed";
@@ -139,10 +139,15 @@ export async function POST(req: Request) {
     }
 
     if (action === "cancel_subscription") {
-      await db
-        .update(profiles)
-        .set({ membershipPlan: "FREE", membershipExpiresAt: null, updatedAt: new Date() })
-        .where(eq(profiles.id, user.id));
+      const now = new Date();
+      await db.transaction(async (tx) => {
+        await tx.update(subscriptions)
+          .set({ status: "cancelled", reviewedAt: now })
+          .where(and(eq(subscriptions.userId, user.id), inArray(subscriptions.status, ["pending", "active"])));
+        await tx.update(profiles)
+          .set({ membershipPlan: "FREE", membershipStartsAt: null, membershipExpiresAt: null, updatedAt: now })
+          .where(eq(profiles.id, user.id));
+      });
 
       await db.insert(notifications).values({
         userId: user.id,
@@ -180,21 +185,26 @@ export async function POST(req: Request) {
     }
 
     const plan = planRows[0];
-    const [sub] = await db
-      .insert(subscriptions)
-      .values({
+    if (!plan.isActive || plan.code === "FREE" || plan.priceEgp <= 0) {
+      return NextResponse.json({ error: "هذه الباقة غير متاحة للاشتراك المدفوع حاليًا" }, { status: 400 });
+    }
+
+    const created = await db.transaction(async (tx) => {
+      const [pending] = await tx.select({ id: subscriptions.id })
+        .from(subscriptions)
+        .where(and(eq(subscriptions.userId, user.id), eq(subscriptions.status, "pending")))
+        .limit(1);
+      if (pending) return { conflict: true as const };
+
+      const [sub] = await tx.insert(subscriptions).values({
         userId: user.id,
         planCode: plan.code,
         status: "pending",
         amountEgp: plan.priceEgp,
         paymentMethod: parsed.data.paymentMethod,
         paymentReference: parsed.data.paymentReference,
-      })
-      .returning();
-
-    const [payment] = await db
-      .insert(payments)
-      .values({
+      }).returning();
+      const [payment] = await tx.insert(payments).values({
         subscriptionId: sub.id,
         userId: user.id,
         planCode: plan.code,
@@ -203,8 +213,14 @@ export async function POST(req: Request) {
         paymentMethod: parsed.data.paymentMethod,
         referenceCode: parsed.data.paymentReference,
         status: "pending_review",
-      })
-      .returning();
+      }).returning();
+      return { subscription: sub, payment };
+    });
+
+    if ("conflict" in created) {
+      return NextResponse.json({ error: "لديك طلب اشتراك قيد المراجعة بالفعل" }, { status: 409 });
+    }
+    const { subscription: sub, payment } = created;
 
     await logAudit({
       actorId: user.id,
