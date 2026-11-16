@@ -109,7 +109,7 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center gap-3 h-11 px-3.5 rounded-xl text-sm font-semibold transition-colors ${
+                className={`yawmak-sidebar-link flex items-center gap-3 h-11 px-3.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
                   active
                     ? "bg-[var(--yawmak-primary)] text-white"
                     : "text-[var(--yawmak-text-muted)] hover:bg-[var(--yawmak-primary-tint)] hover:text-[var(--yawmak-primary)]"
@@ -258,21 +258,21 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
               aria-expanded={mobileOpen}
               className="w-11 h-11 shrink-0 rounded-xl border border-emerald-700/20 bg-emerald-50 flex items-center justify-center text-emerald-800 shadow-sm cursor-pointer active:scale-95 transition-transform"
             >
-              {mobileOpen ? <X className="w-6 h-6" strokeWidth={2.5} /> : <Menu className="w-6 h-6" strokeWidth={2.5} />}
+              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </header>
 
         {mobileOpen && (
           <div
-            className="lg:hidden fixed inset-0 z-[80] bg-slate-950/35 backdrop-blur-[2px]"
+            className="yawmak-mobile-backdrop lg:hidden fixed inset-0 z-[80] bg-slate-950/45 backdrop-blur-md"
             onClick={() => setMobileOpen(false)}
           >
             <section
               role="dialog"
               aria-modal="true"
               aria-label="قائمة التنقل"
-              className="absolute inset-x-0 top-[76px] max-h-[calc(100dvh-88px)] overflow-y-auto rounded-b-[28px] border-b border-[var(--yawmak-border)] bg-white px-4 py-5 shadow-2xl"
+              className="yawmak-mobile-drawer absolute inset-x-0 top-[76px] max-h-[calc(100dvh-88px)] overflow-y-auto rounded-b-[28px] border border-[var(--yawmak-border)] bg-[var(--yawmak-card)] px-4 py-5 shadow-2xl"
               onClick={(event) => event.stopPropagation()}
             >
             <div className="grid grid-cols-2 gap-2">
