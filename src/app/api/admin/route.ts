@@ -420,10 +420,21 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "تعديل صلاحيات المشرفين متاح للمالك فقط" }, { status: 403 });
       }
       const { userId, role } = body;
-      if (!userId || !["user", "support", "moderator", "admin", "super_admin"].includes(role)) {
-        return NextResponse.json({ error: "الدور غير صالح" }, { status: 400 });
+      const allowedRoles = ["user", "support", "moderator", "admin", "super_admin"];
+      if (typeof userId !== "string" || !/^[0-9a-f-]{36}$/i.test(userId) || !allowedRoles.includes(role)) {
+        return NextResponse.json({ error: "بيانات الصلاحية غير صالحة" }, { status: 400 });
+      }
+      const [target] = await db
+        .select({ id: profiles.id, role: profiles.role })
+        .from(profiles)
+        .where(eq(profiles.id, userId))
+        .limit(1);
+      if (!target) return NextResponse.json({ error: "المستخدم غير موجود" }, { status: 404 });
+      if (target.role === "owner" || target.id === admin.id) {
+        return NextResponse.json({ error: "لا يمكن تغيير صلاحية المالك أو صلاحيتك الحالية" }, { status: 403 });
       }
       await db.update(profiles).set({ role, updatedAt: new Date() }).where(eq(profiles.id, userId));
+      await revokeAllUserSessions(userId);
       await logAudit({
         actorId: admin.id,
         actorRole: admin.role,
@@ -441,62 +452,60 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "صلاحية مدير مطلوبة لمراجعة المدفوعات" }, { status: 403 });
       }
       const { subscriptionId, decision, note } = body;
-      const subs = await db
-        .select()
-        .from(subscriptions)
-        .where(eq(subscriptions.id, subscriptionId))
-        .limit(1);
-      if (!subs.length) return NextResponse.json({ error: "الطلب غير موجود" }, { status: 404 });
-
-      const sub = subs[0];
-      const now = new Date();
-      const endsAt = new Date(now.getTime() + 30 * 86400000);
-
-      if (decision === "approve") {
-        await db
-          .update(subscriptions)
-          .set({ status: "active", startsAt: now, endsAt, adminNote: note || null, reviewedBy: admin.id, reviewedAt: now })
-          .where(eq(subscriptions.id, sub.id));
-        await db
-          .update(payments)
-          .set({ status: "verified", verifiedBy: admin.id, verifiedAt: now })
-          .where(eq(payments.subscriptionId, sub.id));
-        await db
-          .update(profiles)
-          .set({
-            membershipPlan: sub.planCode,
-            membershipStartsAt: now,
-            membershipExpiresAt: endsAt,
-            updatedAt: now,
-          })
-          .where(eq(profiles.id, sub.userId));
-        await db.insert(notifications).values({
-          userId: sub.userId,
-          category: "membership",
-          title: `تم تفعيل عضوية ${sub.planCode}`,
-          body: `تمت مراجعة طلبك وتفعيل باقة ${sub.planCode} بنجاح لمدة 30 يومًا. تذكر أن التوثيق يتطلب طلبًا ومراجعة بشرية مستقلة.`,
-          actionUrl: "/settings/membership",
-        });
-      } else {
-        await db
-          .update(subscriptions)
-          .set({ status: "rejected", adminNote: note || null, reviewedBy: admin.id, reviewedAt: now })
-          .where(eq(subscriptions.id, sub.id));
-        await db
-          .update(payments)
-          .set({ status: "rejected", verifiedBy: admin.id, verifiedAt: now })
-          .where(eq(payments.subscriptionId, sub.id));
+      if (typeof subscriptionId !== "string" || !/^[0-9a-f-]{36}$/i.test(subscriptionId) || !["approve", "reject"].includes(decision)) {
+        return NextResponse.json({ error: "بيانات مراجعة الاشتراك غير صالحة" }, { status: 400 });
       }
-
-      await logAudit({
-        actorId: admin.id,
-        actorRole: admin.role,
-        action: `SUBSCRIPTION_${decision.toUpperCase()}`,
-        targetType: "subscription",
-        targetId: sub.id,
-        metadata: { planCode: sub.planCode, note },
+      const result = await db.transaction(async (tx) => {
+        const [sub] = await tx
+          .select()
+          .from(subscriptions)
+          .where(eq(subscriptions.id, subscriptionId))
+          .limit(1)
+          .for("update");
+        if (!sub) return { error: "الطلب غير موجود", status: 404 as const };
+        if (sub.status !== "pending") return { error: "تمت مراجعة هذا الطلب بالفعل", status: 409 as const };
+        const [payment] = await tx
+          .select()
+          .from(payments)
+          .where(eq(payments.subscriptionId, sub.id))
+          .limit(1)
+          .for("update");
+        if (!payment || payment.status !== "pending_review") {
+          return { error: "لا توجد عملية دفع معلقة مرتبطة بهذا الطلب", status: 409 as const };
+        }
+        const now = new Date();
+        if (decision === "approve") {
+          const endsAt = new Date(now.getTime() + 30 * 86400000);
+          await tx.update(subscriptions).set({
+            status: "active", startsAt: now, endsAt, adminNote: typeof note === "string" ? note.slice(0, 1000) : null,
+            reviewedBy: admin.id, reviewedAt: now,
+          }).where(eq(subscriptions.id, sub.id));
+          await tx.update(payments).set({ status: "verified", verifiedBy: admin.id, verifiedAt: now })
+            .where(eq(payments.id, payment.id));
+          await tx.update(profiles).set({
+            membershipPlan: sub.planCode, membershipStartsAt: now, membershipExpiresAt: endsAt, updatedAt: now,
+          }).where(eq(profiles.id, sub.userId));
+          await tx.insert(notifications).values({
+            userId: sub.userId, category: "membership", title: `تم تفعيل عضوية ${sub.planCode}`,
+            body: `تمت مراجعة طلبك وتفعيل باقة ${sub.planCode} بنجاح لمدة 30 يومًا.`,
+            actionUrl: "/settings/membership",
+          });
+        } else {
+          await tx.update(subscriptions).set({
+            status: "rejected", adminNote: typeof note === "string" ? note.slice(0, 1000) : null,
+            reviewedBy: admin.id, reviewedAt: now,
+          }).where(eq(subscriptions.id, sub.id));
+          await tx.update(payments).set({ status: "rejected", verifiedBy: admin.id, verifiedAt: now })
+            .where(eq(payments.id, payment.id));
+        }
+        return { subscription: sub };
       });
-
+      if ("error" in result) return NextResponse.json({ error: result.error }, { status: result.status });
+      await logAudit({
+        actorId: admin.id, actorRole: admin.role, action: `SUBSCRIPTION_${decision.toUpperCase()}`,
+        targetType: "subscription", targetId: result.subscription.id,
+        metadata: { planCode: result.subscription.planCode, note: typeof note === "string" ? note.slice(0, 1000) : null },
+      });
       return NextResponse.json({ ok: true });
     }
 
@@ -506,7 +515,10 @@ export async function POST(req: Request) {
         return NextResponse.json({ error: "تعديل الأسعار متاح للمدير الأعلى والمالك فقط" }, { status: 403 });
       }
       const { code, priceEgp } = body;
-      const numericPrice = Math.max(0, Math.min(100000, Math.floor(Number(priceEgp))));
+      const numericPrice = Number(priceEgp);
+      if (!(typeof code === "string" && ["FREE", "PLUS", "PRO", "VIP"].includes(code)) || !Number.isInteger(numericPrice) || numericPrice < 0 || numericPrice > 100000) {
+        return NextResponse.json({ error: "السعر أو رمز الباقة غير صالح" }, { status: 400 });
+      }
       await db
         .update(membershipPlans)
         .set({ priceEgp: numericPrice, updatedAt: new Date() })
