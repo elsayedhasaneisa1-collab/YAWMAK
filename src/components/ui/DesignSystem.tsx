@@ -20,43 +20,18 @@ import { EGYPT_GOVERNORATES } from "@/lib/constants";
 
 export function YawmakLogo({ size = 34, showText = true }: { size?: number; showText?: boolean }) {
   return (
-    <div className="inline-flex items-center gap-2.5 select-none">
-      <svg
-        width={size}
-        height={size}
-        viewBox="0 0 64 64"
-        fill="none"
-        aria-hidden="true"
-        className="shrink-0"
-      >
+    <div className="inline-flex items-center gap-2.5 select-none" aria-label="YAWMAK يومك">
+      <svg width={size} height={size} viewBox="0 0 64 64" fill="none" role="img" aria-label="شعار يومك" className="shrink-0">
         <defs>
-          <linearGradient id="ywMark" x1="10" y1="8" x2="54" y2="58" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#D4AF62" />
-            <stop offset="55%" stopColor="#B89545" />
-            <stop offset="100%" stopColor="#8D6B2D" />
+          <linearGradient id="yawmakLogoGreen" x1="10" y1="7" x2="54" y2="58" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#20A36B" /><stop offset="1" stopColor="#086443" />
           </linearGradient>
         </defs>
-        <rect x="2" y="2" width="60" height="60" rx="18" fill="url(#ywMark)" />
-        <path
-          d="M16 40c4.4-9.6 9.9-14.4 16-14.4S43.6 30.4 48 40"
-          stroke="#FFFFFF"
-          strokeWidth="3.2"
-          strokeLinecap="round"
-          opacity="0.95"
-        />
-        <circle cx="32" cy="24.5" r="5.2" fill="#FFFFFF" opacity="0.95" />
-        <path d="M15 46h34" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" opacity="0.55" />
+        <rect x="2" y="2" width="60" height="60" rx="19" fill="url(#yawmakLogoGreen)" />
+        <path d="M14 39.5 32 23l18 16.5V51H14V39.5Z" stroke="white" strokeWidth="3.4" strokeLinejoin="round" />
+        <path d="M10 34 32 14l22 20M26 51V39h12v12" stroke="white" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
-      {showText && (
-        <div className="flex flex-col leading-none">
-          <div className="flex items-center gap-1.5">
-            <span className="text-[15px] font-extrabold tracking-[0.14em] text-[var(--yawmak-text)]">
-              YAWMAK
-            </span>
-            <span className="font-display text-lg font-bold text-[var(--yawmak-primary)]">يومك</span>
-          </div>
-        </div>
-      )}
+      {showText && <div className="flex flex-col leading-none"><div className="flex items-center gap-1.5"><span className="text-[15px] font-extrabold tracking-[0.14em] text-[var(--yawmak-text)]">YAWMAK</span><span className="font-display text-lg font-bold text-[var(--yawmak-primary)]">يومك</span></div></div>}
     </div>
   );
 }

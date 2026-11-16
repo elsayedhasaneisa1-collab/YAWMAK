@@ -15,7 +15,6 @@ import {
 import {
   CakeArt,
   ConfettiArt,
-  GoldCrescentArt,
   GoldOrnament,
   LanternArt,
   RingsArt,
@@ -287,9 +286,7 @@ function MemorialExperience({ invitation }: { invitation: InvitationView }) {
   return (
     <GoldScene tint="#8D6B2D">
       <div className="text-center space-y-4">
-        <div className="flex justify-center">
-          <GoldCrescentArt className="w-40 h-40" />
-        </div>
+        <div className="mx-auto h-1 w-16 rounded-full bg-emerald-700/20" />
         <div className="space-y-1.5">
           <p className="text-xs text-[#898273]">ندعو الله لـ</p>
           <h1 className="font-display text-3xl sm:text-5xl text-[#29251D]">{meta.deceasedName}</h1>
@@ -368,7 +365,7 @@ export default function ExperienceEngine({ invitation }: { invitation: Invitatio
     return (
       <div className="min-h-screen flex items-center justify-center px-4">
         <div className="text-center space-y-3">
-          <GoldCrescentArt className="w-44 h-44 mx-auto" />
+          <div className="mx-auto h-1 w-16 rounded-full bg-emerald-700/20" />
           <h1 className="text-2xl font-bold text-[#29251D]">هذه الرحلة غير متاحة</h1>
           <Link href="/invitations" className="text-sm font-semibold text-[#B89545] hover:underline">
             العودة إلى البطاقات

@@ -48,7 +48,6 @@ import {
   YawmakDialog,
   YawmakLogo,
 } from "@/components/ui/DesignSystem";
-import GoldenCrescent from "@/components/three/GoldenCrescent";
 import { DEV_NAME, DEV_SIGNATURE, hasRoleAccess, formatWhatsAppIntlUrl } from "@/lib/constants";
 
 const PRIMARY_NAV = [
@@ -97,7 +96,6 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen flex yawmak-geo-pattern relative">
-      <GoldenCrescent />
       <aside className="hidden lg:flex w-[248px] shrink-0 flex-col gap-5 border-l border-[var(--yawmak-border)] bg-[var(--yawmak-card)] px-4 py-6 sticky top-0 h-screen overflow-y-auto yawmak-scroll-slim">
         <Link href="/" className="px-2">
           <YawmakLogo size={34} />
@@ -234,9 +232,9 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="lg:hidden sticky top-0 z-40 h-16 px-4 flex items-center justify-between gap-3 border-b border-[var(--yawmak-border)] bg-[var(--yawmak-bg)]/92 backdrop-blur-xl">
-          <Link href="/">
-            <YawmakLogo size={30} />
+        <header className="lg:hidden sticky top-0 z-40 min-h-[76px] px-4 sm:px-5 flex items-center justify-between gap-3 border-b border-[var(--yawmak-border)] bg-white/95 backdrop-blur-xl shadow-[0_4px_18px_rgba(15,90,58,0.05)]">
+          <Link href="/" aria-label="YAWMAK الرئيسية" className="flex items-center min-w-0 py-2">
+            <YawmakLogo size={42} />
           </Link>
           <div className="flex items-center gap-1.5">
             {user && (
@@ -257,16 +255,27 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
               type="button"
               onClick={() => setMobileOpen((o) => !o)}
               aria-label="القائمة"
-              className="w-10 h-10 rounded-xl border border-[var(--yawmak-border)] flex items-center justify-center text-[var(--yawmak-text)] cursor-pointer"
+              aria-expanded={mobileOpen}
+              className="w-11 h-11 shrink-0 rounded-xl border border-emerald-700/20 bg-emerald-50 flex items-center justify-center text-emerald-800 shadow-sm cursor-pointer active:scale-95 transition-transform"
             >
-              {mobileOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              {mobileOpen ? <X className="w-6 h-6" strokeWidth={2.5} /> : <Menu className="w-6 h-6" strokeWidth={2.5} />}
             </button>
           </div>
         </header>
 
         {mobileOpen && (
-          <div className="lg:hidden border-b border-[var(--yawmak-border)] bg-[var(--yawmak-card)] px-4 py-4 max-h-[70vh] overflow-y-auto">
-            <div className="grid grid-cols-2 gap-1.5">
+          <div
+            className="lg:hidden fixed inset-0 z-[80] bg-slate-950/35 backdrop-blur-[2px]"
+            onClick={() => setMobileOpen(false)}
+          >
+            <section
+              role="dialog"
+              aria-modal="true"
+              aria-label="قائمة التنقل"
+              className="absolute inset-x-0 top-[76px] max-h-[calc(100dvh-88px)] overflow-y-auto rounded-b-[28px] border-b border-[var(--yawmak-border)] bg-white px-4 py-5 shadow-2xl"
+              onClick={(event) => event.stopPropagation()}
+            >
+            <div className="grid grid-cols-2 gap-2">
               {TOOL_NAV.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -274,7 +283,7 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
                     key={item.href}
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    className="flex items-center gap-2 h-11 px-3 rounded-xl text-xs font-medium text-[var(--yawmak-text-muted)] bg-[var(--yawmak-bg)] border border-[var(--yawmak-border)]"
+                    className="flex items-center gap-2.5 min-h-12 px-3.5 rounded-xl text-sm font-semibold text-[var(--yawmak-text)] bg-white border border-[var(--yawmak-border)] hover:border-[var(--yawmak-primary)] hover:bg-[var(--yawmak-primary-tint)] transition-colors"
                   >
                     <Icon className="w-4 h-4 text-[var(--yawmak-primary)]" />
                     {item.label}
@@ -325,6 +334,7 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
                 </YawmakButton>
               </div>
             )}
+            </section>
           </div>
         )}
 

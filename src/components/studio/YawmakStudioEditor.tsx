@@ -31,7 +31,7 @@ const PRESETS: Array<{ name: string; design: Partial<StudioDesign> }> = [
   },
   {
     name: "أسود منتصف الليل والذهب",
-    design: { bgPrimary: "#F7F4FB", bgSecondary: "#FAF3E3", accentColor: "#E8C55A", textColor: "#292638", ornament: "crescent" },
+    design: { bgPrimary: "#F7F4FB", bgSecondary: "#FAF3E3", accentColor: "#168653", textColor: "#292638", ornament: "octagram" },
   },
   {
     name: "عاجي فاخر للآيات",

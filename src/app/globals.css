@@ -94,8 +94,8 @@ body {
 }
 
 .yawmak-geo-pattern {
-  background-image: radial-gradient(circle at 18% 6%, var(--yawmak-glow), transparent 42%),
-    radial-gradient(circle at 88% 0%, rgba(165, 138, 221, 0.1), transparent 38%);
+  background-image: radial-gradient(circle at 18% 6%, rgba(22, 134, 83, 0.045), transparent 42%),
+    radial-gradient(circle at 88% 0%, rgba(22, 134, 83, 0.025), transparent 38%);
 }
 
 .pb-safe {
@@ -277,9 +277,6 @@ body {
   border-color: var(--yawmak-primary);
 }
 
-.yawmak-crescent {
-  filter: drop-shadow(0 22px 40px rgba(22, 90, 58, 0.18));
-}
 
 .ym-tilt-soft {
   transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
