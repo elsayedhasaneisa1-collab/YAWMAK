@@ -395,6 +395,21 @@ body {
 [data-mode="dark"] .bg-white\/\[0\.03\] {
   background-color: var(--yawmak-bg-elevated) !important;
 }
+/* Theme-aware mobile navigation header */
+.yawmak-mobile-header {
+  background: color-mix(in srgb, var(--yawmak-card) 94%, transparent);
+  color: var(--yawmak-text);
+  border-color: var(--yawmak-border);
+}
+.yawmak-mobile-header a,
+.yawmak-mobile-header button { color: var(--yawmak-text); }
+.yawmak-mobile-header button {
+  background: var(--yawmak-primary-tint);
+  border-color: var(--yawmak-border);
+  box-shadow: 0 5px 16px color-mix(in srgb, var(--yawmak-primary) 12%, transparent);
+}
+.yawmak-mobile-header button:hover { border-color: var(--yawmak-primary); }
+
 [data-mode="dark"] .text-slate-950,
 [data-mode="dark"] .text-gray-900 { color: var(--yawmak-text) !important; }
 
@@ -525,3 +540,13 @@ a:hover > .yawmak-icon, button:hover > .yawmak-icon { transform: scale(1.08); }
 .yawmak-theme-icon { color: var(--yawmak-primary); }
 @media (min-width: 1024px) { .yawmak-rounded-footer { margin-inline: 1.25rem; } }
 @media (prefers-reduced-motion: reduce) { .yawmak-rounded-footer svg, .yawmak-floating-nav svg { transition: none; } }
+
+
+.yawmak-invitation-3d-card {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .yawmak-invitation-3d-card { will-change: auto; }
+}

@@ -147,34 +147,43 @@ const PERSONAS: Record<string, Persona> = {
 };
 
 function PersonaOrnament({ accent }: { accent: string }) {
+  const rays = Array.from({ length: 16 }, (_, index) => index * 22.5);
   return (
-    <svg
-      viewBox="0 0 320 320"
-      className="w-full h-full opacity-[0.19]"
-      aria-hidden="true"
-      focusable="false"
-      preserveAspectRatio="xMidYMid meet"
-    >
-      <g fill="none" stroke={accent} strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="160" cy="160" r="137" strokeWidth="1.1" strokeDasharray="2 9" />
-        <circle cx="160" cy="160" r="119" strokeWidth="0.8" />
-        <path strokeWidth="1.35" d="M160 17 181 66 232 39 225 93 281 99 245 140 293 176 239 191 254 245 203 226 176 282 151 232 103 270 105 215 49 211 87 170 34 137 89 119 74 64 126 83Z" />
-        <path strokeWidth="1.1" d="M160 49 177 91 221 82 207 124 249 150 207 173 217 219 174 205 151 247 132 203 86 218 101 174 61 148 105 128 96 83 139 99Z" />
-        <circle cx="160" cy="160" r="72" strokeWidth="1.25" />
-        <circle cx="160" cy="160" r="57" strokeWidth="0.8" strokeDasharray="3 6" />
-        <path strokeWidth="1.2" d="M160 89 171 137 219 160 171 183 160 231 149 183 101 160 149 137Z" />
-        <path strokeWidth="0.9" d="M160 111V209M111 160H209M125 125 195 195M195 125 125 195" />
-        <circle cx="160" cy="160" r="9" strokeWidth="1.2" />
-        {[0,45,90,135,180,225,270,315].map((angle) => (
-          <circle
-            key={angle}
-            cx={160 + Math.cos((angle * Math.PI) / 180) * 126}
-            cy={160 + Math.sin((angle * Math.PI) / 180) * 126}
-            r="2.8"
-            fill={accent}
-            stroke="none"
-          />
-        ))}
+    <svg viewBox="0 0 360 360" className="w-full h-full opacity-[0.24]" aria-hidden="true" focusable="false">
+      <defs>
+        <radialGradient id="persona-orbit-glow">
+          <stop offset="0" stopColor={accent} stopOpacity=".28" />
+          <stop offset="1" stopColor={accent} stopOpacity="0" />
+        </radialGradient>
+        <linearGradient id="persona-orbit-line" x1="40" y1="30" x2="320" y2="330">
+          <stop stopColor={accent} stopOpacity=".95" />
+          <stop offset=".5" stopColor={accent} stopOpacity=".35" />
+          <stop offset="1" stopColor={accent} stopOpacity=".9" />
+        </linearGradient>
+      </defs>
+      <circle cx="180" cy="180" r="166" fill="url(#persona-orbit-glow)" />
+      <g fill="none" stroke="url(#persona-orbit-line)" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="180" cy="180" r="151" strokeWidth="1.2" strokeDasharray="1 8" />
+        <circle cx="180" cy="180" r="137" strokeWidth=".8" />
+        <circle cx="180" cy="180" r="116" strokeWidth="1.4" strokeDasharray="48 7 3 7" />
+        <path strokeWidth="1.4" d="M180 22 198 105 270 56 244 132 330 145 252 180 330 215 244 228 270 304 198 255 180 338 162 255 90 304 116 228 30 215 108 180 30 145 116 132 90 56 162 105Z" />
+        <path strokeWidth="1.1" d="M180 55 202 112 263 97 236 151 289 180 236 209 263 263 202 248 180 305 158 248 97 263 124 209 71 180 124 151 97 97 158 112Z" />
+        <path strokeWidth="1.2" d="M180 91 205 155 269 180 205 205 180 269 155 205 91 180 155 155Z" />
+        <circle cx="180" cy="180" r="72" strokeWidth="1.2" />
+        <circle cx="180" cy="180" r="55" strokeWidth=".9" strokeDasharray="3 6" />
+        <path strokeWidth="1" d="M180 104V256M104 180H256M126 126 234 234M234 126 126 234" />
+        {rays.map((angle) => {
+          const rad = (angle * Math.PI) / 180;
+          const x1 = 180 + Math.cos(rad) * 122;
+          const y1 = 180 + Math.sin(rad) * 122;
+          const x2 = 180 + Math.cos(rad) * 145;
+          const y2 = 180 + Math.sin(rad) * 145;
+          return <path key={angle} d={`M${x1} ${y1}L${x2} ${y2}`} strokeWidth="2" />;
+        })}
+        <circle cx="180" cy="180" r="13" strokeWidth="1.5" />
+      </g>
+      <g fill={accent}>
+        {rays.map((angle) => <circle key={angle} cx={180 + Math.cos((angle * Math.PI) / 180) * 151} cy={180 + Math.sin((angle * Math.PI) / 180) * 151} r="2.6" />)}
       </g>
     </svg>
   );
@@ -272,25 +281,27 @@ export default function InvitationExperience({ invitation }: { invitation: Invit
         <main className="max-w-6xl mx-auto px-4 sm:px-6 pb-20 pt-8 space-y-10">
           <DepthStage>
             <motion.div
-              initial={reduced ? false : { opacity: 0, y: 72, z: -140, rotateX: -22, rotateY: 9, scale: 0.88 }}
-              animate={{ opacity: 1, y: 0, z: 0, rotateX: 0, rotateY: 0, scale: 1 }}
-              transition={{ duration: 1.15, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              style={{ perspective: 1800, transformStyle: "preserve-3d" }}
+              initial={reduced ? false : { opacity: 0, y: 86, z: -220, rotateX: -28, rotateY: 13, rotateZ: -1.5, scale: 0.82 }}
+              animate={{ opacity: 1, y: 0, z: 0, rotateX: 0, rotateY: 0, rotateZ: 0, scale: 1 }}
+              transition={{ duration: 1.35, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+              style={{ perspective: 2000, transformStyle: "preserve-3d", transformOrigin: "50% 60%" }}
             >
               <TiltCard maxTilt={9} lift={14}>
                 <OrnamentFrame tone={invitation.templateId === "ivory-mosque" ? "silver" : "gold"}>
                   <div
-                    className="relative isolate overflow-hidden rounded-[26px] p-7 sm:p-12 space-y-7"
+                    className="relative isolate overflow-hidden rounded-[26px] p-7 sm:p-12 space-y-7 yawmak-invitation-3d-card"
                     style={{
                       transformStyle: "preserve-3d",
                       background: invitation.templateId === "ivory-mosque"
                         ? "linear-gradient(155deg,#FAF6EC,#EDE2CC)"
                         : "linear-gradient(155deg, #FFFFFF, #F7F3FC 55%, #FBF9FF)",
-                      boxShadow: "0 50px 110px -55px rgba(212,175,55,0.85), 0 12px 28px -18px rgba(184,149,69,0.48)",
+                      boxShadow: "0 58px 120px -58px rgba(212,175,55,0.82), 0 24px 48px -28px rgba(13,30,22,0.32), inset 0 1px 0 rgba(255,255,255,0.92)",
                       color: template.text,
                     }}
                   >
-                    <div className="pointer-events-none absolute inset-3 rounded-[20px] border border-[#B89545]/20" aria-hidden="true" />
+                    <div className="pointer-events-none absolute inset-3 rounded-[20px] border border-[#B89545]/25" aria-hidden="true" />
+                    <div className="pointer-events-none absolute inset-[10px] rounded-[22px] border border-white/70" aria-hidden="true" />
+                    <div className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full border border-[#B89545]/20 shadow-[0_0_0_18px_rgba(184,149,69,0.035),0_0_0_38px_rgba(184,149,69,0.025)]" aria-hidden="true" />
                     <div className="pointer-events-none absolute -top-16 left-1/2 h-44 w-44 -translate-x-1/2 opacity-[0.08]" aria-hidden="true">
                       <PersonaOrnament accent={persona.accent} />
                     </div>

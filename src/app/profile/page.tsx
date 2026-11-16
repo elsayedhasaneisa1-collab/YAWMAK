@@ -83,9 +83,10 @@ export default function ProfilePage() {
       <YawmakCard glow className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-6">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-right">
           <img
-            src={user.avatarUrl}
+            src={user.avatarUrl || "/avatars/default-male.svg"}
             alt={user.username}
-            className="w-24 h-24 rounded-3xl border-2 border-[var(--yawmak-gold)]/60 object-cover shadow-xl"
+            onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = "/avatars/default-male.svg"; }}
+            className="w-24 h-24 rounded-3xl border-2 border-[var(--yawmak-gold)]/60 object-cover shadow-xl bg-[var(--yawmak-card)]"
           />
           <div className="space-y-2">
             <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">

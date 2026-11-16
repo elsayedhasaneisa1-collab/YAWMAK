@@ -196,9 +196,10 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
                 className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-[var(--yawmak-primary-tint)] transition-colors"
               >
                 <img
-                  src={user.avatarUrl}
+                  src={user.avatarUrl || "/avatars/default-male.svg"}
                   alt={user.username}
-                  className="w-9 h-9 rounded-xl object-cover border border-[var(--yawmak-border)]"
+                  onError={(event) => { event.currentTarget.onerror = null; event.currentTarget.src = "/avatars/default-male.svg"; }}
+                  className="w-9 h-9 rounded-xl object-cover border border-[var(--yawmak-border)] bg-[var(--yawmak-card)]"
                 />
                 <div className="min-w-0">
                   <p className="text-xs font-bold text-[var(--yawmak-text)] truncate">{user.username}</p>
@@ -243,7 +244,7 @@ export function YawmakShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="lg:hidden sticky top-0 z-40 min-h-[76px] px-4 sm:px-5 flex items-center justify-between gap-3 border-b border-[var(--yawmak-border)] bg-white/95 backdrop-blur-xl shadow-[0_4px_18px_rgba(15,90,58,0.05)]">
+        <header className="yawmak-mobile-header lg:hidden sticky top-0 z-40 min-h-[76px] px-4 sm:px-5 flex items-center justify-between gap-3 border-b border-[var(--yawmak-border)] backdrop-blur-xl shadow-[0_8px_28px_rgba(0,0,0,0.10)]">
           <Link href="/" aria-label="YAWMAK الرئيسية" className="flex items-center min-w-0 py-2">
             <YawmakLogo size={42} />
           </Link>
