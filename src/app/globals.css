@@ -1,0 +1,371 @@
+@import "tailwindcss";
+
+:root,
+[data-mode="light"] {
+  --yawmak-bg: #faf8f0;
+  --yawmak-bg-elevated: #ffffff;
+  --yawmak-surface: rgba(255, 255, 255, 0.92);
+  --yawmak-surface-solid: #ffffff;
+  --yawmak-emerald: #f6efe0;
+  --yawmak-emerald-bright: #b89545;
+  --yawmak-gold: #b89545;
+  --yawmak-gold-soft: #8d6b2d;
+  --yawmak-text: #29251d;
+  --yawmak-text-muted: #898273;
+  --yawmak-border: #ede5d3;
+  --yawmak-border-subtle: #f3ecdc;
+  --yawmak-glow: rgba(184, 149, 69, 0.12);
+  --yawmak-primary: #b89545;
+  --yawmak-primary-soft: #d4af62;
+  --yawmak-primary-tint: #faf3e3;
+  --yawmak-card: #ffffff;
+  --yawmak-shadow: 0 14px 34px -22px rgba(141, 107, 45, 0.3);
+  --yawmak-shadow-hover: 0 24px 48px -24px rgba(184, 149, 69, 0.45);
+  --yawmak-hero-gradient: linear-gradient(135deg, #ffffff 0%, #faf3e3 55%, #fbf6ea 100%);
+}
+
+[data-mode="dark"] {
+  --yawmak-bg: #17130c;
+  --yawmak-bg-elevated: #211b12;
+  --yawmak-surface: rgba(38, 31, 20, 0.92);
+  --yawmak-surface-solid: #241d13;
+  --yawmak-emerald: #2f2716;
+  --yawmak-emerald-bright: #d4af62;
+  --yawmak-gold: #d4af62;
+  --yawmak-gold-soft: #e8d8a8;
+  --yawmak-text: #faf4e6;
+  --yawmak-text-muted: #b3a88d;
+  --yawmak-border: #3a2f1b;
+  --yawmak-border-subtle: #322917;
+  --yawmak-glow: rgba(212, 175, 98, 0.18);
+  --yawmak-primary: #d4af62;
+  --yawmak-primary-soft: #e8d8a8;
+  --yawmak-primary-tint: #3a2f1b;
+  --yawmak-card: #241d13;
+  --yawmak-shadow: 0 14px 34px -22px rgba(0, 0, 0, 0.65);
+  --yawmak-shadow-hover: 0 24px 48px -24px rgba(212, 175, 98, 0.4);
+  --yawmak-hero-gradient: linear-gradient(135deg, #241d13 0%, #3a2f1b 55%, #2c2314 100%);
+}
+
+html {
+  direction: rtl;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--yawmak-bg);
+  color: var(--yawmak-text);
+  font-family: var(--font-cairo), var(--font-tajawal), system-ui, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.font-quran {
+  font-family: var(--font-amiri), "Traditional Arabic", serif;
+  line-height: 2.25;
+}
+
+.font-display {
+  font-family: var(--font-amiri), var(--font-cairo), serif;
+}
+
+:where(.yawmak-icon) {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  vertical-align: middle;
+}
+
+.yawmak-card {
+  background: var(--yawmak-card);
+  border: 1px solid var(--yawmak-border);
+  box-shadow: var(--yawmak-shadow);
+}
+
+.yawmak-primary-gradient {
+  background: linear-gradient(135deg, #e8d8a8 0%, #d4af62 52%, #b89545 100%);
+}
+
+.yawmak-primary-text {
+  background: linear-gradient(135deg, #e8d8a8 0%, #d4af62 52%, #b89545 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.yawmak-gold-gradient {
+  background: linear-gradient(135deg, #e8d8a8 0%, #d4af62 52%, #b89545 100%);
+}
+
+.yawmak-gold-text {
+  background: linear-gradient(135deg, #e8d8a8 0%, #d4af62 52%, #b89545 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.yawmak-geo-pattern {
+  background-image: radial-gradient(circle at 18% 6%, var(--yawmak-glow), transparent 42%),
+    radial-gradient(circle at 88% 0%, rgba(165, 138, 221, 0.1), transparent 38%);
+}
+
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+.yawmak-glass {
+  background: var(--yawmak-surface);
+  border: 1px solid var(--yawmak-border);
+  backdrop-filter: blur(16px) saturate(130%);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+}
+
+.yawmak-tilt {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
+}
+
+.yawmak-depth-layer {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.yawmak-scroll-slim::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.yawmak-scroll-slim::-webkit-scrollbar-thumb {
+  background: var(--yawmak-border);
+  border-radius: 999px;
+}
+
+.yawmak-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    420px circle at var(--yawmak-glare-x, 50%) var(--yawmak-glare-y, 50%),
+    rgba(165, 138, 221, 0.16),
+    transparent 58%
+  );
+}
+
+.yawmak-tilt:hover .yawmak-glare {
+  opacity: 1;
+}
+
+.yawmak-card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.38s ease,
+    border-color 0.3s ease;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .yawmak-card-3d:hover {
+    transform: perspective(950px) rotateX(2.6deg) translateY(-5px) scale(1.01);
+    box-shadow: var(--yawmak-shadow-hover);
+    border-color: var(--yawmak-primary-soft);
+  }
+  .yawmak-card-3d:active {
+    transform: perspective(950px) rotateX(1deg) translateY(-2px) scale(0.995);
+  }
+  .yawmak-ambient {
+    animation: yawmakAmbient 18s ease-in-out infinite alternate;
+  }
+  .yawmak-float-slow {
+    animation: yawmakFloat 11s ease-in-out infinite alternate;
+  }
+  .yawmak-shimmer {
+    background-size: 220% 220%;
+    animation: yawmakShimmer 12s ease-in-out infinite alternate;
+  }
+  .yawmak-fade-up {
+    animation: yawmakFadeUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  .yawmak-counter-bump {
+    animation: yawmakCounterBump 0.36s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .yawmak-pulse-ring {
+    animation: yawmakPulseRing 2.8s ease-out infinite;
+  }
+  .ym-orbit {
+    animation: ymOrbit 16s linear infinite;
+  }
+  .ym-float {
+    animation: ymFloat 5.5s ease-in-out infinite alternate;
+  }
+  .ym-draw {
+    stroke-dasharray: 260;
+    stroke-dashoffset: 260;
+    animation: ymDraw 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .ym-rise {
+    animation: ymRise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+}
+
+@keyframes ymOrbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ymFloat {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-8px) rotate(3deg);
+  }
+}
+
+@keyframes ymDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ymRise {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ym-panel {
+  background: linear-gradient(150deg, #f6f2fc 0%, #fbf8f2 55%, #f3ecfb 100%);
+  border: 1px solid var(--yawmak-border);
+}
+
+.ym-soft-depth {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 18px 40px -26px rgba(121, 86, 200, 0.35);
+}
+
+.yawmak-floating-nav {
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--yawmak-primary-soft);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  box-shadow: 0 22px 44px -22px rgba(184, 149, 69, 0.55),
+    0 2px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+[data-mode="dark"] .yawmak-floating-nav {
+  background: rgba(36, 29, 19, 0.86);
+}
+
+.yawmak-nav-glow {
+  background: radial-gradient(
+    closest-side,
+    rgba(212, 175, 98, 0.22),
+    rgba(212, 175, 98, 0.05) 70%,
+    transparent
+  );
+  filter: blur(10px);
+}
+
+.yawmak-crescent {
+  filter: drop-shadow(0 22px 40px rgba(184, 149, 69, 0.28));
+}
+
+.ym-tilt-soft {
+  transform: perspective(1100px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+}
+
+@keyframes yawmakAmbient {
+  0% {
+    background-position: 0% 20%;
+    opacity: 0.75;
+  }
+  100% {
+    background-position: 100% 80%;
+    opacity: 1;
+  }
+}
+
+@keyframes yawmakFloat {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+
+@keyframes yawmakShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes yawmakFadeUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes yawmakCounterBump {
+  0% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes yawmakPulseRing {
+  0% {
+    transform: scale(0.94);
+    opacity: 0.5;
+  }
+  70% {
+    transform: scale(1.06);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
